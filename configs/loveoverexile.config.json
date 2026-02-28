@@ -1,0 +1,64 @@
+{
+  "name": "Love Over Exile",
+  "domain": "loveoverexile.com",
+  "staging_url": "https://loveoverexile-website.vercel.app",
+  "project_path": "../loveoverexile-website/",
+  "site_path": "../loveoverexile-website/site/",
+  "primary_keywords": [
+    "parental alienation",
+    "alienated parent",
+    "love over exile"
+  ],
+  "content_pillars": [
+    {
+      "name": "Understanding Parental Alienation",
+      "keywords": ["what is parental alienation", "signs of parental alienation", "parental alienation syndrome", "parental alienation examples"]
+    },
+    {
+      "name": "Coping & Survival",
+      "keywords": ["coping with parental alienation", "alienated parent support", "surviving parental alienation", "parental alienation help"]
+    },
+    {
+      "name": "Legal & Rights",
+      "keywords": ["parental alienation court", "parental alienation custody", "parental alienation legal", "fathers rights alienation"]
+    },
+    {
+      "name": "Healing & Recovery",
+      "keywords": ["healing from parental alienation", "reconnecting with alienated child", "parental alienation recovery", "alienated parent grief"]
+    },
+    {
+      "name": "The Book",
+      "keywords": ["love over exile book", "parental alienation book", "malcolm smith parental alienation"]
+    }
+  ],
+  "content_source": "../loveoverexile-website/content/",
+  "publish_to": "../loveoverexile-website/site/src/pages/articles/",
+  "competitors": [
+    "pasg.info",
+    "isnaf.org",
+    "amybaker.com",
+    "pa-a.org"
+  ],
+  "google_search_console_property": null,
+  "se_ranking_project_id": null,
+  "author": {
+    "name": "Malcolm Smith",
+    "role": "Author & Alienated Parent Advocate",
+    "book": "Love Over Exile"
+  },
+  "schedule": {
+    "audit": "weekly",
+    "rank_check": "daily",
+    "content_review": "weekly",
+    "report": "weekly",
+    "link_check": "weekly",
+    "ai_discovery_audit": "monthly"
+  },
+  "targets": {
+    "min_article_length": 1200,
+    "max_hero_image_kb": 150,
+    "max_card_image_kb": 90,
+    "target_articles_per_month": 2,
+    "target_backlinks_per_month": 5
+  }
+}

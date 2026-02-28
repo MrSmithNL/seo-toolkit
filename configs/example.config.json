@@ -1,0 +1,36 @@
+{
+  "name": "Example Website",
+  "domain": "example.com",
+  "project_path": "../example-website/",
+  "site_path": "../example-website/site/",
+  "primary_keywords": ["main keyword 1", "main keyword 2"],
+  "content_pillars": [
+    {
+      "name": "Pillar Topic 1",
+      "keywords": ["pillar keyword 1a", "pillar keyword 1b"]
+    },
+    {
+      "name": "Pillar Topic 2",
+      "keywords": ["pillar keyword 2a", "pillar keyword 2b"]
+    }
+  ],
+  "content_source": "../example-website/content/",
+  "publish_to": "../example-website/site/src/pages/articles/",
+  "competitors": ["competitor1.com", "competitor2.com", "competitor3.com"],
+  "google_search_console_property": "sc-domain:example.com",
+  "se_ranking_project_id": null,
+  "schedule": {
+    "audit": "weekly",
+    "rank_check": "daily",
+    "content_review": "weekly",
+    "report": "weekly",
+    "link_check": "weekly",
+    "ai_discovery_audit": "monthly"
+  },
+  "targets": {
+    "min_article_length": 1200,
+    "max_image_size_kb": 150,
+    "target_pages_per_month": 2,
+    "target_backlinks_per_month": 5
+  }
+}

@@ -1,0 +1,34 @@
+# Environment & credentials
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Reports output
+reports/
+*.html
+!docs/**/*.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+*.tmp
+*.log
+
+# Data cache
+cache/
+*.cache
