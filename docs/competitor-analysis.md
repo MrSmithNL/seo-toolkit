@@ -128,6 +128,64 @@ The SEO tools market is dominated by a handful of well-funded players. None of t
 
 ---
 
+## Gap Analysis
+
+### What They Do That We Don't (Yet)
+
+| # | Gap | Who Has It | Priority | Feeds Into |
+|---|-----|-----------|----------|------------|
+| G-001 | Massive backlink index (16 trillion links) | Ahrefs | Low — we use DataForSEO/SE Ranking data instead | — |
+| G-002 | PPC / paid ad management | SEMrush | Low — not in our scope, SEO-only focus | — |
+| G-003 | Social media management | SEMrush | Low — out of scope for SEO Toolkit (Marketing Engine will cover) | — |
+| G-004 | Domain Authority industry-standard metric | Moz | Medium — we should display DA alongside our metrics | T-007 |
+| G-005 | Local SEO tools (map packs, citation management) | Moz, SEMrush | Low — future vertical opportunity, not MVP | Backlog |
+| G-006 | Desktop-class technical crawler (deep config, regex, custom extraction) | Screaming Frog | Medium — our Audit Agent needs to match depth | Roadmap #1 |
+| G-007 | NLP content scoring against top-ranking pages in real-time | Surfer SEO | High — core feature gap, Content Optimizer must match this | T-002 |
+| G-008 | Google Docs / WordPress integration for content editor | Surfer SEO | Medium — needed for adoption by content writers | Backlog |
+| G-009 | Free tier / freemium model | Moz, Screaming Frog | Medium — free audit report as lead magnet covers this | M-004 |
+| G-010 | Educational content hub (blogs, guides, tutorials) | Moz, Ahrefs, SEMrush | Medium — builds trust and SEO authority | M-002 |
+
+### What We Do That They Don't
+
+| # | Our Advantage | Impact |
+|---|--------------|--------|
+| A-001 | Autonomous AI agents that take action, not just display data | **Core differentiator** — no competitor offers this |
+| A-002 | AI Discovery Agent for ChatGPT/Perplexity/Gemini visibility | **Unique** — zero competitors address AI search |
+| A-003 | Per-website pricing instead of per-user seats | More accessible for solo operators |
+| A-004 | Automated content writing from SEO data (not just suggestions) | Surfer suggests, we write |
+| A-005 | Multi-agent orchestration (8 agents working together) | Competitors have siloed tools, not coordinated systems |
+| A-006 | Built-in reporting agent (automated, not manual exports) | Competitors require manual report building |
+
+**Our positioning:** Affordable autonomous AI SEO — agents do the work, not dashboards that show you work.
+**Biggest risk gap:** G-007 (NLP content scoring) — Surfer SEO's core feature is in our critical path.
+**Biggest unique advantage:** A-001 + A-002 — autonomous operation + AI search optimisation.
+
+---
+
+## Competitor Monitoring Schedule
+
+> **Frequency:** Monthly (autonomous — Claude runs this in the background).
+> **Process:** Check each competitor for pricing changes, new features, new AI capabilities,
+> acquisitions, or positioning shifts. Only log NEW findings. Don't re-document known information.
+> **Output:** Update this file + add new recommendations to `competitor-recommendations.md` (value-scored).
+
+| Competitor | Check Frequency | Last Checked | Next Check | What To Monitor |
+|-----------|----------------|-------------|------------|-----------------|
+| Ahrefs | Monthly | 2026-03-01 | 2026-04-01 | AI features, pricing changes, new tools |
+| SEMrush | Monthly | 2026-03-01 | 2026-04-01 | AI agent features, ContentShake updates, pricing |
+| Moz | Monthly | 2026-03-01 | 2026-04-01 | DA metric changes, new features, pricing |
+| SE Ranking | Monthly | 2026-03-01 | 2026-04-01 | API changes (we depend on their data), pricing, AI features |
+| Screaming Frog | Monthly | 2026-03-01 | 2026-04-01 | Cloud product launch, API capabilities, pricing |
+| Surfer SEO | Monthly | 2026-03-01 | 2026-04-01 | NLP scoring improvements, AI writing quality, pricing |
+
+**Monitoring sources:**
+- Official blogs and changelogs
+- Product Hunt / Twitter announcements
+- SEO industry newsletters (Search Engine Journal, Search Engine Land)
+- Reddit r/SEO, r/bigseo
+
+---
+
 ## Key Takeaways
 
 1. **No competitor has autonomous AI agents.** Every tool is a dashboard that requires human interpretation and action. This is our core differentiator.
@@ -146,4 +204,5 @@ The SEO tools market is dominated by a handful of well-funded players. None of t
 
 | Date | Change |
 |------|--------|
-| 2026-03-01 | Competitor analysis created. Six major competitors profiled. Feature matrix, positioning map, and key takeaways documented. |
+| 2026-03-01 | v1.1 — Added Gap Analysis (10 gaps, 6 advantages), Competitor Monitoring Schedule (monthly, 6 competitors). |
+| 2026-03-01 | v1.0 — Competitor analysis created. Six major competitors profiled. Feature matrix, positioning map, and key takeaways documented. |
