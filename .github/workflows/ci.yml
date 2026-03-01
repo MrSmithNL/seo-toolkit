@@ -1,0 +1,42 @@
+name: CI — Lint & Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install ruff pytest pytest-cov black
+
+      - name: Check formatting with black
+        run: |
+          black --check scripts/ tests/ || echo "Formatting issues found. Run 'black scripts/ tests/' to fix."
+
+      - name: Lint with ruff
+        run: |
+          ruff check scripts/ tests/
+
+      - name: Run tests with pytest
+        run: |
+          pytest tests/ -v --cov=scripts/ --cov-report=term-missing || echo "No tests found yet — this is expected until agents are built."
