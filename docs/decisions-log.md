@@ -34,3 +34,17 @@
 **Date:** 2026-02-28
 **Decision:** Give AI engine optimisation its own agent rather than bundling it into the Audit agent.
 **Why:** AI discoverability (llms.txt, AI-friendly content structure, citation tracking) is a distinct and fast-evolving discipline. It deserves focused attention and will grow in importance over 2026–2027.
+
+## DEC-006 — Link Builder = "Earned Link Engine", not a posting bot
+
+**Date:** 2026-03-01
+**Decision:** The Link Builder Agent must be designed as an "earned link engine" — helping users earn editorial links through PR, pitching, and linkable assets. It must NOT automate publishing to external sites or run mass outreach campaigns.
+**Why:** Google explicitly penalises large-scale guest-posting campaigns done primarily to build links. Automated placement at scale creates detectable footprints. The commercially viable and safe approach is: discover high-quality prospects, generate genuinely valuable linkable assets (data, tools, stats pages), draft personalised pitches with human approval, and monitor for risk/compliance.
+**Key principles:**
+- Never auto-publish to external sites
+- Never buy links or use PBNs
+- AI assists with prospect scoring, asset creation, pitch drafting, and risk detection
+- Human approves all outreach
+- Proper rel attributes (sponsored, ugc, nofollow) always used
+- Build in 3 MVPs: (1) Prospecting + Fit Scoring → (2) Asset-First Pitching → (3) Risk & Compliance
+**Trade-off:** Slower link acquisition vs. sustainable, penalty-proof growth that can be sold as a legitimate service.
