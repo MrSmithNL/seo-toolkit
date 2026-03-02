@@ -39,8 +39,21 @@
     "amybaker.com",
     "pa-a.org"
   ],
-  "google_search_console_property": null,
+  "google_search_console_property": "sc-domain:loveoverexile.com",
   "se_ranking_project_id": null,
+  "rube_recipes": {
+    "technical_audit": "rcp_fUfiRNt8Bh8b",
+    "content_optimizer": "rcp_-msCRAZI2mln",
+    "keyword_research": "rcp_083WOBwKYeNo",
+    "serp_analyzer": "rcp_tebS66AkhuYq",
+    "ai_discovery": "rcp_3LBwPfkiTtRT"
+  },
+  "last_audit": {
+    "date": "2026-03-02",
+    "technical_score": 90,
+    "content_score": 74,
+    "ai_readiness_score": 100
+  },
   "author": {
     "name": "Malcolm Smith",
     "role": "Author & Alienated Parent Advocate",
