@@ -1,6 +1,6 @@
 # SEO Toolkit — Todo
 
-Last updated: 2026-03-02
+Last updated: 2026-03-03
 
 ---
 
@@ -31,6 +31,14 @@ Built as reusable Rube recipes that work on any domain.
 | SEO-013 | Build AI Discovery Audit service | ✅ Done | Recipe `rcp_3LBwPfkiTtRT` — llms.txt, schema, robots.txt, AI readiness |
 | SEO-014 | Build SERP Analyzer service | ✅ Done | Recipe `rcp_tebS66AkhuYq` — top 10 analysis, PAA, related searches, AI strategy |
 
+## Phase 2b — Multi-Client Validation (complete)
+
+All 5 agents tested on a second client (Hairgenetix) to confirm they work on any domain.
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| SEO-015 | Test all 5 agents on hairgenetix.com | ✅ Done | Tech 83/100, Keywords 104, SERP #2 mesotherapy, AI 74/100, Content 64/100 |
+
 ## Phase 3 — Tracking & Growth
 
 Ongoing monitoring and content generation. These need paid services or more data.
@@ -43,6 +51,7 @@ Ongoing monitoring and content generation. These need paid services or more data
 | SEO-023 | Build Reporter Agent | 🔲 Todo | Weekly/monthly dashboards combining all service data |
 | SEO-024 | Schedule recurring audits | 🔲 Todo | Set up weekly/monthly Rube recipe schedules |
 | SEO-025 | Apply audit recommendations to LOE | 🔲 Todo | Fix titles, meta descriptions, alt text, thin content |
+| SEO-026 | Apply audit recommendations to Hairgenetix | 🔲 Todo | Fix H1 tags, meta titles, alt text, create llms.txt |
 
 ## Phase 4 — Productise
 
@@ -70,6 +79,7 @@ Make it publishable and usable by others.
 | SEO-014 | SERP Analyzer recipe | 2026-03-02 | `rcp_tebS66AkhuYq` — tested on LOE: 3 keywords |
 | SEO-005 | First full audit on LOE | 2026-03-02 | 90/100 — 0 critical, 36 warnings |
 | SEO-006 | First keyword research | 2026-03-02 | 7 clusters, 3 high-priority, all trending up |
+| SEO-015 | All 5 agents tested on hairgenetix.com | 2026-03-03 | Tech 83/100, 104 keywords, SERP #2 mesotherapy, AI 74/100, Content 64/100 avg |
 
 ---
 
@@ -79,3 +89,4 @@ Make it publishable and usable by others.
 |------|--------------|
 | 2026-02-28 | Project created. 8 agents defined. Love Over Exile as first client. Rube MCP connected with bearer token. |
 | 2026-03-02 | 5 Rube recipe services built and tested on LOE. GSC + SerpAPI connected. SEMrush auth link sent. Architecture and todo updated. |
+| 2026-03-03 | All 5 agents tested on hairgenetix.com — multi-client validation complete. All services confirmed working on any domain. |
