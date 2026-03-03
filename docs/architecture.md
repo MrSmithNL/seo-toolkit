@@ -1,73 +1,98 @@
 # SEO Toolkit — Architecture
 
-Last updated: 2026-03-02
+Last updated: 2026-03-03
 
 ---
 
 ## System Diagram
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        SEO TOOLKIT                                  │
-│                                                                     │
-│                    ┌─────────────────────┐                          │
-│                    │   RUBE RECIPE LAYER  │                          │
-│                    │  (reusable services) │                          │
-│                    └─────────┬───────────┘                          │
-│                              │                                      │
-│  ┌──────────┐ ┌──────────┐ ┌┴──────────┐ ┌──────────┐             │
-│  │Technical │ │ Content  │ │ Keyword   │ │  SERP    │             │
-│  │  Audit   │ │Optimizer │ │ Research  │ │ Analyzer │             │
-│  │  ✅ Live │ │  ✅ Live │ │  ✅ Live  │ │  ✅ Live │             │
-│  └────┬─────┘ └────┬─────┘ └─────┬─────┘ └────┬─────┘             │
-│       │             │             │             │                    │
-│  ┌────┴─────┐ ┌────┴─────┐ ┌─────┴─────┐ ┌────┴─────┐             │
-│  │   AI     │ │  Rank    │ │ Content   │ │  Link    │             │
-│  │Discovery │ │ Tracker  │ │  Writer   │ │ Builder  │             │
-│  │  ✅ Live │ │ 🔲 Later │ │ 🔲 Later  │ │ 🔲 Later │             │
-│  └────┬─────┘ └────┬─────┘ └─────┬─────┘ └────┬─────┘             │
-│       │             │             │             │                    │
-│  ─────┴─────────────┴─────────────┴─────────────┴──────             │
-│                    SHARED DATA LAYER                                │
-│            (configs, caches, keyword databases)                     │
-└──────────┬──────────────────────────────────────┬───────────────────┘
-           │                                      │
-    ┌──────┴──────┐                        ┌──────┴──────┐
-    │  DATA APIs  │                        │  CLIENT     │
-    │             │                        │  WEBSITES   │
-    │ Google SC ✅│                        │             │
-    │ SerpAPI  ✅ │                        │ Love Over   │
-    │ Composio ✅ │                        │ Exile ✅    │
-    │ SEMrush  ⏳ │                        │             │
-    │ DataForSEO 🔲│                       │ (future     │
-    │ SE Ranking 🔲│                       │  clients)   │
-    └─────────────┘                        └─────────────┘
+┌───────────────────────────────────────────────────────────────────────────┐
+│                            SEO TOOLKIT (10 Agents)                        │
+│                                                                           │
+│  TIER 1 — LIVE (Rube Recipes)                                            │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
+│  │Technical │ │ Content  │ │ Keyword  │ │  SERP    │ │   AI     │       │
+│  │  Audit   │ │Optimizer │ │ Research │ │ Analyzer │ │Discovery │       │
+│  │  ✅ Live │ │  ✅ Live │ │  ✅ Live │ │  ✅ Live │ │  ✅ Live │       │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
+│                                                                           │
+│  TIER 2 — BUILD NEXT                                                     │
+│  ┌──────────┐ ┌──────────┐ ┌───────────────────────────────────────┐     │
+│  │  Rank    │ │ Content  │ │ LINK BUILDER (Main Agent)             │     │
+│  │ Tracker  │ │  Writer  │ │                                       │     │
+│  │ 🔲 Next  │ │ 🔲 Next  │ │ ┌─────────────┐ ┌─────────────┐     │     │
+│  └──────────┘ └──────────┘ │ │ Backlink    │ │ Prospect    │     │     │
+│                             │ │ Profiler    │ │ Discovery   │     │     │
+│  TIER 3 — STRATEGIC         │ └─────────────┘ └─────────────┘     │     │
+│  ┌──────────┐ ┌──────────┐ │ ┌─────────────┐ ┌─────────────┐     │     │
+│  │Competitor│ │ Reporter │ │ │ Linkable    │ │ Outreach    │     │     │
+│  │ Monitor  │ │          │ │ │ Asset Maker │ │ Manager     │     │     │
+│  │ 🔲 Later │ │ 🔲 Later │ │ └─────────────┘ └─────────────┘     │     │
+│  └──────────┘ └──────────┘ │ ┌─────────────┐ ┌─────────────┐     │     │
+│                             │ │ Competitor  │ │ Link Health │     │     │
+│                             │ │ Link Spy    │ │ Monitor     │     │     │
+│                             │ └─────────────┘ └─────────────┘     │     │
+│                             │                          🔲 Next    │     │
+│                             └───────────────────────────────────────┘     │
+│                                                                           │
+│  ─────────────────────────────────────────────────────────────────        │
+│                         SHARED DATA LAYER                                 │
+│          (configs, caches, keyword databases, backlinks, reports)         │
+└──────────┬──────────────────────────────────────────────┬────────────────┘
+           │                                              │
+    ┌──────┴──────┐                                ┌──────┴──────┐
+    │  DATA APIs  │                                │  CLIENT     │
+    │             │                                │  WEBSITES   │
+    │ Google SC ✅│                                │             │
+    │ SerpAPI  ✅ │                                │ Love Over   │
+    │ Composio ✅ │                                │ Exile ✅    │
+    │ SEMrush  ⏳ │                                │             │
+    │ DataForSEO 🔲│                               │ Hairgenetix │
+    │ SE Ranking 🔲│                               │  ✅ New     │
+    │ Ahrefs   🔲 │                                │             │
+    └─────────────┘                                └─────────────┘
 ```
 
 ---
 
-## Components
+## Agent Registry (10 Agents)
 
-### Rube Recipe Services (Live)
+### Tier 1 — Live (5 Rube Recipe Services)
 
-These are reusable SEO services built as Rube recipes. Each can be run on any domain, scheduled, or triggered on demand.
+| # | Agent | Recipe ID | Status | Tools Used |
+|---|-------|-----------|--------|------------|
+| 1 | Technical Audit | `rcp_fUfiRNt8Bh8b` | ✅ Live | GSC, WebFetch |
+| 2 | Content Optimizer | `rcp_-msCRAZI2mln` | ✅ Live | WebFetch, invoke_llm |
+| 3 | Keyword Research | `rcp_083WOBwKYeNo` | ✅ Live | GSC, SerpAPI, Composio Search, invoke_llm |
+| 4 | SERP Analyzer | `rcp_tebS66AkhuYq` | ✅ Live | SerpAPI, invoke_llm |
+| 5 | AI Discovery Audit | `rcp_3LBwPfkiTtRT` | ✅ Live | WebFetch, invoke_llm |
 
-| Service | Recipe ID | Status | Tools Used |
-|---------|-----------|--------|------------|
-| SEO Technical Audit | `rcp_fUfiRNt8Bh8b` | ✅ Live | GSC, WebFetch |
-| Content Optimizer | `rcp_-msCRAZI2mln` | ✅ Live | WebFetch, invoke_llm |
-| Keyword Research | `rcp_083WOBwKYeNo` | ✅ Live | GSC, SerpAPI, Composio Search, invoke_llm |
-| SERP Analyzer | `rcp_tebS66AkhuYq` | ✅ Live | SerpAPI, invoke_llm |
-| AI Discovery Audit | `rcp_3LBwPfkiTtRT` | ✅ Live | WebFetch, invoke_llm |
+### Tier 2 — Build Next (3 Agents)
 
-### Agents (Planned — Phase 3+)
+| # | Agent | Sub-Agents | Status | Depends On |
+|---|-------|-----------|--------|------------|
+| 6 | Rank Tracker | - | 🔲 Not built | SE Ranking ($52/month) |
+| 7 | Content Writer | - | 🔲 Not built | Keyword Research data |
+| 8 | **Link Builder** | **6 sub-agents** | 🔲 Not built | DataForSEO + Ahrefs |
 
-| Agent | Status | Depends On |
-|-------|--------|------------|
-| Rank Tracker | 🔲 Not built | SE Ranking ($52/month) |
-| Content Writer | 🔲 Not built | Keyword Research data |
-| Link Builder | 🔲 Not built | DataForSEO backlink data |
-| Reporter | 🔲 Not built | Data from all other services |
+**Link Builder Sub-Agents:**
+
+| Sub-Agent | Purpose | Data Source |
+|-----------|---------|------------|
+| 8a. Backlink Profiler | Crawl full backlink profile, anchor text, toxic links | DataForSEO / Ahrefs |
+| 8b. Prospect Discovery | Find + AI-score link opportunities | Web research, Ahrefs Content Explorer |
+| 8c. Linkable Asset Creator | Generate statistics pages, tools, data assets | SERP analysis + invoke_llm |
+| 8d. Outreach Manager | Draft pitches, manage follow-ups, CRM | invoke_llm + custom |
+| 8e. Competitor Link Spy | Monitor competitor backlinks, link intersect | DataForSEO / Ahrefs |
+| 8f. Link Health Monitor | Track new/lost/toxic links, anchor text ratios | DataForSEO / Ahrefs |
+
+### Tier 3 — Strategic (2 Agents)
+
+| # | Agent | Status | Depends On |
+|---|-------|--------|------------|
+| 9 | Competitor Monitor | 🔲 Not built | Keyword + SERP data |
+| 10 | Reporter | 🔲 Not built | All other agents |
 
 ### Data Sources & APIs
 
@@ -84,9 +109,10 @@ These are reusable SEO services built as Rube recipes. Each can be run on any do
 
 ### Client Websites
 
-| Website | Config File | Domain | Status | Last Audited |
-|---------|-------------|--------|--------|--------------|
-| Love Over Exile | `configs/loveoverexile.config.json` | loveoverexile.com | ✅ Audited | 2026-03-02 |
+| Website | Config File | Domain | Type | Status | Last Audited |
+|---------|-------------|--------|------|--------|--------------|
+| Love Over Exile | `configs/loveoverexile.config.json` | loveoverexile.com | Content / Book | ✅ Audited | 2026-03-02 |
+| Hairgenetix | `configs/hairgenetix.config.json` | hairgenetix.com | E-commerce / Shopify | 🆕 Testing | 2026-03-03 |
 
 ---
 
@@ -124,4 +150,6 @@ First run on loveoverexile.com:
 | 2026-03-02 | 5 Rube recipe services built | Technical Audit, Content Optimizer, Keyword Research, SERP Analyzer, AI Discovery Audit — all tested on LOE |
 | 2026-03-02 | GSC + SerpAPI connected | OAuth via Rube MCP. GSC has both hairgenetix.com and loveoverexile.com properties |
 | 2026-03-02 | SEMrush auth initiated | Auth link sent, awaiting Malcolm to complete |
+| 2026-03-03 | Architecture expanded to 10 agents | Link Builder promoted to main agent with 6 sub-agents. Added Competitor Monitor (#9) and Reporter (#10). Tiered build order defined. |
+| 2026-03-03 | Hairgenetix added as second client | Config created, first e-commerce test case for all agents |
 | 2026-02-28 | Project created | Initial structure — 8 agents defined, first client config (Love Over Exile), Rube MCP connected |

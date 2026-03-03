@@ -1,0 +1,68 @@
+{
+  "name": "Hairgenetix",
+  "domain": "hairgenetix.com",
+  "platform": "shopify",
+  "project_path": "../hairgenetix/",
+  "primary_keywords": [
+    "copper peptide hair growth",
+    "GHK-Cu hair serum",
+    "hair mesotherapy at home",
+    "hair growth serum",
+    "hair loss treatment"
+  ],
+  "content_pillars": [
+    {
+      "name": "Hair Science & Research",
+      "keywords": ["copper peptide hair growth", "GHK-Cu hair", "copper peptide serum benefits", "hair growth peptides research"]
+    },
+    {
+      "name": "Hair Loss Solutions",
+      "keywords": ["hair loss treatment", "hair growth serum", "best hair growth products", "how to stop hair loss"]
+    },
+    {
+      "name": "Mesotherapy & Microneedling",
+      "keywords": ["hair mesotherapy at home", "microneedling for hair growth", "mesotherapy hair treatment", "derma roller hair growth"]
+    },
+    {
+      "name": "Product Education",
+      "keywords": ["how to use copper peptide serum", "hair mesotherapy kit instructions", "hair growth serum results"]
+    }
+  ],
+  "languages": ["en", "nl", "de", "fr", "es", "it", "pt", "sv", "da"],
+  "competitors": [
+    "foligain.com",
+    "hairmax.com",
+    "nutrafol.com",
+    "keeps.com",
+    "minoxidilmax.com"
+  ],
+  "google_search_console_property": "sc-domain:hairgenetix.com",
+  "se_ranking_project_id": null,
+  "rube_recipes": {
+    "technical_audit": "rcp_fUfiRNt8Bh8b",
+    "content_optimizer": "rcp_-msCRAZI2mln",
+    "keyword_research": "rcp_083WOBwKYeNo",
+    "serp_analyzer": "rcp_tebS66AkhuYq",
+    "ai_discovery": "rcp_3LBwPfkiTtRT"
+  },
+  "last_audit": {
+    "date": null,
+    "technical_score": null,
+    "content_score": null,
+    "ai_readiness_score": null
+  },
+  "schedule": {
+    "audit": "weekly",
+    "rank_check": "daily",
+    "content_review": "weekly",
+    "report": "weekly",
+    "link_check": "weekly",
+    "ai_discovery_audit": "monthly"
+  },
+  "targets": {
+    "min_article_length": 1200,
+    "max_hero_image_kb": 150,
+    "target_articles_per_month": 4,
+    "target_backlinks_per_month": 10
+  }
+}
