@@ -1,6 +1,6 @@
 # SEO Toolkit — Architecture
 
-Last updated: 2026-03-03
+Last updated: 2026-03-04
 
 ---
 
@@ -66,7 +66,7 @@ Last updated: 2026-03-03
 | 2 | Content Optimizer | `rcp_-msCRAZI2mln` | ✅ Live | WebFetch, invoke_llm |
 | 3 | Keyword Research | `rcp_083WOBwKYeNo` | ✅ Live | GSC, SerpAPI, Composio Search, invoke_llm |
 | 4 | SERP Analyzer | `rcp_tebS66AkhuYq` | ✅ Live | SerpAPI, invoke_llm |
-| 5 | AI Discovery Audit | `rcp_3LBwPfkiTtRT` | ✅ Live | WebFetch, invoke_llm |
+| 5 | AI Discovery Audit **v2.0** | `rcp_3LBwPfkiTtRT` | ✅ Live (spec upgraded, recipe rebuild pending) | WebFetch, invoke_llm, Composio Search |
 
 ### Tier 2 — Build Next (3 Agents)
 
@@ -126,7 +126,7 @@ First run on loveoverexile.com:
 | Content Optimizer | 74/100 avg — 15 of 17 pages need work (thin content, missing alt text) |
 | Keyword Research | 7 clusters, 3 high-priority opportunities, all trending up |
 | SERP Analyzer | Not ranking for any seed keywords yet (expected — site just launched) |
-| AI Discovery | 100/100 — llms.txt, schema, robots.txt all perfect |
+| AI Discovery (v1.0) | 100/100 — llms.txt, schema, robots.txt all perfect (v2.0 re-audit pending) |
 
 ---
 
@@ -152,4 +152,5 @@ First run on loveoverexile.com:
 | 2026-03-02 | SEMrush auth initiated | Auth link sent, awaiting Malcolm to complete |
 | 2026-03-03 | Architecture expanded to 10 agents | Link Builder promoted to main agent with 6 sub-agents. Added Competitor Monitor (#9) and Reporter (#10). Tiered build order defined. |
 | 2026-03-03 | Hairgenetix added as second client | Config created, first e-commerce test case for all agents |
+| 2026-03-04 | AI Discovery Agent v2.0 | Major upgrade: 34-factor Vida AEO framework, 6 weighted categories, external presence assessment, Share of Model measurement, platform-specific recommendations. Spec updated, recipe rebuild pending. |
 | 2026-02-28 | Project created | Initial structure — 8 agents defined, first client config (Love Over Exile), Rube MCP connected |
