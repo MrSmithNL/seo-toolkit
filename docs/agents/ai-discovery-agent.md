@@ -629,8 +629,10 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 8.  Understanding the Research Method (H2) — EDUCATIONAL section explaining the study type
     (e.g., "What is a Meta-Analysis?") — increases AI's "educational depth" scoring
 9.  What They Found (H2) — key findings with highlight boxes (hg-finding)
-10. Data Visualisation (hg-chart) — HTML/CSS bar chart or comparison visual
-    AI systems extract data visuals for snippet generation and citation
+10. Data Visualisation — matplotlib-generated PNG chart uploaded to Shopify CDN
+    Use matplotlib to create professional horizontal bar charts comparing treatment vs control.
+    Upload via Shopify fileCreate mutation. Embed as <img> with descriptive alt text.
+    AI systems extract data visuals for snippet generation and citation.
 11. Mechanism of Action (H2) — biological pathways explaining WHY treatment works
     (e.g., Wnt/β-catenin, VEGF, stem cell activation, drug penetration)
 12. Clinical Interpretation (H2) — what the findings mean clinically
@@ -645,8 +647,12 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 18. FAQ section (hg-faq) — MINIMUM 6 questions (AI extracts answers directly)
     Include conversational queries that AI assistants would receive
 19. Original Study Citation (hg-citation) — full APA-style reference with DOI/PubMed
-20. Related Research section — links to 3-5 other Hairgenetix research articles
-21. Brand Authority footer — positions Hairgenetix as evidence-based research source
+20. How to Cite This Summary (hg-cite-guide) — suggested citation format
+    AI systems sometimes pick up citation patterns. Encourages proper attribution.
+21. Last Updated date (hg-last-updated) — freshness signal for medical content
+    AI systems treat dated medical content as more trustworthy.
+22. Related Research section — links to 3-5 other Hairgenetix research articles
+23. Brand Authority footer — positions Hairgenetix as evidence-based research source
 ```
 
 **Evidence Summary box format (NEW — add after TL;DR):**
@@ -737,6 +743,68 @@ Each article should contain the specific medical/scientific terms that AI classi
 .hg-chart-caption { font-size: 0.85em; color: #888; margin-top: 12px; font-style: italic; }
 ```
 
+**Citation encouragement block (NEW):**
+```html
+<div class="hg-cite-guide">
+  <h3>How to Cite This Research Summary</h3>
+  <p>[Brand] Research Team. "[Article Title]." [Brand] Research Library, [Month Year].<br>
+  Available at: [article URL]</p>
+</div>
+```
+AI systems sometimes pick up citation patterns. This encourages proper attribution and signals that the content is meant to be referenced as a primary source.
+
+**Last Updated date (NEW):**
+```html
+<div class="hg-last-updated">Last updated: [Month Year]</div>
+```
+Medical content benefits from explicit freshness signals. AI systems treat dated medical content as more trustworthy and "maintained research" rather than abandoned blog posts.
+
+**Chart generation workflow:**
+1. Use matplotlib in a Python workbench (Rube/Composio remote sandbox) to generate professional bar charts
+2. Upload PNG to Composio S3 via `upload_local_file()`
+3. Download the S3 URL locally, then upload to Shopify via `fileCreate` GraphQL mutation
+4. Reference the Shopify CDN URL in the article `<img>` tag with descriptive alt text
+5. Chart should use brand colours, show treatment vs control, include p-values, and cite the source study
+
+**CSS for new sections:**
+```css
+.hg-cite-guide { background: #eceff1; border: 1px solid #cfd8dc; padding: 16px 20px; margin: 24px 0; border-radius: 8px; font-size: 0.9em; }
+.hg-cite-guide h3 { margin-top: 0; font-size: 1em; color: #455a64; }
+.hg-last-updated { font-size: 0.85em; color: #888; font-style: italic; margin: 8px 0; }
+```
+
+### Site-Level AI Authority Strategies (from ChatGPT Audit Round 3)
+
+These are strategic, site-wide recommendations that go beyond individual article optimization. They emerged from a ChatGPT audit of the broader Hairgenetix research ecosystem.
+
+**1. Research pages should lead with science, not products**
+- On ingredient-specific research pages (e.g., copper peptide), products appearing early shift AI classification from "scientific resource" to "product marketing"
+- Move product references to the bottom under "Products using this ingredient"
+- Keep the top 70% of the page purely educational
+
+**2. Create "Definition Pages" for key topics**
+- Pages that define topics get cited by AI answers and featured snippets
+- Examples: "What is Microneedling for Hair Loss?", "What Are Hair Peptides?", "What is Mesotherapy?"
+- These become entry points for AI citation on broad informational queries
+
+**3. Build a pillar page for "Androgenetic Alopecia"**
+- This is the largest search + AI question cluster in hair science
+- A comprehensive page ("The Science of Androgenetic Alopecia") linking to all research articles becomes the biggest AI citation magnet
+- Structure: causes, biology, treatment options (each linking to research articles), prognosis
+
+**4. Add structured study comparison tables to research hub pages**
+- Tables with Study | Type | Main Result columns are highly LLM-extractable
+- Place on ingredient/topic research pages to provide at-a-glance evidence summaries
+
+**5. Build "Citation Gravity" through external mentions**
+- Authoritative mentions on Medium, LinkedIn, Substack, Reddit (hair science discussions)
+- Not thousands of backlinks — just a few high-quality references in the right places
+- These signals influence AI training datasets and citation likelihood
+
+**6. Evidence-Based Medicine statement**
+- Place on all research pages: "Hairgenetix publishes evidence-based summaries of peer-reviewed research. All summaries reference clinical trials, systematic reviews, or meta-analyses when available."
+- Increases trust scoring across the research section
+
 ---
 
 ## Version History
@@ -749,3 +817,4 @@ Each article should contain the specific medical/scientific terms that AI classi
 | 2.2 | 2026-03-05 | **Shopify Implementation Recipes.** Added 10 repeatable fix procedures for common GEO gaps: ai.txt creation, blog/collection SEO metadata, hreflang validation, image alt text audit, meta description audit, menu translation fixes (2 recipes for different root causes), OG tag validation, GA4 verification. Based on real fixes applied to hairgenetix.com. |
 | 2.3 | 2026-03-05 | **Research Article AI Optimization Recipe (#11).** Full article structure template for transforming study summaries into AI citation pages. Based on ChatGPT LLM/SEO audit of a Hairgenetix research article. Adds: Evidence Summary box, Mechanism of Action, Clinical Interpretation, Study Comparison with internal links, Treatment Protocol table, Research Limitations, expanded FAQ (6-8 Qs), Related Research section, Brand Authority footer, semantic keyword guidance, internal linking rules, CSS classes for new sections. |
 | 2.4 | 2026-03-05 | **Recipe 11 v2 — Second audit round.** Added 3 new article sections from follow-up ChatGPT LLM audit: (1) Reviewed By attribution with named Person entity for E-E-A-T trust signals, (2) HTML/CSS data visualisation chart for AI snippet extraction, (3) Research Methodology educational section explaining study design. Updated article structure from 18 to 21 sections. Added CSS for `.hg-reviewer`, `.hg-chart`, `.hg-chart-bar`, `.hg-chart-fill`, `.hg-chart-caption`. Key learning: AI auditors repeatedly flag visual data and person entities as missing even when other structured data is present — these are high-value additions. |
+| 2.5 | 2026-03-05 | **Recipe 11 v3 — Third audit round + site-level authority strategies.** Article-level: added "How to Cite" block, "Last Updated" freshness signal, replaced CSS bar charts with matplotlib-generated PNG images uploaded to Shopify CDN. Article structure now 23 sections. Chart generation workflow documented (matplotlib → S3 → Shopify CDN → `<img>` with alt text). Site-level: added 6 strategic AI authority recommendations — science-first research pages, definition pages, AGA pillar page, structured study comparison tables, citation gravity building, evidence-based medicine statements. These are separate from individual article optimization and target AI brand recognition. |
