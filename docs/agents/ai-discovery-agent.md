@@ -21,20 +21,20 @@ In plain English: when someone asks an AI "what's the best product for X?" or "h
 
 ### Overview
 
-The agent scores websites on a **0-100 scale** across **6 weighted categories** containing **34 auditable factors** plus **7 diagnostic factors** (advisory, no score impact). Based on the Vida AEO framework, adapted with findings from the Princeton GEO study, Qwairy citation analysis (118,101 AI answers), Previsible session study (1.96M sessions), and Omniscient Digital citation research (23,000+ citations).
+The agent scores websites on a **0-100 scale** across **6 weighted categories** containing **36 auditable factors** plus **10 diagnostic factors** (advisory, no score impact). Based on the Vida AEO framework, adapted with findings from the Princeton GEO study, Qwairy citation analysis (118,101 AI answers), Previsible session study (1.96M sessions), and Omniscient Digital citation research (23,000+ citations).
 
 ### Category Weights
 
 | # | Category | Weight | # Factors | What It Measures |
 |---|----------|--------|-----------|-----------------|
 | A | Content Structure & Extractability | **30%** | 10 | Can AI systems easily extract, quote, and cite your content? |
-| B | Schema & Structured Data | **20%** | 8 | Does your site speak the machine-readable language AI relies on? |
+| B | Schema & Structured Data | **20%** | 9 | Does your site speak the machine-readable language AI relies on? |
 | C | Authority & Trustworthiness | **20%** | 8 | Does AI have enough evidence to trust your brand? |
-| D | Technical Accessibility | **15%** | 8 | Can AI crawlers access, read, and understand your site? |
+| D | Technical Accessibility | **15%** | 9 | Can AI crawlers access, read, and understand your site? |
 | E | Freshness & Recency | **10%** | 4 | Is your content current enough for AI to confidently cite? |
 | F | Conversational Readiness | **5%** | 3 | Does your content match how AI formulates answers? |
 
-**Total: 100% across 6 categories, 34 scored factors + 7 diagnostic factors.**
+**Total: 100% across 6 categories, 36 scored factors + 10 diagnostic factors.**
 
 ### Score Interpretation
 
@@ -77,14 +77,15 @@ Pages with comprehensive schema markup get a **36% advantage** in AI-generated s
 |----|--------|--------|---------------|-----------------|
 | B1 | Organization Schema | 0.15 | Is there a complete Organization schema with name, URL, logo, social profiles, contact info? Establishes brand entity in knowledge graphs. | 10 = complete with all properties; 0 = missing |
 | B2 | FAQ Schema | 0.15 | Do FAQ/Q&A pages have FAQPage schema markup? FAQ content is the format most naturally cited by AI. | 10 = all FAQ content marked up; 0 = no FAQ schema |
-| B3 | Article Schema | 0.15 | Do blog posts and articles have Article/NewsArticle schema with author, datePublished, dateModified? | 10 = all articles marked up correctly; 0 = missing |
-| B4 | Product Schema | 0.10 | Do product pages have Product schema with offers, pricing, availability, reviews? (E-commerce sites only — scored as N/A for non-commerce) | 10 = complete product schema; 0 = missing |
+| B3 | Article / MedicalScholarlyArticle Schema | 0.15 | Do blog posts have Article schema? Do health/science pages use MedicalScholarlyArticle with citation arrays linking to PubMed or scholarly sources? Health/medical sites must use medical schema types. | 10 = all articles marked up with correct type; 0 = missing |
+| B4 | Product Schema | 0.10 | Do product pages have Product schema with offers.price (decimal format), priceCurrency, availability, gtin/sku, AggregateRating, shippingDetails, returnPolicy? (E-commerce only — N/A for non-commerce) | 10 = complete product schema; 0 = missing |
 | B5 | Author / Person Schema | 0.10 | Is there Person schema for authors/experts with credentials, sameAs links, and affiliation? Feeds E-E-A-T signals. | 10 = complete author schema linked from articles; 0 = missing |
-| B6 | HowTo Schema | 0.10 | Do step-by-step guides have HowTo schema? This content type is easily extractable by AI. | 10 = all how-to content marked up; 0 = missing |
-| B7 | Review / AggregateRating Schema | 0.10 | Do pages with reviews/testimonials have proper Review or AggregateRating schema? Social proof signals for AI. | 10 = all review content marked up; 0 = missing |
-| B8 | Schema-Content Alignment | 0.15 | Does the schema data actually match the visible page content? Misaligned schema is worse than no schema — it signals untrustworthiness. | 10 = perfect alignment; 0 = mismatches found |
+| B6 | HowTo Schema | 0.10 | Do step-by-step guides have HowTo schema with supply[], tool[], and step[] arrays? This content type is easily extractable by AI. | 10 = all how-to content marked up; 0 = missing |
+| B7 | Review / AggregateRating Schema | 0.10 | Do pages with reviews/testimonials have proper Review or AggregateRating schema? Product pages should always have AggregateRating if reviews exist. | 10 = all review content marked up; 0 = missing |
+| B8 | Schema-Content Alignment | 0.10 | Does the schema data actually match the visible page content? Misaligned schema (wrong price, stale dates, empty values) is worse than no schema. | 10 = perfect alignment; 0 = mismatches found |
+| B9 | Schema Deduplication | 0.05 | Are there duplicate @types from different sources (CMS auto-generated + custom + theme + apps)? Duplicate schemas confuse AI and search engines. | 10 = one canonical schema per type per page; 0 = duplicates found |
 
-**How to audit:** Fetch HTML of key pages. Parse JSON-LD blocks. Validate against Schema.org specs. Cross-check schema values against visible content. Use Google Rich Results Test for validation.
+**How to audit:** Fetch HTML of key pages. Parse all JSON-LD blocks. Validate against Schema.org specs. Cross-check schema values against visible content. Check for duplicates from multiple sources (CMS built-in vs custom). Use the dedicated Schema Audit Agent for deep-dive analysis. See `docs/agents/schema-audit-agent.md` for full methodology.
 
 ---
 
@@ -122,15 +123,20 @@ The foundation layer. If AI crawlers can't access your content, nothing else mat
 | D7 | Internal Linking | 0.10 | Strong internal link structure reinforces topical relationships for AI. Topic cluster linking. | 10 = clear hub-and-spoke linking; 0 = orphan pages |
 | D8 | Server-Side Rendering | 0.10 | Is content available in the initial HTML response? JavaScript-heavy sites may not be crawled properly by AI. | 10 = full SSR/SSG; 0 = client-side only rendering |
 
+| D9 | hreflang / Multilingual | 0.05 | For multi-language sites: are hreflang tags correctly implemented? Do canonical URLs point correctly? AI systems use these to serve the right language version. | 10 = correct hreflang + canonicals; 0 = missing or conflicting; N/A for single-language |
+
 **Additional technical checks (no score impact — diagnostic only):**
 - llms.txt file presence, format compliance, and content quality
 - llms-full.txt presence (extended version)
+- ai.txt file presence (emerging standard for AI-specific crawling permissions and preferences)
 - Open Graph tags on all pages
-- Canonical URLs
+- Canonical URLs — cross-check against hreflang for consistency
 - Title tags and meta descriptions
 - H1 validation
 - Image alt text
 - Heading structure compliance (H1 > H2 > H3)
+- **GA4 AI traffic channel** — check if GA4 is configured to track "AI Referral" as a channel (traffic from chat.openai.com, perplexity.ai, claude.ai, copilot.microsoft.com)
+- **Conversion event audit** — verify that conversion events (add to cart, purchase, signup) are firing and attributed correctly for AI-referred sessions
 
 **How to audit:** Fetch robots.txt and parse AI crawler rules. Fetch llms.txt and validate format. Check HTTPS, sitemap, speed via web tools. Crawl sample pages for SSR/URL structure/internal links.
 
@@ -288,6 +294,33 @@ For each platform, the agent generates targeted recommendations:
 
 ---
 
+## Invisible GEO — Machine-Only Optimizations
+
+A key strategic category: optimizations that improve AI/LLM visibility without changing what visitors see on the page. These are zero-risk, high-impact changes that should be recommended first.
+
+### What Counts as Invisible GEO
+
+| Optimization | What It Does | Visible to Readers? |
+|-------------|-------------|-------------------|
+| **JSON-LD schema markup** | Tells AI systems exactly what the content is, who wrote it, and why to trust it | No — hidden in page source |
+| **Meta descriptions** | AI systems often use these as summaries when deciding whether to cite | No — only in source code |
+| **Open Graph tags** | Help AI understand content when shared or crawled | No — only in page head |
+| **hreflang tags** | Tell AI which language version to serve | No — only in page head |
+| **Canonical URLs** | Prevent AI from splitting signals across duplicate pages | No — only in page head |
+| **llms.txt / llms-full.txt** | Machine-readable site map specifically for AI systems | No — separate files |
+| **ai.txt** | AI-specific crawling permissions and preferences | No — separate file |
+| **robots.txt AI directives** | Control which AI crawlers can access content | No — separate file |
+| **Internal linking structure** | Reinforces topical relationships for AI understanding | Subtle — improves UX too |
+| **Image alt text** | Helps AI understand visual content | Only for screen readers |
+| **Semantic HTML** | Proper heading hierarchy (H1>H2>H3) helps AI parse content structure | Subtle — improves UX too |
+| **FAQ schema on product pages** | Adds Q&A to product pages that AI can cite, without visible FAQ section | No — only in schema |
+
+### Why This Matters
+
+Many website owners resist SEO changes because they fear affecting the customer experience. Invisible GEO eliminates this concern — it's pure upside with zero customer-facing risk. The audit should always categorize recommendations as "invisible" (schema, meta, technical) vs "visible" (content rewrites, new pages) so clients can prioritize accordingly.
+
+---
+
 ## Audit Report Structure
 
 The agent generates a comprehensive report saved to `reports/{domain}/ai-discovery-{date}.md`:
@@ -335,10 +368,23 @@ The agent generates a comprehensive report saved to `reports/{domain}/ai-discove
 ### Claude Optimization
 
 ## Prioritised Action Plan
+
+### Invisible GEO (no visible changes — implement first)
+[Schema fixes, meta tags, technical changes — zero customer-facing risk]
+
+### Visible Changes (requires content review)
+[Content rewrites, new pages, structural changes — discuss with stakeholder first]
+
 ### Immediate (this week)
 ### Short-term (this month)
 ### Medium-term (next quarter)
 ### Long-term (ongoing)
+
+## Analytics & Measurement Setup
+### AI Traffic Channel (GA4)
+[Is AI referral tracking configured? If not, provide setup instructions]
+### Conversion Attribution
+[Are conversions being attributed to AI-referred sessions?]
 
 ## Comparison with Previous Audit
 [Score changes, improvements, new issues — if previous audit exists]
@@ -409,3 +455,4 @@ This agent's methodology is based on:
 |---------|------|---------|
 | 1.0 | 2026-02-28 | Initial agent — basic llms.txt, schema, robots.txt checks. 10-item checklist. |
 | 2.0 | 2026-03-04 | **Major upgrade.** 34-factor audit based on Vida AEO framework + research. 6 weighted categories. External presence assessment. Share of Model measurement. Platform-specific recommendations. Prioritised action plans. Comprehensive report structure. |
+| 2.1 | 2026-03-05 | **Schema & diagnostic expansion.** Added B9 (Schema Deduplication) and D9 (hreflang/Multilingual) factors. Added MedicalScholarlyArticle to B3. Added gtin, shippingDetails, returnPolicy to B4. Added diagnostics: GA4 AI traffic channel, conversion event audit, ai.txt. Added Invisible GEO recommendations section. Added Analytics & Measurement Setup to report. Linked to new Schema Audit Agent for deep-dive analysis. Based on gaps found comparing our audit vs ChatGPT audit of hairgenetix.com. |

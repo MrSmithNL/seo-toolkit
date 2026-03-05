@@ -1,6 +1,6 @@
 # SEO Toolkit — Architecture
 
-Last updated: 2026-03-04
+Last updated: 2026-03-05
 
 ---
 
@@ -66,7 +66,8 @@ Last updated: 2026-03-04
 | 2 | Content Optimizer | `rcp_-msCRAZI2mln` | ✅ Live | WebFetch, invoke_llm |
 | 3 | Keyword Research | `rcp_083WOBwKYeNo` | ✅ Live | GSC, SerpAPI, Composio Search, invoke_llm |
 | 4 | SERP Analyzer | `rcp_tebS66AkhuYq` | ✅ Live | SerpAPI, invoke_llm |
-| 5 | AI Discovery Audit **v2.0** | `rcp_3LBwPfkiTtRT` | ✅ Live (spec upgraded, recipe rebuild pending) | WebFetch, invoke_llm, Composio Search |
+| 5 | AI Discovery Audit **v2.1** | `rcp_3LBwPfkiTtRT` | ✅ Live (spec upgraded, recipe rebuild pending) | WebFetch, invoke_llm, Composio Search |
+| 5a | Schema Audit (sub-agent) | - | 📋 Spec complete (no recipe yet) | WebFetch, Shopify API, invoke_llm |
 
 ### Tier 2 — Build Next (3 Agents)
 
@@ -152,5 +153,7 @@ First run on loveoverexile.com:
 | 2026-03-02 | SEMrush auth initiated | Auth link sent, awaiting Malcolm to complete |
 | 2026-03-03 | Architecture expanded to 10 agents | Link Builder promoted to main agent with 6 sub-agents. Added Competitor Monitor (#9) and Reporter (#10). Tiered build order defined. |
 | 2026-03-03 | Hairgenetix added as second client | Config created, first e-commerce test case for all agents |
+| 2026-03-05 | Schema Audit Agent created | New dedicated schema audit capability. Covers discovery, validation, completeness, content alignment, platform-specific knowledge (Shopify, WordPress). Linked from AI Discovery Agent Category B. |
+| 2026-03-05 | AI Discovery Agent v2.1 | Added B9 (Schema Deduplication), D9 (hreflang/Multilingual). Added diagnostics: GA4 AI traffic channel, conversion events, ai.txt. Added Invisible GEO section. Now 36 factors + 10 diagnostics. |
 | 2026-03-04 | AI Discovery Agent v2.0 | Major upgrade: 34-factor Vida AEO framework, 6 weighted categories, external presence assessment, Share of Model measurement, platform-specific recommendations. Spec updated, recipe rebuild pending. |
 | 2026-02-28 | Project created | Initial structure — 8 agents defined, first client config (Love Over Exile), Rube MCP connected |
