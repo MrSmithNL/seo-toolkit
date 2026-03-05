@@ -607,6 +607,90 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 3. Report: GA4 installed (yes/no), measurement ID
 4. Advisory: recommend setting up custom channel grouping for AI referrals (chat.openai.com, perplexity.ai, claude.ai, copilot.microsoft.com, gemini.google.com)
 
+### Recipe 11: Research Article AI Optimization (Shopify Blog)
+
+**Fixes:** Content Structure (A1-A10), Conversational Readiness (F1-F2), Authority signals (C3-C4)
+**What it does:** Transforms a clinical study summary from a "generic blog post" into an "AI citation page" — structured so LLM crawlers can extract, quote, and cite the content.
+
+**Background:** ChatGPT audit of a Hairgenetix research article (March 2026) identified that AI systems treat plain-language study summaries as generic blog content unless specific structural elements signal research authority. The recommendations below are consolidated from that audit and validated against our AI Discovery scoring model.
+
+**Required article structure (in order):**
+
+```
+1. TL;DR / Key Takeaways box (hg-tldr) — 3-5 bullet points with boldest findings
+2. Evidence Summary box (hg-evidence-summary) — machine-readable structured block:
+   Condition | Treatment | Evidence Level | Primary Outcome | Safety Profile
+3. Study Info table (hg-study-info) — Authors, Journal, Year, Type, Sample Size, PMID
+4. Disclaimer (hg-disclaimer) — transparency note
+5. Why This Research Matters (H2) — plain-language context, 2-3 paragraphs
+6. What The Researchers Did (H2) — methodology explained simply
+7. What They Found (H2) — key findings with highlight boxes (hg-finding)
+8. Mechanism of Action (H2) — biological pathways explaining WHY treatment works
+   (e.g., Wnt/β-catenin, VEGF, stem cell activation, drug penetration)
+9. Clinical Interpretation (H2) — what the findings mean clinically
+   (beyond "what it means for your hair" — expert-level analysis)
+10. Comparison With Other Research (H2) — cross-reference other studies,
+    INTERNAL LINKS to other Hairgenetix articles on same topic
+11. Treatment Protocol (H2) — table with practical parameters from the study
+    (needle depth, frequency, duration, combination therapies)
+12. Research Limitations (H2) — shows balance and credibility
+13. What This Means For Your Hair (H2) — practical consumer takeaway
+14. Key Terms Explained (hg-glossary) — 3-5 technical terms defined
+15. FAQ section (hg-faq) — MINIMUM 6 questions (AI extracts answers directly)
+    Include conversational queries that AI assistants would receive
+16. Original Study Citation (hg-citation) — full APA-style reference with DOI/PubMed
+17. Related Research section — links to 3-5 other Hairgenetix research articles
+18. Brand Authority footer — positions Hairgenetix as evidence-based research source
+```
+
+**Evidence Summary box format (NEW — add after TL;DR):**
+```html
+<div class="hg-evidence-summary">
+  <h3>Research Evidence Summary</h3>
+  <table>
+    <tr><td>Condition</td><td>Androgenetic alopecia</td></tr>
+    <tr><td>Treatment</td><td>[specific treatment]</td></tr>
+    <tr><td>Evidence Level</td><td>[meta-analysis / RCT / clinical trial / review]</td></tr>
+    <tr><td>Sample Size</td><td>[N patients across N trials]</td></tr>
+    <tr><td>Primary Outcome</td><td>[key finding in one sentence]</td></tr>
+    <tr><td>Safety Profile</td><td>[safety summary]</td></tr>
+  </table>
+</div>
+```
+
+**Why this matters for AI:**
+- AI systems extract answers, not articles — structured blocks get quoted
+- Evidence tables increase LLM reliability scores
+- FAQ answers are directly extracted by AI assistants
+- Internal links build topic cluster authority (AI heavily rewards semantic clusters)
+- Comparison sections create knowledge graph connections between articles
+- Clinical interpretation signals expertise beyond simple summarisation
+- 1,800-2,500 words is the ideal length for AI citation pages
+
+**Semantic keywords to include naturally:**
+Each article should contain the specific medical/scientific terms that AI classification systems expect for the topic. For hair loss articles: androgenetic alopecia, hair follicle stimulation, randomized clinical trials, hair density, hair shaft diameter, miniaturisation, wound healing pathways, follicle regeneration, dermal papilla cells.
+
+**Internal linking rules:**
+- Every research article must link to at least 3 other Hairgenetix research articles
+- Group by topic: copper peptide articles link to each other, microneedling articles link to each other
+- Cross-topic links where relevant (e.g., microneedling + copper peptide)
+- Use descriptive anchor text (not "click here") — e.g., "our summary of the 2023 Abdi meta-analysis"
+
+**CSS classes for new sections:**
+```css
+.hg-evidence-summary { background: #e3f2fd; border: 1px solid #90caf9; padding: 20px 24px; margin: 24px 0; border-radius: 8px; }
+.hg-evidence-summary h3 { margin-top: 0; color: #1565c0; font-size: 1.1em; }
+.hg-evidence-summary table { width: 100%; border-collapse: collapse; }
+.hg-evidence-summary td { padding: 6px 0; vertical-align: top; }
+.hg-evidence-summary td:first-child { font-weight: 600; width: 140px; color: #1565c0; }
+.hg-related-research { background: #f3e5f5; border: 1px solid #ce93d8; padding: 20px 24px; margin: 24px 0; border-radius: 8px; }
+.hg-related-research h2 { margin-top: 0; color: #7b1fa2; font-size: 1.2em; }
+.hg-related-research ul { margin-bottom: 0; }
+.hg-related-research li { margin-bottom: 8px; }
+.hg-brand-authority { background: #263238; color: #fff; padding: 20px 24px; margin: 24px 0; border-radius: 8px; font-size: 0.95em; }
+.hg-brand-authority strong { color: #80cbc4; }
+```
+
 ---
 
 ## Version History
@@ -617,3 +701,4 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 | 2.0 | 2026-03-04 | **Major upgrade.** 34-factor audit based on Vida AEO framework + research. 6 weighted categories. External presence assessment. Share of Model measurement. Platform-specific recommendations. Prioritised action plans. Comprehensive report structure. |
 | 2.1 | 2026-03-05 | **Schema & diagnostic expansion.** Added B9 (Schema Deduplication) and D9 (hreflang/Multilingual) factors. Added MedicalScholarlyArticle to B3. Added gtin, shippingDetails, returnPolicy to B4. Added diagnostics: GA4 AI traffic channel, conversion event audit, ai.txt. Added Invisible GEO recommendations section. Added Analytics & Measurement Setup to report. Linked to new Schema Audit Agent for deep-dive analysis. Based on gaps found comparing our audit vs ChatGPT audit of hairgenetix.com. |
 | 2.2 | 2026-03-05 | **Shopify Implementation Recipes.** Added 10 repeatable fix procedures for common GEO gaps: ai.txt creation, blog/collection SEO metadata, hreflang validation, image alt text audit, meta description audit, menu translation fixes (2 recipes for different root causes), OG tag validation, GA4 verification. Based on real fixes applied to hairgenetix.com. |
+| 2.3 | 2026-03-05 | **Research Article AI Optimization Recipe (#11).** Full article structure template for transforming study summaries into AI citation pages. Based on ChatGPT LLM/SEO audit of a Hairgenetix research article. Adds: Evidence Summary box, Mechanism of Action, Clinical Interpretation, Study Comparison with internal links, Treatment Protocol table, Research Limitations, expanded FAQ (6-8 Qs), Related Research section, Brand Authority footer, semantic keyword guidance, internal linking rules, CSS classes for new sections. |
