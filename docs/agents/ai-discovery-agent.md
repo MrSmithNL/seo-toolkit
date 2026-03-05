@@ -617,30 +617,36 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 **Required article structure (in order):**
 
 ```
-1. TL;DR / Key Takeaways box (hg-tldr) — 3-5 bullet points with boldest findings
-2. Evidence Summary box (hg-evidence-summary) — machine-readable structured block:
-   Condition | Treatment | Evidence Level | Primary Outcome | Safety Profile
-3. Study Info table (hg-study-info) — Authors, Journal, Year, Type, Sample Size, PMID
-4. Disclaimer (hg-disclaimer) — transparency note
-5. Why This Research Matters (H2) — plain-language context, 2-3 paragraphs
-6. What The Researchers Did (H2) — methodology explained simply
-7. What They Found (H2) — key findings with highlight boxes (hg-finding)
-8. Mechanism of Action (H2) — biological pathways explaining WHY treatment works
-   (e.g., Wnt/β-catenin, VEGF, stem cell activation, drug penetration)
-9. Clinical Interpretation (H2) — what the findings mean clinically
-   (beyond "what it means for your hair" — expert-level analysis)
-10. Comparison With Other Research (H2) — cross-reference other studies,
+1.  TL;DR / Key Takeaways box (hg-tldr) — 3-5 bullet points with boldest findings
+2.  Evidence Summary box (hg-evidence-summary) — machine-readable structured block:
+    Condition | Treatment | Evidence Level | Primary Outcome | Safety Profile
+3.  Study Info table (hg-study-info) — Authors, Institution, Journal, Year, Type, Sample Size, PMID
+4.  Disclaimer (hg-disclaimer) — transparency note
+5.  Reviewed By attribution (hg-reviewer) — named person entity (E-E-A-T signal)
+    Format: "Reviewed by: [Name] — [Title] ([Credentials])"
+6.  Why This Research Matters (H2) — plain-language context, 2-3 paragraphs
+7.  What The Researchers Did (H2) — methodology explained simply
+8.  Understanding the Research Method (H2) — EDUCATIONAL section explaining the study type
+    (e.g., "What is a Meta-Analysis?") — increases AI's "educational depth" scoring
+9.  What They Found (H2) — key findings with highlight boxes (hg-finding)
+10. Data Visualisation (hg-chart) — HTML/CSS bar chart or comparison visual
+    AI systems extract data visuals for snippet generation and citation
+11. Mechanism of Action (H2) — biological pathways explaining WHY treatment works
+    (e.g., Wnt/β-catenin, VEGF, stem cell activation, drug penetration)
+12. Clinical Interpretation (H2) — what the findings mean clinically
+    (beyond "what it means for your hair" — expert-level analysis)
+13. Comparison With Other Research (H2) — cross-reference other studies,
     INTERNAL LINKS to other Hairgenetix articles on same topic
-11. Treatment Protocol (H2) — table with practical parameters from the study
+14. Treatment Protocol (H2) — table with practical parameters from the study
     (needle depth, frequency, duration, combination therapies)
-12. Research Limitations (H2) — shows balance and credibility
-13. What This Means For Your Hair (H2) — practical consumer takeaway
-14. Key Terms Explained (hg-glossary) — 3-5 technical terms defined
-15. FAQ section (hg-faq) — MINIMUM 6 questions (AI extracts answers directly)
+15. Research Limitations (H2) — shows balance and credibility
+16. What This Means For Your Hair (H2) — practical consumer takeaway
+17. Key Terms Explained (hg-glossary) — 3-5 technical terms defined
+18. FAQ section (hg-faq) — MINIMUM 6 questions (AI extracts answers directly)
     Include conversational queries that AI assistants would receive
-16. Original Study Citation (hg-citation) — full APA-style reference with DOI/PubMed
-17. Related Research section — links to 3-5 other Hairgenetix research articles
-18. Brand Authority footer — positions Hairgenetix as evidence-based research source
+19. Original Study Citation (hg-citation) — full APA-style reference with DOI/PubMed
+20. Related Research section — links to 3-5 other Hairgenetix research articles
+21. Brand Authority footer — positions Hairgenetix as evidence-based research source
 ```
 
 **Evidence Summary box format (NEW — add after TL;DR):**
@@ -658,6 +664,34 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 </div>
 ```
 
+**Reviewer attribution (E-E-A-T — critical for AI trust):**
+```html
+<div class="hg-reviewer">
+  <strong>Reviewed by:</strong> [Full Name] — [Title] ([Credentials])
+</div>
+```
+AI ranking systems heavily weigh E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness). A named Person entity as reviewer signals medical authority. The Shopify article `author` field should be set to the original study authors, while the in-body reviewer attribution uses Hairgenetix's medical advisor.
+
+**Data visualisation (HTML/CSS chart — aids AI snippet extraction):**
+```html
+<div class="hg-chart">
+  <h3>[Chart Title]</h3>
+  <div class="hg-chart-bar">
+    <span class="hg-chart-label">[Treatment A]</span>
+    <div class="hg-chart-fill" style="width: [X]%"><span>[value]</span></div>
+  </div>
+  <div class="hg-chart-bar">
+    <span class="hg-chart-label">[Treatment B]</span>
+    <div class="hg-chart-fill hg-chart-control" style="width: [Y]%"><span>[value]</span></div>
+  </div>
+  <p class="hg-chart-caption">[Source note and context]</p>
+</div>
+```
+AI systems extract data visuals for snippets. Even simple horizontal bar charts signal "data-rich content" to crawlers.
+
+**Research Methodology educational section:**
+Each article should include a plain-language explanation of the study design (e.g., "What is a Meta-Analysis?", "How Randomised Trials Work"). This increases AI's "educational depth" scoring and makes the article a teaching resource, not just a summary. Place after "What The Researchers Did" and before "What They Found".
+
 **Why this matters for AI:**
 - AI systems extract answers, not articles — structured blocks get quoted
 - Evidence tables increase LLM reliability scores
@@ -665,6 +699,9 @@ JSON-LD schema markup on all pages: Organization, Product, FAQPage, Article, Bre
 - Internal links build topic cluster authority (AI heavily rewards semantic clusters)
 - Comparison sections create knowledge graph connections between articles
 - Clinical interpretation signals expertise beyond simple summarisation
+- Data visualisations signal data-rich content and increase snippet extraction probability
+- Named reviewer entities dramatically improve E-E-A-T trust signals
+- Educational methodology sections position articles as reference material (not marketing)
 - 1,800-2,500 words is the ideal length for AI citation pages
 
 **Semantic keywords to include naturally:**
@@ -689,6 +726,15 @@ Each article should contain the specific medical/scientific terms that AI classi
 .hg-related-research li { margin-bottom: 8px; }
 .hg-brand-authority { background: #263238; color: #fff; padding: 20px 24px; margin: 24px 0; border-radius: 8px; font-size: 0.95em; }
 .hg-brand-authority strong { color: #80cbc4; }
+.hg-reviewer { display: flex; align-items: center; gap: 10px; background: #f9fbe7; border: 1px solid #e6ee9c; padding: 14px 18px; margin: 16px 0; border-radius: 8px; font-size: 0.95em; }
+.hg-reviewer strong { color: #558b2f; }
+.hg-chart { background: #fafafa; border: 1px solid #e0e0e0; padding: 20px 24px; margin: 24px 0; border-radius: 8px; }
+.hg-chart h3 { margin-top: 0; font-size: 1.1em; color: #333; }
+.hg-chart-bar { display: flex; align-items: center; margin: 10px 0; gap: 12px; }
+.hg-chart-label { width: 200px; font-size: 0.9em; color: #555; flex-shrink: 0; }
+.hg-chart-fill { background: #43a047; color: #fff; padding: 6px 12px; border-radius: 4px; font-weight: 600; font-size: 0.85em; min-width: 40px; transition: width 0.3s; }
+.hg-chart-fill.hg-chart-control { background: #90a4ae; }
+.hg-chart-caption { font-size: 0.85em; color: #888; margin-top: 12px; font-style: italic; }
 ```
 
 ---
@@ -702,3 +748,4 @@ Each article should contain the specific medical/scientific terms that AI classi
 | 2.1 | 2026-03-05 | **Schema & diagnostic expansion.** Added B9 (Schema Deduplication) and D9 (hreflang/Multilingual) factors. Added MedicalScholarlyArticle to B3. Added gtin, shippingDetails, returnPolicy to B4. Added diagnostics: GA4 AI traffic channel, conversion event audit, ai.txt. Added Invisible GEO recommendations section. Added Analytics & Measurement Setup to report. Linked to new Schema Audit Agent for deep-dive analysis. Based on gaps found comparing our audit vs ChatGPT audit of hairgenetix.com. |
 | 2.2 | 2026-03-05 | **Shopify Implementation Recipes.** Added 10 repeatable fix procedures for common GEO gaps: ai.txt creation, blog/collection SEO metadata, hreflang validation, image alt text audit, meta description audit, menu translation fixes (2 recipes for different root causes), OG tag validation, GA4 verification. Based on real fixes applied to hairgenetix.com. |
 | 2.3 | 2026-03-05 | **Research Article AI Optimization Recipe (#11).** Full article structure template for transforming study summaries into AI citation pages. Based on ChatGPT LLM/SEO audit of a Hairgenetix research article. Adds: Evidence Summary box, Mechanism of Action, Clinical Interpretation, Study Comparison with internal links, Treatment Protocol table, Research Limitations, expanded FAQ (6-8 Qs), Related Research section, Brand Authority footer, semantic keyword guidance, internal linking rules, CSS classes for new sections. |
+| 2.4 | 2026-03-05 | **Recipe 11 v2 — Second audit round.** Added 3 new article sections from follow-up ChatGPT LLM audit: (1) Reviewed By attribution with named Person entity for E-E-A-T trust signals, (2) HTML/CSS data visualisation chart for AI snippet extraction, (3) Research Methodology educational section explaining study design. Updated article structure from 18 to 21 sections. Added CSS for `.hg-reviewer`, `.hg-chart`, `.hg-chart-bar`, `.hg-chart-fill`, `.hg-chart-caption`. Key learning: AI auditors repeatedly flag visual data and person entities as missing even when other structured data is present — these are high-value additions. |
