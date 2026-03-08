@@ -12,6 +12,12 @@ The toolkit is designed to work across all of Malcolm's websites — Love Over E
 
 ---
 
+## Research-First Protocol — Always Before Planning or Building
+
+Before planning or building any feature, capability, architecture decision, or methodology: run online research FIRST. Find latest frameworks, best practices, lessons learned, anti-patterns, and existing solutions. Mandatory sequence: **Research → Plan → Build**. No exceptions unless Malcolm says "skip research". Save research to `research/` folder with sources and URLs.
+
+---
+
 ## Skills Check — Always First
 
 Before taking any action (installing tools, running scripts, setting up integrations, publishing content, building workflows), check `~/.claude/skills/` for a relevant skill.
