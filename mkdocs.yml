@@ -18,12 +18,14 @@ theme:
         icon: material/brightness-7
         name: Switch to dark mode
   features:
-    - navigation.tabs
     - navigation.top
     - navigation.path
     - search.suggest
     - search.highlight
     - toc.integrate
+
+extra:
+  homepage: https://mrsmithnl.github.io/smith-ai-agency/
 
 plugins:
   - search
