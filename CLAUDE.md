@@ -20,7 +20,7 @@ Before planning or building any feature, capability, architecture decision, or m
 
 ## Skills Check — Always First
 
-Before taking any action (installing tools, running scripts, setting up integrations, publishing content, building workflows), check `~/.claude/skills/` for a relevant skill.
+Before taking any action (installing tools, running scripts, setting up integrations, publishing content, building workflows), check `~/.claude/skills/` for a relevant skill. 40 core skills installed (plus ~832 Composio tool connectors).
 
 ```
 ls ~/.claude/skills/ | grep -i [relevant keyword]
@@ -28,6 +28,12 @@ ls ~/.claude/skills/ | grep -i [relevant keyword]
 
 If a skill exists: read it, understand what it needs, and use it.
 If no skill exists: proceed with the direct approach.
+
+---
+
+## Capability Hierarchy — Mandatory
+
+This project follows the agency's 5-layer capability hierarchy: **Products → Capabilities → Agents → Skills → Tools**. See the [Capability Hierarchy](~/Claude Code/Projects/smith-ai-agency/docs/capability-hierarchy.md) reference. Use terms precisely: Tools are external connections (Composio, MCP, APIs). Skills are procedural knowledge (`~/.claude/skills/`). Agents are autonomous workers (`~/.claude/agents/`). Capabilities are business-level abilities. Products are sellable platforms.
 
 ---
 
