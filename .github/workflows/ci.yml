@@ -31,12 +31,30 @@ jobs:
 
       - name: Check formatting with black
         run: |
-          black --check scripts/ tests/ || echo "Formatting issues found. Run 'black scripts/ tests/' to fix."
+          dirs=""
+          [ -d scripts ] && dirs="$dirs scripts/"
+          [ -d tests ] && dirs="$dirs tests/"
+          if [ -n "$dirs" ]; then
+            black --check $dirs || echo "Formatting issues found."
+          else
+            echo "No scripts/ or tests/ directories yet — skipping."
+          fi
 
       - name: Lint with ruff
         run: |
-          ruff check scripts/ tests/
+          dirs=""
+          [ -d scripts ] && dirs="$dirs scripts/"
+          [ -d tests ] && dirs="$dirs tests/"
+          if [ -n "$dirs" ]; then
+            ruff check $dirs
+          else
+            echo "No scripts/ or tests/ directories yet — skipping."
+          fi
 
       - name: Run tests with pytest
         run: |
-          pytest tests/ -v --cov=scripts/ --cov-report=term-missing || echo "No tests found yet — this is expected until agents are built."
+          if [ -d tests ]; then
+            pytest tests/ -v --cov=scripts/ --cov-report=term-missing || echo "No tests found yet."
+          else
+            echo "No tests/ directory yet — skipping."
+          fi
