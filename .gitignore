@@ -32,3 +32,7 @@ tmp/
 # Data cache
 cache/
 *.cache
+
+# MkDocs build output
+site/
+encryptcontent.cache
