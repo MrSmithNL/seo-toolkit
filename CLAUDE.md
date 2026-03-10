@@ -1,5 +1,12 @@
 # Project Instructions — SEO Toolkit
 
+<!-- project-classification
+type: product
+work_nature: software-development
+hierarchy_position: capability-engine
+enforcement_profile: full
+-->
+
 These instructions apply to this project in every session.
 
 ---
