@@ -1,0 +1,78 @@
+name: Weekly Debt Metrics
+
+# Tracks complexity, duplication, and dead code trends over time.
+# Runs weekly and on-demand. Appends metrics to docs/debt-metrics.md.
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'  # Every Monday 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect-metrics:
+    name: Collect Debt Metrics
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tools
+        run: pip install radon vulture jscpd
+
+      - name: Collect complexity metrics
+        id: complexity
+        run: |
+          AVG_CC=$(radon cc scripts/ -s -a -nc 2>/dev/null | tail -1 | grep -oP '[\d.]+' | head -1 || echo "0")
+          MAX_CC=$(radon cc scripts/ -s -nc 2>/dev/null | grep -oP '\(\d+\)' | tr -d '()' | sort -rn | head -1 || echo "0")
+          echo "avg_cc=${AVG_CC}" >> "$GITHUB_OUTPUT"
+          echo "max_cc=${MAX_CC}" >> "$GITHUB_OUTPUT"
+
+      - name: Collect duplication metrics
+        id: duplication
+        run: |
+          npx jscpd scripts/ --reporters json --output .jscpd-report 2>/dev/null || true
+          DUP=$(cat .jscpd-report/jscpd-report.json 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); print(f'{d.get(\"statistics\",{}).get(\"total\",{}).get(\"percentage\",0):.1f}')" 2>/dev/null || echo "0.0")
+          echo "duplication=${DUP}" >> "$GITHUB_OUTPUT"
+
+      - name: Collect dead code count
+        id: deadcode
+        run: |
+          DEAD=$(vulture scripts/ --min-confidence 80 2>/dev/null | wc -l | tr -d ' ')
+          echo "dead_code=${DEAD}" >> "$GITHUB_OUTPUT"
+
+      - name: Count open debt issues
+        id: debt_issues
+        run: |
+          COUNT=$(gh issue list --label tech-debt --state open --json number --jq length 2>/dev/null || echo "0")
+          echo "open_debt=${COUNT}" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Append metrics to log
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          mkdir -p docs
+          if [ ! -f docs/debt-metrics.md ]; then
+            echo "# Debt Metrics — Weekly Trend" > docs/debt-metrics.md
+            echo "" >> docs/debt-metrics.md
+            echo "| Date | Avg CC | Max CC | Duplication % | Dead Code Items | Open Debt Issues |" >> docs/debt-metrics.md
+            echo "|------|--------|--------|---------------|-----------------|-----------------|" >> docs/debt-metrics.md
+          fi
+          echo "| ${DATE} | ${{ steps.complexity.outputs.avg_cc }} | ${{ steps.complexity.outputs.max_cc }} | ${{ steps.duplication.outputs.duplication }}% | ${{ steps.deadcode.outputs.dead_code }} | ${{ steps.debt_issues.outputs.open_debt }} |" >> docs/debt-metrics.md
+
+      - name: Commit metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/debt-metrics.md
+          git diff --cached --quiet || git commit -m "metrics: weekly debt metrics $(date +%Y-%m-%d)"
+          git push
