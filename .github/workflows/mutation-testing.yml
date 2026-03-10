@@ -1,0 +1,107 @@
+name: Mutation Testing
+
+on:
+  schedule:
+    - cron: '0 3 * * 3'  # Wednesday 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  mutation-testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install mutmut pytest pytest-cov pyyaml
+
+      - name: Run mutmut mutation testing
+        run: |
+          mutmut run --paths-to-mutate=scripts/shared/ --CI || true
+
+      - name: Generate JUnit XML report
+        run: |
+          mutmut junitxml > mutation-report.xml
+
+      - name: Display mutation results
+        id: results
+        run: |
+          mutmut results | tee mutation-results.txt
+
+          # Extract counts from mutmut results
+          KILLED=$(grep -c "^Killed" mutation-results.txt 2>/dev/null || echo "0")
+          SURVIVED=$(grep -c "^Survived" mutation-results.txt 2>/dev/null || echo "0")
+          TIMEOUT=$(grep -c "^Timeout" mutation-results.txt 2>/dev/null || echo "0")
+
+          # Also parse from the summary line if available
+          if grep -q "Killed" mutation-results.txt; then
+            TOTAL_KILLED=$(mutmut results 2>/dev/null | grep -oP 'killed \K[0-9]+' || echo "")
+            TOTAL_SURVIVED=$(mutmut results 2>/dev/null | grep -oP 'survived \K[0-9]+' || echo "")
+          fi
+
+          # Use mutmut junitxml to get accurate counts
+          TOTAL=$(grep -c 'testcase' mutation-report.xml 2>/dev/null || echo "0")
+          KILLED_COUNT=$(grep -c 'status="killed"' mutation-report.xml 2>/dev/null || echo "0")
+          SURVIVED_COUNT=$(grep -c 'status="survived"' mutation-report.xml 2>/dev/null || echo "0")
+
+          if [ "$TOTAL" -gt 0 ]; then
+            SCORE=$(python3 -c "print(f'{($KILLED_COUNT / $TOTAL) * 100:.1f}')")
+          else
+            SCORE="N/A"
+          fi
+
+          echo "killed=$KILLED_COUNT" >> "$GITHUB_OUTPUT"
+          echo "survived=$SURVIVED_COUNT" >> "$GITHUB_OUTPUT"
+          echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
+          echo "score=$SCORE" >> "$GITHUB_OUTPUT"
+
+      - name: Update mutation metrics
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          SCORE="${{ steps.results.outputs.score }}"
+          KILLED="${{ steps.results.outputs.killed }}"
+          SURVIVED="${{ steps.results.outputs.survived }}"
+          TOTAL="${{ steps.results.outputs.total }}"
+
+          METRICS_FILE="docs/mutation-metrics.md"
+
+          # Create file with header if it doesn't exist
+          if [ ! -f "$METRICS_FILE" ]; then
+            cat > "$METRICS_FILE" << 'HEADER'
+          # Mutation Testing Metrics
+
+          Tracked automatically by the mutation-testing workflow (weekly, Wednesdays).
+
+          | Date | Mutation Score | Killed | Survived | Total |
+          |------|---------------|--------|----------|-------|
+          HEADER
+          fi
+
+          # Append the new row
+          echo "| $DATE | ${SCORE}% | $KILLED | $SURVIVED | $TOTAL |" >> "$METRICS_FILE"
+
+      - name: Upload mutation report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report
+          path: |
+            mutation-report.xml
+            mutation-results.txt
+
+      - name: Commit and push metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/mutation-metrics.md
+          git diff --cached --quiet || git commit -m "Update mutation testing metrics [skip ci]"
+          git push
