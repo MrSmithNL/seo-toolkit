@@ -50,7 +50,7 @@ Ongoing monitoring and content generation. These need paid services or more data
 | SEO-022 | Build Link Builder Agent | 🔲 Todo | Needs DataForSEO for backlink data |
 | SEO-023 | Build Reporter Agent | 🔲 Todo | Weekly/monthly dashboards combining all service data |
 | SEO-024 | Schedule recurring audits | 🔲 Todo | Set up weekly/monthly Rube recipe schedules |
-| SEO-025 | Apply audit recommendations to LOE | ⏳ In Progress | Re-audited 2026-03-09: 90/100. Fix list pending (objective T-001 done, T-002/T-004 next) |
+| SEO-025 | Apply audit recommendations to LOE | ⏳ In Progress | Re-audited 2026-03-09: 90/100 tech, 63/100 content (40 pages). T-001 + T-002 done, T-003/T-004 next |
 | SEO-026 | Apply audit recommendations to Hairgenetix | 🔲 Todo | Fix H1 tags, meta titles, alt text, create llms.txt |
 | SEO-027 | Rebuild AI Discovery Rube recipe for v2.0 | 🔲 Todo | Implement 34-factor audit in recipe `rcp_3LBwPfkiTtRT` — content scoring, external presence, SoM |
 | SEO-028 | Re-audit Love Over Exile with AI Discovery v2.0 | 🔲 Todo | Re-score with new 34-factor model (was 100/100 on v1.0 — expect lower on v2.0) |
