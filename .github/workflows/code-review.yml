@@ -1,0 +1,132 @@
+name: Code Review
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-extended:
+    name: Extended Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+
+      - name: Ruff lint (extended rules)
+        run: |
+          ruff check scripts/ tests/ \
+            --select E,W,F,I,N,D,UP,B,S,C4,RET,SIM,C90,ERA,PL,PERF \
+            --statistics
+
+      - name: Ruff format check
+        run: ruff format --check scripts/ tests/
+
+  complexity:
+    name: Complexity Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install radon
+        run: pip install radon
+
+      - name: Check cyclomatic complexity
+        run: |
+          echo "## Cyclomatic Complexity Report"
+          echo ""
+
+          # Grade C or worse = warning, Grade D/E/F = fail
+          # -nc: show complexity grade, -s: show score, -a: show average
+          RESULT=$(radon cc scripts/ -s -a -nc 2>&1)
+          echo "$RESULT"
+
+          # Check for D, E, or F grades (high complexity — fail the build)
+          if echo "$RESULT" | grep -qE "^\s+[A-Z] .* - [DEF]"; then
+            echo ""
+            echo "::error::Functions with complexity grade D, E, or F detected — refactor required"
+            exit 1
+          fi
+
+          # Check for C grades (moderate complexity — warn)
+          if echo "$RESULT" | grep -qE "^\s+[A-Z] .* - C"; then
+            echo ""
+            echo "::warning::Functions with complexity grade C detected — consider refactoring"
+          fi
+
+          echo ""
+          echo "Complexity check passed"
+
+      - name: Check maintainability index
+        run: |
+          echo "## Maintainability Index"
+          echo ""
+          # Show maintainability index, fail if any file scores below 20 (very low)
+          radon mi scripts/ -s
+
+          # Grade C or worse = potential issue
+          if radon mi scripts/ -s | grep -qE "^\S.* - [CF]"; then
+            echo "::warning::Some files have low maintainability index"
+          fi
+
+  coverage:
+    name: Coverage Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests with coverage (80% gate)
+        run: |
+          pytest tests/ -v \
+            --cov=scripts \
+            --cov-report=term-missing:skip-covered \
+            --cov-fail-under=80
+
+  duplication:
+    name: Duplication Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install jscpd
+        run: npm install -g jscpd
+
+      - name: Check for duplicate code
+        run: |
+          jscpd \
+            --pattern "**/*.py" \
+            --ignore "node_modules,__pycache__,.pytest_cache,*.egg-info" \
+            --min-lines 10 \
+            --min-tokens 50 \
+            --threshold 5 \
+            --reporters "console" \
+            .
