@@ -1,0 +1,37 @@
+# Approved Python dependencies for SEO Toolkit
+# Any package not on this list will be flagged in PR review.
+# To add a new dependency: add it here AND in requirements.txt.
+
+# HTTP requests
+requests
+httpx
+
+# HTML parsing and crawling
+beautifulsoup4
+lxml
+
+# Data processing
+pandas
+
+# Schema validation
+jsonschema
+
+# Readability analysis
+textstat
+
+# Image analysis
+Pillow
+
+# XML sitemap parsing
+defusedxml
+
+# Environment variables
+python-dotenv
+
+# Google API (Search Console)
+google-api-python-client
+google-auth
+google-auth-oauthlib
+
+# Report generation
+jinja2

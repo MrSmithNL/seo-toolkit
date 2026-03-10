@@ -41,7 +41,7 @@ jobs:
         run: ruff check scripts/ tests/
 
       - name: Type check with mypy
-        run: mypy scripts/ --ignore-missing-imports
+        run: mypy scripts/
 
       - name: Run tests with pytest
         run: pytest tests/ -v --cov=scripts/ --cov-report=term-missing

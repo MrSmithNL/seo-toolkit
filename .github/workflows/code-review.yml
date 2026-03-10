@@ -168,11 +168,184 @@ jobs:
             WARNINGS=$((WARNINGS + 1))
           fi
 
+          # 6. Assertion density: avg assertions per test function (target >= 1.5, hard fail)
+          echo ""
+          echo "### Assertion Density"
+          TEST_FUNCS=$(grep -rc 'def test_' tests/ 2>/dev/null | awk -F: '{s+=$2} END {print s+0}')
+          # Count only lines that are actual assertions (start with assert or contain pytest.raises in a with block)
+          ASSERT_COUNT=$(find tests/ -name '*.py' -exec grep -hc '^\s*assert \|pytest\.raises' {} + 2>/dev/null | awk '{s+=$1} END {print s+0}')
+          if [ "$TEST_FUNCS" -gt 0 ]; then
+            # Integer math: multiply by 10 for one decimal place
+            DENSITY_X10=$((ASSERT_COUNT * 10 / TEST_FUNCS))
+            DENSITY_INT=$((DENSITY_X10 / 10))
+            DENSITY_DEC=$((DENSITY_X10 % 10))
+            echo "Assertion density: ${DENSITY_INT}.${DENSITY_DEC} assertions/test (${ASSERT_COUNT} assertions in ${TEST_FUNCS} tests)"
+            if [ "$DENSITY_X10" -lt 15 ]; then
+              echo "::error::Assertion density ${DENSITY_INT}.${DENSITY_DEC} is below 1.5 — tests are too shallow. Each test should verify multiple properties."
+              exit 1
+            elif [ "$DENSITY_X10" -lt 20 ]; then
+              echo "::warning::Assertion density ${DENSITY_INT}.${DENSITY_DEC} is below 2.0 — consider adding more assertions per test"
+              WARNINGS=$((WARNINGS + 1))
+            fi
+          fi
+
+          # 7. Boundary test coverage: verify test files contain REAL boundary test logic
+          #    Two hard requirements per test file:
+          #    (a) At least 1 pytest.raises or assert ... is None / assert ... == [] block
+          #    (b) At least 1 test method explicitly named for error/edge paths
+          echo ""
+          echo "### Boundary Test Coverage"
+          BOUNDARY_FAIL=0
+          for src_file in $(find scripts/ -name '*.py' -not -name '__init__.py' -not -path '*/configs/*'); do
+            module_name=$(basename "$src_file" .py)
+            test_file=$(find tests/ -name "test_${module_name}.py" 2>/dev/null | head -1)
+            if [ -n "$test_file" ]; then
+              # Requirement A: actual error-path assertions (pytest.raises, assert is None, assert == [], etc.)
+              ERROR_PATH_ASSERTS=$(grep -cE '^\s*(with\s+pytest\.raises|assert\s+.*\bis\s+None\b|assert\s+.*==\s*\[\]|assert\s+.*==\s*"")' "$test_file" 2>/dev/null || true)
+              # Requirement B: test methods named for error/edge scenarios (stricter keywords)
+              EDGE_METHODS=$(grep -cE 'def test_.*(none|null|empty|missing|raises|error_|_error|overflow|negative|_zero$|boundary|typeerror|valueerror)' "$test_file" 2>/dev/null || true)
+
+              echo "${test_file}: error_path_asserts=${ERROR_PATH_ASSERTS}, edge_methods=${EDGE_METHODS}"
+
+              if [ "$ERROR_PATH_ASSERTS" -eq 0 ] && [ "$EDGE_METHODS" -eq 0 ]; then
+                echo "::error::${test_file} has NO error-path assertions and NO edge-case test methods for ${src_file}"
+                echo "::error::  Required: at least 1 pytest.raises block OR assert ... is None OR test method named for error/edge case"
+                WARNINGS=$((WARNINGS + 1))
+                BOUNDARY_FAIL=1
+              elif [ "$ERROR_PATH_ASSERTS" -eq 0 ]; then
+                echo "::error::${test_file} has edge-case method names but NO actual error-path assertions (pytest.raises, assert is None, assert == [])"
+                echo "::error::  Test methods with edge-case names must include assertion logic that validates error behaviour"
+                WARNINGS=$((WARNINGS + 1))
+                BOUNDARY_FAIL=1
+              fi
+            fi
+          done
+          if [ "$BOUNDARY_FAIL" -eq 1 ]; then
+            echo ""
+            echo "::error::Boundary test coverage check failed — add pytest.raises, None checks, or empty-collection assertions"
+            exit 1
+          fi
+
+          # 8. Security suppression audit: ban noqa on security rules without justification
+          echo ""
+          echo "### Security Suppression Audit"
+          NOQA_SECURITY=$(grep -rnE '#\s*noqa:\s*S[0-9]' scripts/ tests/ 2>/dev/null || true)
+          if [ -n "$NOQA_SECURITY" ]; then
+            NOQA_COUNT=$(echo "$NOQA_SECURITY" | wc -l | tr -d ' ')
+            echo "$NOQA_SECURITY"
+            echo ""
+            echo "::error::Found ${NOQA_COUNT} security rule suppression(s) (# noqa: S...) — security warnings must not be silenced"
+            echo "::error::  Fix the underlying issue instead of suppressing it. If truly a false positive, document why in a code comment above the line."
+            exit 1
+          else
+            echo "No security rule suppressions found"
+          fi
+
           echo ""
           if [ "$WARNINGS" -gt 0 ]; then
             echo "Found ${WARNINGS} potential AI anti-pattern(s) — review recommended"
           else
             echo "No AI anti-patterns detected"
+          fi
+
+  secret-scanning:
+    name: Secret Scanning (gitleaks)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mutation-spot-check:
+    name: Mutation Spot Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest mutmut
+
+      - name: Run mutation testing on changed source files
+        run: |
+          #!/bin/bash
+          set -euo pipefail
+
+          echo "## Mutation Spot Check (PR-level)"
+          echo ""
+
+          # Get Python source files changed in this PR
+          CHANGED=$(git diff --name-only origin/main...HEAD -- 'scripts/**/*.py' | grep -v '__init__\|configs/' || true)
+
+          if [ -z "$CHANGED" ]; then
+            echo "No source files changed — skipping mutation testing"
+            exit 0
+          fi
+
+          echo "Changed source files:"
+          echo "$CHANGED"
+          echo ""
+
+          TOTAL_MUTANTS=0
+          KILLED_MUTANTS=0
+
+          for src_file in $CHANGED; do
+            if [ ! -f "$src_file" ]; then
+              continue
+            fi
+
+            echo "---"
+            echo "Mutating: $src_file"
+
+            # Run mutmut on this single file (timeout 120s per file)
+            timeout 120 mutmut run --paths-to-mutate "$src_file" --no-progress 2>&1 || true
+
+            # Parse results
+            RESULTS=$(mutmut results 2>&1 || true)
+            echo "$RESULTS"
+
+            FILE_KILLED=$(echo "$RESULTS" | grep -c 'Killed' || true)
+            FILE_SURVIVED=$(echo "$RESULTS" | grep -c 'Survived' || true)
+            FILE_TOTAL=$((FILE_KILLED + FILE_SURVIVED))
+
+            TOTAL_MUTANTS=$((TOTAL_MUTANTS + FILE_TOTAL))
+            KILLED_MUTANTS=$((KILLED_MUTANTS + FILE_KILLED))
+
+            # Reset for next file
+            rm -f .mutmut-cache
+
+            echo ""
+          done
+
+          if [ "$TOTAL_MUTANTS" -gt 0 ]; then
+            SCORE=$((KILLED_MUTANTS * 100 / TOTAL_MUTANTS))
+            echo "## Mutation Score: ${SCORE}% (${KILLED_MUTANTS}/${TOTAL_MUTANTS} killed)"
+
+            if [ "$SCORE" -lt 60 ]; then
+              echo "::error::Mutation score ${SCORE}% is below 60% — tests are not catching real bugs. Add boundary, error, and edge-case tests."
+              exit 1
+            elif [ "$SCORE" -lt 75 ]; then
+              echo "::warning::Mutation score ${SCORE}% is below 75% — consider adding more thorough tests"
+            else
+              echo "Mutation score is healthy"
+            fi
+          else
+            echo "No mutants generated — files may be too simple or have no testable logic"
           fi
 
   duplication:
@@ -199,3 +372,56 @@ jobs:
             --threshold 5 \
             --reporters "console" \
             .
+
+  dependency-allowlist:
+    name: Dependency Allowlist Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for unapproved dependencies
+        run: |
+          #!/bin/bash
+          set -euo pipefail
+
+          echo "## Dependency Allowlist Check"
+          echo ""
+
+          if [ ! -f requirements-allowlist.txt ]; then
+            echo "::error::requirements-allowlist.txt not found — create it with approved package names"
+            exit 1
+          fi
+
+          UNAPPROVED=0
+
+          # Extract package names from requirements.txt (strip versions, comments, blank lines)
+          while IFS= read -r line; do
+            # Skip comments and blank lines
+            [[ "$line" =~ ^[[:space:]]*# ]] && continue
+            [[ -z "${line// /}" ]] && continue
+
+            # Extract package name (before any version specifier)
+            pkg=$(echo "$line" | sed 's/[><=!].*//' | sed 's/\[.*//' | tr -d '[:space:]')
+            [ -z "$pkg" ] && continue
+
+            # Normalize: lowercase for comparison
+            pkg_lower=$(echo "$pkg" | tr '[:upper:]' '[:lower:]')
+
+            # Check if package is in the allowlist (case-insensitive)
+            if ! grep -iq "^${pkg}$\|^${pkg_lower}$" requirements-allowlist.txt 2>/dev/null; then
+              echo "::error::UNAPPROVED dependency: '${pkg}' is not in requirements-allowlist.txt"
+              echo "  → If this is intentional, add '${pkg}' to requirements-allowlist.txt"
+              UNAPPROVED=$((UNAPPROVED + 1))
+            else
+              echo "✓ ${pkg} — approved"
+            fi
+          done < requirements.txt
+
+          echo ""
+          if [ "$UNAPPROVED" -gt 0 ]; then
+            echo "::error::Found ${UNAPPROVED} unapproved dependency/ies — add them to requirements-allowlist.txt or remove from requirements.txt"
+            exit 1
+          else
+            echo "All dependencies are on the approved list"
+          fi

@@ -16,12 +16,18 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.9.0
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+  - repo: local
     hooks:
       - id: mypy
-        args: [--ignore-missing-imports]
-        additional_dependencies: []
+        name: mypy type check
+        entry: python3 -m mypy
+        language: system
+        types: [python]
+        require_serial: true
   - repo: local
     hooks:
       - id: pytest-unit
