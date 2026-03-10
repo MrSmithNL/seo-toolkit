@@ -106,6 +106,75 @@ jobs:
             --cov-report=term-missing:skip-covered \
             --cov-fail-under=80
 
+  ai-antipatterns:
+    name: AI Anti-Pattern Detection
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check for AI anti-patterns
+        run: |
+          #!/bin/bash
+          set -euo pipefail
+          WARNINGS=0
+
+          echo "## AI Anti-Pattern Detection"
+          echo ""
+
+          # 1. Excessive comments: lines that are comments vs code
+          TOTAL_LINES=$(find scripts/ -name '*.py' -exec cat {} + | wc -l)
+          COMMENT_LINES=$(find scripts/ -name '*.py' -exec cat {} + | grep -cE '^\s*#' || true)
+          if [ "$TOTAL_LINES" -gt 0 ]; then
+            RATIO=$((COMMENT_LINES * 100 / TOTAL_LINES))
+            echo "Comment ratio: ${RATIO}% (${COMMENT_LINES}/${TOTAL_LINES} lines)"
+            if [ "$RATIO" -gt 30 ]; then
+              echo "::warning::Comment ratio ${RATIO}% exceeds 30% — check for excessive WHAT comments"
+              WARNINGS=$((WARNINGS + 1))
+            fi
+          fi
+
+          # 2. Phantom error handling: bare except or overly broad catches
+          BARE_EXCEPT=$(grep -rnc 'except:$\|except Exception:$' scripts/ || true)
+          if [ "$BARE_EXCEPT" -gt 3 ]; then
+            echo "::warning::Found ${BARE_EXCEPT} bare/broad except clauses — check for phantom error handling"
+            WARNINGS=$((WARNINGS + 1))
+          fi
+
+          # 3. God functions: functions over 30 lines (via radon)
+          pip install radon -q
+          LONG_FUNCS=$(radon cc scripts/ -n C -s 2>&1 | grep -cE '- [CDEF]' || true)
+          if [ "$LONG_FUNCS" -gt 0 ]; then
+            echo "::warning::Found ${LONG_FUNCS} functions with complexity grade C or worse"
+            WARNINGS=$((WARNINGS + 1))
+          fi
+
+          # 4. Dead code: unused imports (ruff F401)
+          pip install ruff -q
+          UNUSED=$(ruff check scripts/ --select F401 --statistics 2>&1 | tail -1 || true)
+          if echo "$UNUSED" | grep -q "F401"; then
+            echo "::warning::Unused imports detected — possible dead code"
+            WARNINGS=$((WARNINGS + 1))
+          fi
+
+          # 5. TODO/FIXME/HACK accumulation
+          TODOS=$(grep -rnc 'TODO\|FIXME\|HACK\|XXX' scripts/ || true)
+          if [ "$TODOS" -gt 10 ]; then
+            echo "::warning::Found ${TODOS} TODO/FIXME/HACK markers — review for stale items"
+            WARNINGS=$((WARNINGS + 1))
+          fi
+
+          echo ""
+          if [ "$WARNINGS" -gt 0 ]; then
+            echo "Found ${WARNINGS} potential AI anti-pattern(s) — review recommended"
+          else
+            echo "No AI anti-patterns detected"
+          fi
+
   duplication:
     name: Duplication Check
     runs-on: ubuntu-latest
