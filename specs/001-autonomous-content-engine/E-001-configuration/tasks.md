@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 7
+completed_tasks: 8
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -120,13 +120,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: none
   - Est: 2h | Actual: ~10min
 
-- [ ] **TASK-F04:** Circuit breaker wrapper for external HTTP calls
+- [x] **TASK-F04:** Circuit breaker wrapper for external HTTP calls ✅
   - Story: Cross-cutting (NFR 29 for F-001, F-002, F-003, F-004)
   - Files: `src/lib/http/circuit-breaker.ts`, `src/lib/http/__tests__/circuit-breaker.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: Circuit breaker with 5 failures / 60s window → open for 30s. Returns `SiteOperationError.circuitOpen()` when open. State transitions logged. Half-open recovery works. Tests verify open/closed/half-open states.
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: Circuit breaker with configurable failure threshold / window → open for configurable reset timeout. Throws descriptive error when open. Half-open recovery works. Tests verify open/closed/half-open states.
+  - Result: 14 tests pass. Closed state (start, success, below threshold), open state (trip, reject, no-call), half-open (timeout transition, success→close, failure→reopen), window expiry resets count, success resets count, error propagation (original + circuit-open). Generic `CircuitBreaker` class — CMS adapters will wrap this.
   - Dependencies: TASK-F01
-  - Est: 3h
+  - Est: 3h | Actual: ~10min
 
 Phase 1 parallel groups:
   Group A: TASK-002, TASK-003 (both depend on TASK-001)
