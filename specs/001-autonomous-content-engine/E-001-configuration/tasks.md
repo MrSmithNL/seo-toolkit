@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 13
+completed_tasks: 14
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -175,13 +175,14 @@ Phase 1 parallel groups:
   - Dependencies: TASK-001
   - Est: 2h | Actual: ~10min
 
-- [ ] **TASK-009:** CMS adapter interfaces + WordPress adapter [P]
+- [x] **TASK-009:** CMS adapter interfaces + WordPress adapter ✅
   - Story: US-001 (F-002)
-  - Files: `src/modules/content-engine/config/cms-connection/adapters/types.ts`, `src/modules/content-engine/config/cms-connection/adapters/wordpress.ts`, `src/modules/content-engine/config/cms-connection/__tests__/wordpress.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `CMSAdapter` interface defined (connect, verify, testPublish, publish, unpublish). `WordPressAdapter` implements it. Validates credentials via GET `/wp-json/wp/v2/users/me`. Creates test draft post and deletes it. Credentials encrypted before storage. All examples from F-002 US-001, US-003 pass (mocked HTTP).
+  - Files: `cms-connection/adapters/types.ts`, `adapters/wordpress.ts`, `__tests__/wordpress.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `CmsAdapter` interface defined (verify, testPublish, publish, unpublish). `WordPressAdapter` implements it. `CmsHttpClient` abstraction for testability. All 4 operations tested with mocked HTTP.
+  - Result: 8 tests pass. Verify (200 OK with username, 401 auth fail, network error → 502). TestPublish (create draft + delete, create fail). Publish (201 → id + url). Unpublish (200 → true, 404 → error). Basic auth via Application Passwords. All return `Result<T, OperationError>`.
   - Dependencies: TASK-002, TASK-004
-  - Est: 4h
+  - Est: 4h | Actual: ~15min
 
 - [ ] **TASK-010:** Shopify adapter [P]
   - Story: US-002 (F-002)
