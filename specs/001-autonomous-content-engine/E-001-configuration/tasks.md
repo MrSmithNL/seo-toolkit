@@ -5,12 +5,12 @@ title: "Configuration & Setup"
 project: PROD-001
 domain: configuration
 parent: "THM-CE-001"
-status: draft
-phase: 5-tasks
+status: in-progress
+phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 0
+completed_tasks: 1
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -54,13 +54,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
 
 ## Phase 1: Foundation (Walking Skeleton + Data Layer)
 
-- [ ] **TASK-001:** Walking skeleton — register a site URL, store in database, read it back
+- [x] **TASK-001:** Walking skeleton — register a site URL, store in database, read it back ✅
   - Story: US-001 (F-001)
-  - Files: `src/modules/content-engine/config/index.ts`, `src/db/schema.ts`, `drizzle/`, `src/modules/content-engine/config/site-registration/site.repository.ts`, `src/modules/content-engine/config/site-registration/site.service.ts`, `vitest.config.ts`
-  - TDD: [ ] Red (tests fail) → [ ] Green (tests pass) → [ ] Refactor
+  - Files: `src/modules/content-engine/config/index.ts`, `src/db/schema.ts`, `src/db/index.ts`, `src/lib/result.ts`, `src/lib/context.ts`, `src/lib/id.ts`, `src/modules/content-engine/config/site-registration/site.repository.ts`, `src/modules/content-engine/config/site-registration/site.service.ts`, `vitest.config.ts`, `package.json`, `tsconfig.json`, `drizzle.config.ts`
+  - TDD: [x] Red (tests fail) → [x] Green (tests pass) → [ ] Refactor
   - Done when: `registerSite("https://example.com")` creates a row in `site_config` table with `tenant_id`, `getSite(id)` returns it. Tests pass.
+  - Result: 7 tests pass (register, validation, duplicate detection, tenant isolation, getSite, not-found, cross-tenant 404)
   - Dependencies: none
-  - Est: 4h
+  - Est: 4h | Actual: ~2h
 
 - [ ] **TASK-002:** Drizzle schema — full data model for all 6 features
   - Story: All features (data layer)
