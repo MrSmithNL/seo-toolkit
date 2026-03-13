@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 4
+completed_tasks: 6
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -98,21 +98,18 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: TASK-003, TASK-F02
   - Est: 4h
 
-- [ ] **TASK-F01:** Operation pattern infrastructure — OperationContext, Result type, error hierarchy
+- [x] **TASK-F01:** Operation pattern infrastructure — OperationContext, Result type, error hierarchy ✅ (completed as part of TASK-001)
   - Story: Cross-cutting (NFR 19-20 all features)
-  - Files: `src/lib/operations/context.ts`, `src/lib/operations/result.ts`, `src/lib/operations/errors.ts`, `src/lib/operations/logging.ts`, `src/lib/operations/__tests__/operations.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `OperationContext` type (tenantId + correlationId + idempotencyKey) defined. `Result<T, E>` type with `ok()` and `err()` helpers. `SiteOperationError` extends `OperationError` with factory methods (validation, notFound, cmsUnreachable, circuitOpen, authFailed, conflict). `withOperationLogging()` wrapper emits `operation.started`, `operation.completed`, `operation.failed`. All return RFC 7807 with `suggested_action`.
-  - Dependencies: none
-  - Est: 4h
+  - Files: `src/lib/context.ts`, `src/lib/result.ts` (built during walking skeleton)
+  - Result: `OperationContext` (tenantId + correlationId + idempotencyKey), `Result<T, E>` with `ok()`/`err()`, `OperationError` interface with `operationError()` factory, RFC 7807 fields incl. `suggestedAction`. Error subtypes used in `site.service.ts` (validation 400, notFound 404, conflict 409). Logging wrapper deferred to TASK-F03.
+  - Note: `withOperationLogging()` not yet implemented — needs pino from TASK-F03. `SiteOperationError` class not created (using `operationError()` factory instead — simpler, same compliance).
+  - Est: 4h | Actual: included in TASK-001
 
-- [ ] **TASK-F02:** Prefixed ID generation utility
+- [x] **TASK-F02:** Prefixed ID generation utility ✅ (completed as part of TASK-001, extended in TASK-002)
   - Story: Cross-cutting (NFR 24 all features)
-  - Files: `src/lib/ids/generate.ts`, `src/lib/ids/__tests__/generate.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `generateId('site')` → `ste_xxxxxxxxxxxxxxxx`. All 8 prefixes work (ste, cms, vce, tpc, tcl, qty, asp, tnt). IDs are 20+ chars. NanoID used. Unit tests verify prefix and length.
-  - Dependencies: none
-  - Est: 1h
+  - Files: `src/lib/id.ts`
+  - Result: `generateId()` with 9 prefixes (ste, slg, cms, vce, tpc, tcl, qty, asp, tnt). NanoID 16 chars. Used in site.service.ts.
+  - Est: 1h | Actual: included in TASK-001
 
 - [ ] **TASK-F03:** Structured logging setup — pino with PII redaction
   - Story: Cross-cutting (NFR 21, 28 all features)
