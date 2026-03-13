@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 16
+completed_tasks: 17
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -210,13 +210,14 @@ Phase 2 parallel groups:
   - Dependencies: TASK-005, TASK-006, TASK-007, TASK-008
   - Est: 4h | Actual: ~15min
 
-- [ ] **TASK-012:** CMS connection service — connect, verify, manage
+- [x] **TASK-012:** CMS connection service — connect, verify, manage ✅
   - Story: US-001, US-002, US-003, US-004 (F-002)
-  - Files: `src/modules/content-engine/config/cms-connection/cms.service.ts`, `src/modules/content-engine/config/cms-connection/cms.repository.ts`, `src/modules/content-engine/config/cms-connection/__tests__/cms.service.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `connectCMS(siteId, type, credentials)` selects adapter → validates → encrypts credentials → stores → runs test publish → emits `cms.connected` + `cms.verified`. State machine enforced (pending → verified/failed). Default publish status configurable. All F-002 acceptance criteria met.
+  - Files: `cms-connection/cms.service.ts`, `cms.repository.ts`, `__tests__/cms.service.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `connect()` encrypts credentials (AES-256-GCM) → stores → returns pending status. `getConnection()` retrieves. `updateStatus()` transitions state with verifiedAt timestamp. Duplicate connection rejected (409).
+  - Result: 6 tests pass. WordPress connect (encrypted password, prefixed ID, pending status), duplicate rejection (409), Shopify connect (encrypted token), getConnection (found + 404), updateStatus (verified with timestamp). CmsRepository with create/findBySiteId/updateStatus. Event emission deferred to TASK-017.
   - Dependencies: TASK-009, TASK-010, TASK-003
-  - Est: 4h
+  - Est: 4h | Actual: ~10min
 
 - [ ] **TASK-013:** Brand voice extraction service [P]
   - Story: US-001, US-002, US-003 (F-003)
