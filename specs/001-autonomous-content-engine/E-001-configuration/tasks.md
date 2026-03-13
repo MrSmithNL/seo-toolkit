@@ -5,12 +5,12 @@ title: "Configuration & Setup"
 project: PROD-001
 domain: configuration
 parent: "THM-CE-001"
-status: in-progress
+status: complete
 phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 26
+completed_tasks: 33
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -306,10 +306,11 @@ Phase 3 parallel groups:
   - Dependencies: TASK-003, TASK-011
   - Est: 3h
 
-- [ ] **TASK-F08:** CloudEvents event logging verification
+- [x] **TASK-F08:** CloudEvents event logging verification
   - Story: Cross-cutting (NFR 21 — logging standards §14)
   - Files: `tests/integration/event-logging.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 11 tests. All 7 CloudEvents verified (envelope, unique IDs, ISO 8601 timestamps, JSON serialisable, subscriber delivery).
   - Done when: All 7 events emit with CloudEvents 1.0 envelope (specversion, id, source, type, time, tenantid, correlationid). Emit and consume are both logged as structured JSON. Tests capture log output and verify fields.
   - Dependencies: TASK-017
   - Est: 2h
@@ -363,12 +364,12 @@ Test data approach: mocked HTTP responses for unit/integration tests (no real ne
 
 ## Verification Tasks
 
-- [ ] **TASK-V01:** Run full test suite — all tests pass, coverage ≥ 85%
-- [ ] **TASK-V02:** Manual walkthrough of all user stories against acceptance criteria (21 stories across 6 features)
-- [ ] **TASK-V03:** Verify all NFRs (performance: crawl <30s + CMS verify <10s + config read <100ms; security: AES-256, no plaintext credentials; reliability: retry + fallback)
-- [ ] **TASK-V04:** Update documentation (CLAUDE.md, README with setup instructions)
-- [ ] **TASK-V05:** Security review — no secrets in logs, encryption verified, API keys in .env only, credential redaction confirmed
-- [ ] **TASK-V06:** Architecture guardrails verified — import directions correct, module boundary respected, no config → stages imports, tenant isolation confirmed
+- [x] **TASK-V01:** Run full test suite — all tests pass, coverage ≥ 85%
+- [x] **TASK-V02:** Manual walkthrough of all user stories against acceptance criteria (21 stories across 6 features)
+- [x] **TASK-V03:** Verify all NFRs (performance: crawl <30s + CMS verify <10s + config read <100ms; security: AES-256, no plaintext credentials; reliability: retry + fallback)
+- [x] **TASK-V04:** Update documentation (CLAUDE.md, README with setup instructions)
+- [x] **TASK-V05:** Security review — no secrets in logs, encryption verified, API keys in .env only, credential redaction confirmed
+- [x] **TASK-V06:** Architecture guardrails verified — import directions correct, module boundary respected, no config → stages imports, tenant isolation confirmed
 
 ## Summary
 
