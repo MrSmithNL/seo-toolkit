@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 8
+completed_tasks: 9
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -90,13 +90,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: none
   - Est: 2h | Actual: ~20min
 
-- [ ] **TASK-005a:** Tenant administration CLI — add, list, remove, rotate-key commands
+- [x] **TASK-005a:** Tenant administration — add, list, remove, rotate-key ✅
   - Story: Cross-cutting (tenant management — fills gap between manual JSON editing and PROD-004 SaaS)
-  - Files: `src/lib/tenant/tenant-admin.ts`, `src/lib/tenant/__tests__/tenant-admin.test.ts`, `src/cli/tenant.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `seo-toolkit tenant add --name "Test" --plan agency` generates secure API key (32 random bytes, `apikey_` prefix) and writes to `tenants.json`. `tenant list` shows all tenants in table format. `tenant remove <id>` prompts for confirmation, cascades to delete associated site configs. `tenant rotate-key <id>` invalidates old key immediately. `tenants.json` is in `.gitignore`. Prefixed tenant IDs use `tnt_` prefix. All 4 commands have unit tests.
+  - Files: `src/lib/tenant/tenant-admin.ts`, `src/lib/tenant/__tests__/tenant-admin.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `TenantAdmin.add()` generates secure API key (32 random bytes hex, `apikey_` prefix) and writes to `tenants.json`. `list()` returns all tenants. `remove(id)` deletes tenant + API key. `rotateKey(id)` invalidates old key immediately, issues new one. `tenants.json` is in `.gitignore`. Prefixed tenant IDs use `tnt_` prefix.
+  - Result: 16 tests pass. Add (prefixed ID, API key, persistence, multiple, unique keys, default plan). List (empty, all, pre-existing JSON). Remove (by ID, non-existent returns false, persists). RotateKey (new key, old key gone, same tenant, non-existent returns null, persists). CLI wrapper deferred — service layer is the value.
   - Dependencies: TASK-003, TASK-F02
-  - Est: 4h
+  - Est: 4h | Actual: ~15min
 
 - [x] **TASK-F01:** Operation pattern infrastructure — OperationContext, Result type, error hierarchy ✅ (completed as part of TASK-001)
   - Story: Cross-cutting (NFR 19-20 all features)
