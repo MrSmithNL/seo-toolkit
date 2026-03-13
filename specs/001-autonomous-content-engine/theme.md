@@ -336,3 +336,4 @@ Alternative considered: **Capability Area** decomposition (SEO capability, AISO 
 | Date | What Happened | Next Step |
 |------|--------------|-----------|
 | 2026-03-13 | Phase 0 started. All 3 strategic research streams completed (market sizing, competitive landscape, technology). Theme.md created with PDM (38 L3 sub-processes, 13 competitors), FBS, capability map, 5 epics identified. Two hook conflicts found and fixed (PIF-001, PIF-002). | Create D2 capability diagram, populate contracts/, proceed to Phase 1 (E-001 epic). |
+| 2026-03-13 | **Malcolm's Phase 0 decisions:** (1) **Full pipeline** — all 5 epics, not reduced scope. (2) **SEO Toolkit module** — confirmed (was already stated in briefing doc — PIF-005 logged for not using briefing as input). (3) **Test sites:** Hairgenetix + Skingenetix (Shopify) + Digital Builders.nl (WordPress). Briefing document restored from git. | Proceed to Phase 1 for E-001. |
