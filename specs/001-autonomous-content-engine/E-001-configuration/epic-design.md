@@ -445,6 +445,7 @@ const ID_PREFIXES = {
   topicCluster: 'tcl',
   qualityThresholds: 'qty',
   aisoPreferences: 'asp',
+  tenant: 'tnt',
 } as const;
 
 export function generateId(entity: keyof typeof ID_PREFIXES): string {
@@ -532,7 +533,106 @@ function createOperationContext(tenant: Tenant, req: Request): OperationContext 
 }
 ```
 
-**Migration to DatabaseTenantResolver:** Swap the constructor injection. No other code changes needed because all code uses the `TenantResolver` interface.
+### Tenant Administration CLI (R1)
+
+Until the SaaS platform (PROD-004) provides user registration and tenant management, E-001 needs CLI commands to manage `tenants.json`. Without this, adding a new client means manually editing JSON — error-prone and undocumented.
+
+**Commands:**
+
+```bash
+# Add a new tenant — generates a secure API key automatically
+seo-toolkit tenant add --name "Hairgenetix" --plan agency
+# Output: Created tenant tenant_hg001. API key: apikey_<generated>
+
+# List all tenants
+seo-toolkit tenant list
+# Output:
+# ID              Name            Plan      Modules                    Created
+# tenant_hg001    Hairgenetix     agency    content-engine-config      2026-03-13
+# tenant_sg001    Skingenetix     agency    content-engine-config      2026-03-13
+
+# Remove a tenant (confirms before deleting)
+seo-toolkit tenant remove tenant_hg001
+# Output: Remove tenant "Hairgenetix" and all associated data? (y/N)
+
+# Rotate API key for a tenant
+seo-toolkit tenant rotate-key tenant_hg001
+# Output: New API key: apikey_<generated>  (old key invalidated immediately)
+```
+
+**Implementation:**
+
+```typescript
+// src/lib/tenant/tenant-admin.ts
+
+import crypto from 'node:crypto';
+import { generateId } from '../ids/generate.js';
+
+interface TenantEntry {
+  id: string;
+  name: string;
+  plan: 'agency' | 'starter' | 'pro';
+  enabledModules: string[];
+  createdAt: string;  // ISO 8601
+}
+
+function generateApiKey(): string {
+  // 32 random bytes → base64url → prefixed
+  const random = crypto.randomBytes(32).toString('base64url');
+  return `apikey_${random}`;
+}
+
+function addTenant(name: string, plan: string): { tenant: TenantEntry; apiKey: string } {
+  const tenants = loadTenantsFile();
+  const apiKey = generateApiKey();
+  const tenant: TenantEntry = {
+    id: generateId('tenant'),  // tnt_xxxxxxxx
+    name,
+    plan: plan as TenantEntry['plan'],
+    enabledModules: ['content-engine-config'],
+    createdAt: new Date().toISOString(),
+  };
+  tenants[apiKey] = tenant;
+  writeTenantsFile(tenants);
+  return { tenant, apiKey };
+}
+
+function listTenants(): TenantEntry[] {
+  const tenants = loadTenantsFile();
+  return Object.values(tenants);
+}
+
+function removeTenant(tenantId: string): boolean {
+  const tenants = loadTenantsFile();
+  const entry = Object.entries(tenants).find(([_, t]) => t.id === tenantId);
+  if (!entry) return false;
+  delete tenants[entry[0]];
+  writeTenantsFile(tenants);
+  return true;
+}
+
+function rotateApiKey(tenantId: string): string | null {
+  const tenants = loadTenantsFile();
+  const entry = Object.entries(tenants).find(([_, t]) => t.id === tenantId);
+  if (!entry) return null;
+  const [oldKey, tenant] = entry;
+  const newKey = generateApiKey();
+  delete tenants[oldKey];
+  tenants[newKey] = tenant;
+  writeTenantsFile(tenants);
+  return newKey;
+}
+```
+
+**Prefixed ID addition:** `tnt_` prefix for tenant IDs (added to the 7 existing prefixes → 8 total).
+
+**Security:**
+- API keys are 32 random bytes (256-bit entropy) — cryptographically secure
+- `tenants.json` should be in `.gitignore` (contains secrets)
+- Key rotation invalidates old key immediately — no grace period for R1
+- `tenant remove` requires confirmation and cascades to delete all associated site configs
+
+**Migration to DatabaseTenantResolver:** Swap the constructor injection. No other code changes needed because all code uses the `TenantResolver` interface. The tenant admin CLI commands become database operations (CREATE/DELETE/UPDATE on `tenants` table) — same interface, different storage backend.
 
 ---
 

@@ -9,7 +9,7 @@ status: draft
 phase: 5-tasks
 created: 2026-03-13
 last_updated: 2026-03-13
-total_tasks: 32
+total_tasks: 33
 completed_tasks: 0
 refs:
   requirements: "./F-*/requirements.md"
@@ -86,6 +86,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: none
   - Est: 2h
 
+- [ ] **TASK-005a:** Tenant administration CLI — add, list, remove, rotate-key commands
+  - Story: Cross-cutting (tenant management — fills gap between manual JSON editing and PROD-004 SaaS)
+  - Files: `src/lib/tenant/tenant-admin.ts`, `src/lib/tenant/__tests__/tenant-admin.test.ts`, `src/cli/tenant.ts`
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - Done when: `seo-toolkit tenant add --name "Test" --plan agency` generates secure API key (32 random bytes, `apikey_` prefix) and writes to `tenants.json`. `tenant list` shows all tenants in table format. `tenant remove <id>` prompts for confirmation, cascades to delete associated site configs. `tenant rotate-key <id>` invalidates old key immediately. `tenants.json` is in `.gitignore`. Prefixed tenant IDs use `tnt_` prefix. All 4 commands have unit tests.
+  - Dependencies: TASK-003, TASK-F02
+  - Est: 4h
+
 - [ ] **TASK-F01:** Operation pattern infrastructure — OperationContext, Result type, error hierarchy
   - Story: Cross-cutting (NFR 19-20 all features)
   - Files: `src/lib/operations/context.ts`, `src/lib/operations/result.ts`, `src/lib/operations/errors.ts`, `src/lib/operations/logging.ts`, `src/lib/operations/__tests__/operations.test.ts`
@@ -98,7 +106,7 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Story: Cross-cutting (NFR 24 all features)
   - Files: `src/lib/ids/generate.ts`, `src/lib/ids/__tests__/generate.test.ts`
   - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `generateId('site')` → `ste_xxxxxxxxxxxxxxxx`. All 7 prefixes work (ste, cms, vce, tpc, tcl, qty, asp). IDs are 20+ chars. NanoID used. Unit tests verify prefix and length.
+  - Done when: `generateId('site')` → `ste_xxxxxxxxxxxxxxxx`. All 8 prefixes work (ste, cms, vce, tpc, tcl, qty, asp, tnt). IDs are 20+ chars. NanoID used. Unit tests verify prefix and length.
   - Dependencies: none
   - Est: 1h
 
@@ -122,7 +130,8 @@ Phase 1 parallel groups:
   Group A: TASK-002, TASK-003 (both depend on TASK-001)
   Group B: TASK-004, TASK-F01, TASK-F02, TASK-F03 (independent — no dependencies)
   Group C: TASK-F04 (depends on TASK-F01)
-  → TASK-001 runs first. Then Groups A and B run in parallel. TASK-F04 starts when TASK-F01 completes.
+  Group D: TASK-005a (depends on TASK-003 + TASK-F02)
+  → TASK-001 runs first. Then Groups A and B run in parallel. TASK-F04 starts when TASK-F01 completes. TASK-005a starts when TASK-003 and TASK-F02 complete.
 
 ## Phase 2: Domain Logic (Detection + Adapters)
 
@@ -346,12 +355,12 @@ Test data approach: mocked HTTP responses for unit/integration tests (no real ne
 
 | Phase | Tasks | Est. Hours | Calendar | Parallel Groups |
 |-------|:-----:|:----------:|----------|:---------------:|
-| 1. Foundation + Framework Infra | 4 + 4 = 8 | 13h + 10h = 23h | Week 1 | 3 |
+| 1. Foundation + Framework Infra | 4 + 4 + 1 = 9 | 13h + 10h + 4h = 27h | Week 1 | 4 |
 | 2. Domain Logic | 6 | 17h | Week 1-2 | 3 |
 | 3. Services + AI | 6 | 24h | Week 2 | 3 |
 | 4. Integration + Framework Verification | 2 + 4 = 6 | 6h + 12h = 18h | Week 2 | 4 |
 | Verification | 6 | 4h | Week 2 | — |
-| **Total** | **32** | **~86h** | **~2 weeks** | |
+| **Total** | **33** | **~90h** | **~2 weeks** | |
 
 Critical path: TASK-001 → TASK-002 → TASK-009 → TASK-010 → TASK-012 → TASK-017 → TASK-F06 → TASK-018
 Parallelism ratio: 22 of 26 implementation tasks can run in parallel with at least one other task

@@ -325,7 +325,7 @@ Epic E-001: Configuration & Setup
 |--------|-------|
 | **Total features** | 6 |
 | **Features complete** | 0 |
-| **Total tasks** | 0 |
+| **Total tasks** | 33 |
 | **Tasks complete** | 0 |
 
 ---
@@ -400,6 +400,7 @@ F-005 (Quality Thresholds) ─→ F-006 (AISO Preferences)
 | 2026-03-13 | **E2E Pass 2 started.** 10 new frameworks created today (SaaS coding arch, API standards, domain standards, DB migration, multi-tenant arch, logging/observability, conformance suite, engineering handbook, error handling, fitness functions FF-028–FF-034). Gate 0 re-assessed: 7/10 frameworks were FAIL. Architecture Integration Checklist expanded to cover all 10 frameworks (34 coding principles, data layer governance, API/integration standards, logging, conformance suite, 7 new fitness functions). Gate 0 now PASSES. Re-validating Phase 3 requirements and Phase 4 design against expanded standards. | Update F-001 requirements with framework-specific NFRs, then cascade to all features. |
 | 2026-03-13 | **E2E Pass 2 — Phase 3 & 4 complete.** epic-design.md fully updated: Operation Pattern (P-008) with code examples, CQS file structure, AppError hierarchy (RFC 7807 + suggested_action), structured logging (pino with PII redaction), prefixed IDs (7 entity prefixes), circuit breaker config, CloudEvents 1.0 event contracts, conformance suite YAML examples, 7 fitness functions (FF-028–FF-034), Prisma schema updated with RLS policies and prefixed IDs. All 6 feature requirements have framework-specific NFRs (Operation Pattern, Error Handling, Logging, Tenant Isolation, Idempotency, Serialisable I/O, Contract Completeness, No Module State, PII Redaction, Prefixed IDs, Circuit Breaker). **Gate 2 passed:** 10/10 RE process checks, 12/12 framework integration checks. 11 minor gaps found and fixed (FF ID collision renumbered FF-028–FF-034, DOR boxes ticked, domain model reconciliation notes added, quality rubric scored 4.5/5.0, hallucination risk assessment, Black Hat sweep, RAID log, test coverage summary added). | Phase 5: Task breakdown update, then Gate 3. |
 | 2026-03-13 | **Phase 5 complete + Gate 3 PASSED.** Task breakdown updated: 8 framework tasks added (TASK-F01 to F08) covering Operation pattern infrastructure, prefixed ID generation, structured logging, circuit breaker, conformance suite, fitness functions, tenant isolation integration test, CloudEvents logging verification. Total: 32 tasks (26 impl + 6 verification), ~86h. Gate 3 conditions cleared: deployment readiness section, test data strategy, agent task boundaries (Always/Ask/Never + context files per phase), task count corrected. **Full E2E test of RE v4.16 process complete.** All 3 gates passed. All 10 frameworks integrated. | Ready for Malcolm's review and build approval. |
+| 2026-03-13 | **Tenant admin CLI added.** Gap identified: no way to create/manage tenants in `tenants.json` for R1. Added tenant administration CLI to epic-design (4 commands: add, list, remove, rotate-key). TASK-005a added to tasks.md (4h, Phase 1). Secure API key generation (32 random bytes, `apikey_` prefix). `tnt_` prefix added to ID system (8 total). Cascade delete on tenant remove. Total: 33 tasks, ~90h. | Proceed to build Phase 1. |
 
 ---
 
