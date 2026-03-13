@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 2
+completed_tasks: 3
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -72,13 +72,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: TASK-001
   - Est: 3h | Actual: ~1h
 
-- [ ] **TASK-003:** Tenant context middleware — `StaticTenantResolver` + Drizzle query wrapper
+- [x] **TASK-003:** Tenant context middleware — `StaticTenantResolver` + Drizzle query wrapper ✅
   - Story: Cross-cutting (multi-tenancy)
-  - Files: `src/lib/tenant/static-tenant-resolver.ts`, `src/lib/tenant/tenant-middleware.ts`, `src/lib/tenant/types.ts`, `tenants.json`, `src/lib/tenant/__tests__/tenant.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - Files: `src/lib/tenant/types.ts`, `src/lib/tenant/static-tenant-resolver.ts`, `src/lib/tenant/tenant-context.ts`, `src/lib/tenant/scoped-query.ts`, `src/lib/tenant/tenant.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
   - Done when: `StaticTenantResolver` reads `tenants.json`, validates API key, sets `tenantId` in AsyncLocalStorage. Drizzle query wrapper auto-adds `WHERE tenant_id = ?` to all queries. Tests verify tenant isolation (query with tenant A cannot see tenant B's data).
+  - Result: 10 tests pass. StaticTenantResolver returns Result (not throw), AsyncLocalStorage isolates concurrent tenant contexts, scopedQuery filters by tenant_id. E2E learning: Drizzle's generic table types are complex — `any` cast needed for `db.from()` with generic table parameter (acceptable trade-off, typed at call site).
   - Dependencies: TASK-001
-  - Est: 4h
+  - Est: 4h | Actual: ~1h
 
 - [ ] **TASK-004:** Encryption utility — AES-256-GCM encrypt/decrypt for credentials
   - Story: US-001, US-002 (F-002 — Constitutional Constraint #1)
