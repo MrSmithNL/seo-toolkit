@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 24
+completed_tasks: 26
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -290,7 +290,7 @@ Phase 3 parallel groups:
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 4h
 
-- [ ] **TASK-F06:** Fitness function CI checks (FF-028 to FF-034)
+- [x] **TASK-F06:** Fitness function CI checks (FF-028 to FF-034)
   - Story: Cross-cutting (architecture — fitness functions)
   - Files: `tests/architecture/fitness-functions.test.ts`
   - TDD: [ ] Red → [ ] Green → [ ] Refactor
@@ -298,7 +298,7 @@ Phase 3 parallel groups:
   - Dependencies: TASK-017
   - Est: 3h
 
-- [ ] **TASK-F07:** Tenant isolation integration test
+- [x] **TASK-F07:** Tenant isolation integration test
   - Story: Cross-cutting (NFR 22 all features — FF-034)
   - Files: `tests/integration/tenant-isolation.test.ts`
   - TDD: [ ] Red → [ ] Green → [ ] Refactor
