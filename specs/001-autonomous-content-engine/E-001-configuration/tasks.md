@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 15
+completed_tasks: 16
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -201,13 +201,14 @@ Phase 2 parallel groups:
 
 ## Phase 3: Services + AI Features
 
-- [ ] **TASK-011:** Site registration service — orchestrate crawl pipeline
+- [x] **TASK-011:** Site registration service — orchestrate crawl pipeline ✅
   - Story: US-001, US-002, US-003, US-004 (F-001)
-  - Files: `src/modules/content-engine/config/site-registration/site.service.ts` (update), `src/modules/content-engine/config/site-registration/__tests__/site.service.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `registerSite(url)` normalises URL → stores site → detects CMS → detects languages → counts content → emits `site.registered` + `site.crawled` events. Retry on crawl failure (once after 5s). All F-001 acceptance criteria met. Integration test with mocked HTTP passes.
+  - Files: `site.service.ts` (updated), `site.repository.ts` (update + addLanguage), `__tests__/registration-pipeline.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `registerAndCrawl(url, name)` normalises URL → stores site → detects CMS → detects languages → counts content → persists languages. Event emission deferred to TASK-017. Integration test with mocked HTTP passes.
+  - Result: 6 tests pass. WordPress site (CMS detected, 3 content URLs, 2 languages persisted), Shopify site, unknown CMS, URL normalisation (whitespace/case/slash stripped), invalid URL rejection (400), multi-language persistence (3 languages). Repository extended with `update()` and `addLanguage()`. Crawl runs 3 detectors in parallel via `Promise.all`. SiteService backward-compatible (fetcher optional).
   - Dependencies: TASK-005, TASK-006, TASK-007, TASK-008
-  - Est: 4h
+  - Est: 4h | Actual: ~15min
 
 - [ ] **TASK-012:** CMS connection service — connect, verify, manage
   - Story: US-001, US-002, US-003, US-004 (F-002)

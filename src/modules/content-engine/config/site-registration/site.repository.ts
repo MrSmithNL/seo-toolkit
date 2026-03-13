@@ -1,8 +1,8 @@
 // Repository pattern — all database access for site_config goes through here
 // No raw Drizzle calls in service logic (coding guardrail)
 
-import { eq, and } from 'drizzle-orm';
-import { siteConfig } from '../../../../db/schema.js';
+import { eq, and, sql } from 'drizzle-orm';
+import { siteConfig, siteLanguage } from '../../../../db/schema.js';
 import type { DrizzleDB } from '../../../../db/index.js';
 
 export interface SiteRecord {
@@ -62,5 +62,43 @@ export class SiteRepository {
       .all();
 
     return rows[0];
+  }
+
+  async update(id: string, tenantId: string, fields: {
+    cmsType?: string;
+    cmsDetectedAt?: string;
+    primaryLanguage?: string;
+    contentCount?: number;
+    lastCrawled?: string;
+  }): Promise<SiteRecord> {
+    const rows = this.db
+      .update(siteConfig)
+      .set({ ...fields, updatedAt: sql`(datetime('now'))` })
+      .where(and(eq(siteConfig.id, id), eq(siteConfig.tenantId, tenantId)))
+      .returning()
+      .all();
+
+    const row = rows[0];
+    if (!row) throw new Error('Update returned no rows');
+    return row;
+  }
+
+  async addLanguage(record: {
+    id: string;
+    siteId: string;
+    code: string;
+    name: string;
+    urlPattern?: string;
+  }): Promise<void> {
+    this.db
+      .insert(siteLanguage)
+      .values({
+        id: record.id,
+        siteId: record.siteId,
+        code: record.code,
+        name: record.name,
+        urlPattern: record.urlPattern,
+      })
+      .run();
   }
 }
