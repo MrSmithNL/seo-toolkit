@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 6
+completed_tasks: 7
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -111,13 +111,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Result: `generateId()` with 9 prefixes (ste, slg, cms, vce, tpc, tcl, qty, asp, tnt). NanoID 16 chars. Used in site.service.ts.
   - Est: 1h | Actual: included in TASK-001
 
-- [ ] **TASK-F03:** Structured logging setup — pino with PII redaction
+- [x] **TASK-F03:** Structured logging setup — pino with PII redaction ✅
   - Story: Cross-cutting (NFR 21, 28 all features)
   - Files: `src/lib/logging/logger.ts`, `src/lib/logging/__tests__/logger.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [ ] Refactor
   - Done when: pino configured with JSON output, `redact` paths for `*.password`, `*.token`, `*.secret`, `*.accessToken`, `*.email`, `*.phone`, `*.ip`. ISO 8601 timestamps. Service name set. Tests verify PII fields show `[REDACTED]`.
+  - Result: 14 tests pass. Basic logging (JSON output, structured data, all levels), PII redaction (7 field types + nested objects), non-PII preserved, child logger with tenantId/correlationId, ISO 8601 timestamps. `createLogger()` factory with custom destination support for testing.
   - Dependencies: none
-  - Est: 2h
+  - Est: 2h | Actual: ~10min
 
 - [ ] **TASK-F04:** Circuit breaker wrapper for external HTTP calls
   - Story: Cross-cutting (NFR 29 for F-001, F-002, F-003, F-004)
