@@ -1,0 +1,147 @@
+direction: right
+
+title: "Autonomous Content Engine — Capability Framework" {
+  near: top-center
+}
+
+configure: {
+  label: "1. Configure"
+  style.fill: "#E3F2FD"
+  style.stroke: "#1565C0"
+
+  setup: {
+    label: "Site & Brand Setup"
+    site-reg: "1.1 Site URL [AUTO][TS]"
+    brand-voice: "1.2 Brand Voice [ASSISTED][DF]"
+    cms-connect: "1.3 CMS Connection [ASSISTED][TS]"
+    topic-config: "1.4 Topic Config [ASSISTED][TS]"
+    quality-thresh: "1.5 Quality Thresholds [ASSISTED][DF]"
+    aiso-prefs: "1.6 AISO Preferences [ASSISTED][IN]" {
+      style.fill: "#FFF3E0"
+    }
+  }
+}
+
+research: {
+  label: "2. Research"
+  style.fill: "#E8F5E9"
+  style.stroke: "#2E7D32"
+
+  keyword-intel: {
+    label: "Keyword Intelligence"
+    kw-research: "2.1 Keyword Research [AUTO][TS]"
+    kw-cluster: "2.2 Clustering [AUTO][DF]"
+    intent: "2.3 Intent Classification [AUTO][DF]"
+    cannibal: "2.4 Cannibalisation [AUTO][DF]"
+  }
+
+  gap-analysis: {
+    label: "Content Gap Analysis"
+    competitor-audit: "2.5.1 Competitor Audit [AUTO][TS]"
+    content-gap: "2.5.2 Gap ID [AUTO][TS]"
+    serp: "2.5.3 SERP Analysis [AUTO][TS]"
+  }
+
+  aiso-intel: {
+    label: "AISO Intelligence"
+    style.fill: "#FFF3E0"
+    citation: "2.6.1 AI Citation Analysis [IN]"
+    entity-gap: "2.6.2 Entity Coverage [IN]"
+    schema-opp: "2.6.3 Schema Opportunities [IN]"
+  }
+}
+
+generate: {
+  label: "3. Generate & Optimise"
+  style.fill: "#F3E5F5"
+  style.stroke: "#6A1B9A"
+
+  content-gen: {
+    label: "Content Generation"
+    brief: "3.1 Brief [AUTO][TS]"
+    outline: "3.2 Outline [AUTO][TS]"
+    article: "3.3 Full Article [AUTO][TS]"
+    aiso-native: "3.4 AISO-Native [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    nlp: "3.5 NLP Terms [AUTO][DF]"
+    images: "3.6 Images [ASSISTED][DF]"
+  }
+
+  optimisation: {
+    label: "Content Optimisation"
+    seo-score: "3.7.1 SEO Score [AUTO][TS]"
+    aiso-score: "3.7.2 AISO 36-Factor [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    dual-score: "3.7.3 Dual Score [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    iterate: "3.7.4 Iterate [AUTO][DF]"
+    readability: "3.7.5 Readability [AUTO][TS]"
+    factcheck: "3.7.6 Fact-Check [ASSISTED][DF]"
+  }
+}
+
+publish: {
+  label: "4. Publish"
+  style.fill: "#FFF9C4"
+  style.stroke: "#F9A825"
+
+  publishing: {
+    label: "Content Publishing"
+    wordpress: "4.1 WordPress [AUTO][TS]"
+    shopify: "4.2 Shopify [AUTO][DF]"
+    schema: "4.3 Schema 6+ Types [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    internal-links: "4.4 Internal Links [AUTO][DF]"
+    images-pub: "4.5 Image Upload [AUTO][TS]"
+    scheduled: "4.6 Scheduled [AUTO][DF]"
+  }
+}
+
+monitor: {
+  label: "5. Monitor & Refresh"
+  style.fill: "#FFEBEE"
+  style.stroke: "#C62828"
+
+  perf: {
+    label: "Performance"
+    rank: "5.1 Rank Tracking [AUTO][TS]"
+    ai-vis: "5.2 AI Visibility [AUTO][DF]"
+    decay: "5.3 Decay Detection [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    citation-prob: "5.4 Citation Prob [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+  }
+
+  refresh: {
+    label: "Content Refresh"
+    auto-trigger: "5.5.1 Auto-Trigger [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+    update-gen: "5.5.2 Update Gen [AUTO][IN]" {
+      style.fill: "#FFF3E0"
+    }
+  }
+}
+
+configure -> research: feeds
+research -> generate: informs
+generate -> publish: outputs
+publish -> monitor: tracks
+monitor -> generate: refresh {style.stroke-dash: 3}
+
+cross-cutting: {
+  label: "Cross-Cutting"
+  style.fill: "#ECEFF1"
+  multi-model: "X.1 Multi-Model AI [DF]"
+  api: "X.2 API Access [TS]"
+  multi-lang: "X.3 Multi-Lang [TS]"
+  bulk: "X.4 Bulk Gen [DF]"
+  brand: "X.5 Brand Voice [DF]"
+  whitelabel: "X.6 White-Label [DF]"
+}
