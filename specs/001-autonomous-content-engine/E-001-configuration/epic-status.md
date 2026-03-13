@@ -55,7 +55,7 @@
 - [x] Webhook-triggerable (P-013): all commands callable via API routes
 
 **Data Layer Governance (ADR-017):**
-- [x] Prisma schema uses `@map`/`@@map` for snake_case DB names (database migration standards §8.3)
+- [x] Drizzle schema uses snake_case column names directly (database migration standards §8.3)
 - [x] RLS policies on all tenant-scoped tables in same migration (multi-tenant arch §3.1)
 - [x] `tenant_id` indexed on every tenant table (migration standards §8.4)
 - [x] Tenant isolation tests required: `tenant-isolation.test.ts` per module (FF-034, multi-tenant arch §11)
@@ -94,7 +94,7 @@
 | Platform Service | Needed By | Status in PROD-004 | Temporary Solution | Migration Path |
 |-----------------|-----------|-------------------|-------------------|---------------|
 | Tenant Context (`AsyncLocalStorage`) | All data models | Phase 0 complete | `StaticTenantResolver` — reads `tenants.json` config | Swap resolver implementation, no schema changes |
-| Database (Prisma + PostgreSQL) | All data storage | Phase 0 complete | Direct Prisma client with tenant_id filter | Add RLS policies when multi-tenant |
+| Database (Drizzle + SQLite/PostgreSQL) | All data storage | Phase 0 complete | Drizzle with SQLite + tenant_id query wrapper | Add RLS policies via `pgPolicy()` when multi-tenant |
 | Auth (JWT + RBAC) | API endpoints | Not started | API key per config file | Swap to JWT middleware |
 | Event Bus | Cross-module events | Phase 0 complete (in-process) | `EventEmitter` in-process | Swap to Trigger.dev when needed |
 | Logging (pino) | All operations | L1 Foundation | Standard pino setup from `@saas-platform/core/logging` | Already platform-standard |
@@ -398,9 +398,10 @@ F-005 (Quality Thresholds) ─→ F-006 (AISO Preferences)
 | 2026-03-13 | Phase 2 analysis complete: Value Proposition Canvas (3 competitors), Blue Ocean ERRC Grid, Spec-as-Context (all 6 features), assumption validation (4 confirmed, 2 partial, 1 accepted). **Gate 1 APPROVED by Malcolm.** Constitutional constraints set (4), Scope Triangle defined (scope+time fixed, cost flexible). | Phase 3: Requirements Decomposition. |
 | 2026-03-13 | **Phase 3 complete.** All 6 features have `requirements.md` + `tests.md`. 16 user stories with EARS criteria + examples. 51 acceptance tests + 16 integration tests + 23 property invariants across 6 features. All 18 NFR categories scanned per feature. Story Map with walking skeleton defined. MECE check passed. MoSCoW + WSJF prioritisation complete. Gap Identification Pass completed. Constitutional constraints verified. | Gate 2: Completeness Review. |
 | 2026-03-13 | **E2E Pass 2 started.** 10 new frameworks created today (SaaS coding arch, API standards, domain standards, DB migration, multi-tenant arch, logging/observability, conformance suite, engineering handbook, error handling, fitness functions FF-028–FF-034). Gate 0 re-assessed: 7/10 frameworks were FAIL. Architecture Integration Checklist expanded to cover all 10 frameworks (34 coding principles, data layer governance, API/integration standards, logging, conformance suite, 7 new fitness functions). Gate 0 now PASSES. Re-validating Phase 3 requirements and Phase 4 design against expanded standards. | Update F-001 requirements with framework-specific NFRs, then cascade to all features. |
-| 2026-03-13 | **E2E Pass 2 — Phase 3 & 4 complete.** epic-design.md fully updated: Operation Pattern (P-008) with code examples, CQS file structure, AppError hierarchy (RFC 7807 + suggested_action), structured logging (pino with PII redaction), prefixed IDs (7 entity prefixes), circuit breaker config, CloudEvents 1.0 event contracts, conformance suite YAML examples, 7 fitness functions (FF-028–FF-034), Prisma schema updated with RLS policies and prefixed IDs. All 6 feature requirements have framework-specific NFRs (Operation Pattern, Error Handling, Logging, Tenant Isolation, Idempotency, Serialisable I/O, Contract Completeness, No Module State, PII Redaction, Prefixed IDs, Circuit Breaker). **Gate 2 passed:** 10/10 RE process checks, 12/12 framework integration checks. 11 minor gaps found and fixed (FF ID collision renumbered FF-028–FF-034, DOR boxes ticked, domain model reconciliation notes added, quality rubric scored 4.5/5.0, hallucination risk assessment, Black Hat sweep, RAID log, test coverage summary added). | Phase 5: Task breakdown update, then Gate 3. |
+| 2026-03-13 | **E2E Pass 2 — Phase 3 & 4 complete.** epic-design.md fully updated: Operation Pattern (P-008) with code examples, CQS file structure, AppError hierarchy (RFC 7807 + suggested_action), structured logging (pino with PII redaction), prefixed IDs (7 entity prefixes), circuit breaker config, CloudEvents 1.0 event contracts, conformance suite YAML examples, 7 fitness functions (FF-028–FF-034), Drizzle schema updated with RLS policies and prefixed IDs. All 6 feature requirements have framework-specific NFRs (Operation Pattern, Error Handling, Logging, Tenant Isolation, Idempotency, Serialisable I/O, Contract Completeness, No Module State, PII Redaction, Prefixed IDs, Circuit Breaker). **Gate 2 passed:** 10/10 RE process checks, 12/12 framework integration checks. 11 minor gaps found and fixed (FF ID collision renumbered FF-028–FF-034, DOR boxes ticked, domain model reconciliation notes added, quality rubric scored 4.5/5.0, hallucination risk assessment, Black Hat sweep, RAID log, test coverage summary added). | Phase 5: Task breakdown update, then Gate 3. |
 | 2026-03-13 | **Phase 5 complete + Gate 3 PASSED.** Task breakdown updated: 8 framework tasks added (TASK-F01 to F08) covering Operation pattern infrastructure, prefixed ID generation, structured logging, circuit breaker, conformance suite, fitness functions, tenant isolation integration test, CloudEvents logging verification. Total: 32 tasks (26 impl + 6 verification), ~86h. Gate 3 conditions cleared: deployment readiness section, test data strategy, agent task boundaries (Always/Ask/Never + context files per phase), task count corrected. **Full E2E test of RE v4.16 process complete.** All 3 gates passed. All 10 frameworks integrated. | Ready for Malcolm's review and build approval. |
 | 2026-03-13 | **Tenant admin CLI added.** Gap identified: no way to create/manage tenants in `tenants.json` for R1. Added tenant administration CLI to epic-design (4 commands: add, list, remove, rotate-key). TASK-005a added to tasks.md (4h, Phase 1). Secure API key generation (32 random bytes, `apikey_` prefix). `tnt_` prefix added to ID system (8 total). Cascade delete on tenant remove. Total: 33 tasks, ~90h. | Proceed to build Phase 1. |
+| 2026-03-13 | **Prisma → Drizzle ORM correction.** Spec referenced Prisma throughout but ADR-007 (researched, accepted 2026-03-10) chose Drizzle for native RLS support, SQL-first philosophy, no code generation. Converted all references across 13 files: full schema rewrite to `sqliteTable()` syntax in epic-design.md, file paths updated (`prisma/` → `src/db/`, `drizzle/`), middleware → query wrapper terminology, Technology Decision #2 updated, dependency list changed (drizzle-orm + drizzle-kit + better-sqlite3). **E2E test learning:** Gate 0 should cross-check technology decisions against existing ADRs — this inconsistency survived 3 gates. | Start build Phase 1. |
 
 ---
 
@@ -549,7 +550,7 @@ This skeleton skips: language detection, brand voice training, GSC import, topic
 | **Determinism** | 4.5 | All acceptance criteria use EARS notation with measurable outcomes. Examples tables with concrete inputs/outputs. Only F-003 voice extraction has slight subjectivity (quality of extraction). |
 | **Completeness** | 4.5 | 21 user stories across 6 features. 18 standard + 11 framework NFR categories per feature. Gap identification pass found no remaining gaps. MECE verified. |
 | **Testability** | 5.0 | Every story has acceptance criteria with specific test scenarios. 51 acceptance tests + 16 integration tests + 23 property invariants defined in tests.md files. Conformance suite YAML examples provided. |
-| **Context Sufficiency** | 4.0 | Domain models, Prisma schema, Operation pattern examples, error hierarchy all documented. Architecture placement clear (L3 module). Minor gap: F-003/F-004 domain models needed reconciliation notes (now added). |
+| **Context Sufficiency** | 4.0 | Domain models, Drizzle schema, Operation pattern examples, error hierarchy all documented. Architecture placement clear (L3 module). Minor gap: F-003/F-004 domain models needed reconciliation notes (now added). |
 | **Test Readiness** | 4.5 | Test specs exist for all 6 features. 7 fitness functions mapped to CI gates. Conformance suite template with safety_checks. Tenant isolation test required per module. |
 | **Average** | **4.5** | Exceeds 3.5 minimum. |
 
@@ -580,8 +581,8 @@ This skeleton skips: language detection, brand voice training, GSC import, topic
 | Shopify rate limits during crawl | Medium | Low | Circuit breaker (5 failures / 60s). Crawl is lightweight (1 page + sitemap). |
 | AI voice extraction produces poor results | Medium | Medium | Skip/default option (F-003 US-003). Manual edit (F-003 US-002). Output validated against schema. |
 | GSC API rate limits during topic import | Low | Low | Circuit breaker. Fallback to manual seed keywords (F-004 US-002). |
-| SQLite → PostgreSQL migration breaks data | Low | High | Prisma abstracts DB. Schema tested against both. Migration script planned for R2. |
-| Tenant isolation leak (cross-tenant data access) | Low | Critical | RLS policies. `tenant-isolation.test.ts` required (FF-034). 404-not-403 pattern. Prisma middleware. |
+| SQLite → PostgreSQL migration breaks data | Low | High | Drizzle abstracts DB. Schema tested against both. Migration script planned for R2. |
+| Tenant isolation leak (cross-tenant data access) | Low | Critical | RLS policies. `tenant-isolation.test.ts` required (FF-034). 404-not-403 pattern. Drizzle query wrapper. |
 | Credential encryption key management | Medium | High | AES-256-GCM with Node.js crypto. Key from env variable. Never logged. Rotatable. |
 
 ---
@@ -594,7 +595,7 @@ This skeleton skips: language detection, brand voice training, GSC import, topic
 |----|------|:-----------:|:------:|-------|------------|:------:|
 | R1 | Voice extraction quality insufficient | Medium | Medium | Malcolm | Skip option + manual edit + schema validation | Open |
 | R2 | CMS API changes break adapters | Low | High | Claude | Strategy pattern isolates change surface | Open |
-| R3 | Tenant isolation leak | Low | Critical | Claude | RLS + tests + 404-not-403 + Prisma middleware | Open |
+| R3 | Tenant isolation leak | Low | Critical | Claude | RLS + tests + 404-not-403 + Drizzle query wrapper | Open |
 
 ### Assumptions
 

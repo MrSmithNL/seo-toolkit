@@ -38,7 +38,7 @@ traces_to:
 
 # Feature Design — CMS Connection Setup (F-002)
 
-> Slim feature design. See `../epic-design.md` for shared architecture (Prisma schema, module boundary, coding guardrails, cross-cutting concerns).
+> Slim feature design. See `../epic-design.md` for shared architecture (Drizzle schema, module boundary, coding guardrails, cross-cutting concerns).
 
 ---
 

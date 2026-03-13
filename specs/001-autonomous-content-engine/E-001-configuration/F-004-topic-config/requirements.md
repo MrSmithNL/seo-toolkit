@@ -100,7 +100,7 @@ TopicCluster {
 }
 ```
 
-Note: `article_count_target` and `existing_coverage` fields in TopicCluster are stored as JSON extensions within the Prisma model. See epic-design.md for the full Prisma schema.
+Note: `article_count_target` and `existing_coverage` fields in TopicCluster are stored as JSON extensions within the Drizzle model. See epic-design.md for the full Drizzle schema.
 
 ## User Stories
 

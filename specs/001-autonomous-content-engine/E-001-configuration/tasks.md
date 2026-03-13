@@ -47,7 +47,7 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
 **Foundation-first ordering (mandatory):**
 
 1. **Walking skeleton** — thinnest end-to-end slice: register a site → detect CMS → store config → read config back
-2. **Data models / schemas** — Prisma schema, migrations, tenant context
+2. **Data models / schemas** — Drizzle schema, migrations, tenant context
 3. **Domain logic** — business rules, detection algorithms, encryption
 4. **API / service layer** — CLI commands, service functions, validation
 5. **Integration** — external HTTP calls, CMS adapters
@@ -56,25 +56,25 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
 
 - [ ] **TASK-001:** Walking skeleton — register a site URL, store in database, read it back
   - Story: US-001 (F-001)
-  - Files: `src/modules/content-engine/config/index.ts`, `prisma/schema.prisma`, `prisma/migrations/`, `src/modules/content-engine/config/site-registration/site.repository.ts`, `src/modules/content-engine/config/site-registration/site.service.ts`, `vitest.config.ts`
+  - Files: `src/modules/content-engine/config/index.ts`, `src/db/schema.ts`, `drizzle/`, `src/modules/content-engine/config/site-registration/site.repository.ts`, `src/modules/content-engine/config/site-registration/site.service.ts`, `vitest.config.ts`
   - TDD: [ ] Red (tests fail) → [ ] Green (tests pass) → [ ] Refactor
   - Done when: `registerSite("https://example.com")` creates a row in `site_config` table with `tenant_id`, `getSite(id)` returns it. Tests pass.
   - Dependencies: none
   - Est: 4h
 
-- [ ] **TASK-002:** Prisma schema — full data model for all 6 features
+- [ ] **TASK-002:** Drizzle schema — full data model for all 6 features
   - Story: All features (data layer)
-  - Files: `prisma/schema.prisma`, `prisma/migrations/YYYYMMDD_initial_schema/`
+  - Files: `src/db/schema.ts`, `src/db/index.ts`, `drizzle.config.ts`, `drizzle/`
   - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: All 8 models from `epic-design.md` §Shared Data Model are in schema, migration runs cleanly, TypeScript types generated. All relations and cascading deletes verified by test.
+  - Done when: All 8 tables from `epic-design.md` §Shared Data Model are in schema, `drizzle-kit push` applies cleanly, TypeScript types inferred. All relations and cascading deletes verified by test.
   - Dependencies: TASK-001
   - Est: 3h
 
-- [ ] **TASK-003:** Tenant context middleware — `StaticTenantResolver` + Prisma middleware
+- [ ] **TASK-003:** Tenant context middleware — `StaticTenantResolver` + Drizzle query wrapper
   - Story: Cross-cutting (multi-tenancy)
   - Files: `src/lib/tenant/static-tenant-resolver.ts`, `src/lib/tenant/tenant-middleware.ts`, `src/lib/tenant/types.ts`, `tenants.json`, `src/lib/tenant/__tests__/tenant.test.ts`
   - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `StaticTenantResolver` reads `tenants.json`, validates API key, sets `tenantId` in AsyncLocalStorage. Prisma middleware auto-filters all queries by `tenantId`. Tests verify tenant isolation (query with tenant A cannot see tenant B's data).
+  - Done when: `StaticTenantResolver` reads `tenants.json`, validates API key, sets `tenantId` in AsyncLocalStorage. Drizzle query wrapper auto-adds `WHERE tenant_id = ?` to all queries. Tests verify tenant isolation (query with tenant A cannot see tenant B's data).
   - Dependencies: TASK-001
   - Est: 4h
 
@@ -309,7 +309,7 @@ Phase 4 parallel groups:
 | **Deployment target** | Local CLI — `npm link` in seo-toolkit repo |
 | **Feature flag** | `content-engine-v1` (on/off via `tenants.json` per tenant) |
 | **Staging** | Run against real sites: hairgenetix.com, skingenetix.com, digitalbouwers.nl |
-| **Rollback** | `git revert` + `prisma migrate reset` to drop schema |
+| **Rollback** | `git revert` + delete SQLite DB file to reset schema |
 | **Monitoring** | pino structured logs to stdout, review manually for R1 |
 
 ## Test Data Strategy
@@ -322,11 +322,11 @@ Test data approach: mocked HTTP responses for unit/integration tests (no real ne
 - Create/modify files within `src/modules/content-engine/config/`
 - Create/modify test files within `tests/`
 - Run tests via `pnpm test`
-- Generate Prisma client
+- Run `drizzle-kit push` to sync schema
 
 **Ask (confirm before proceeding):**
 - Add new npm dependencies
-- Modify `prisma/schema.prisma` beyond the spec
+- Modify `src/db/schema.ts` beyond the spec
 - Create files outside the module boundary
 - Modify CI/CD config
 
@@ -337,7 +337,7 @@ Test data approach: mocked HTTP responses for unit/integration tests (no real ne
 - Store secrets in code
 
 **Context files per phase:**
-- Phase 1: Read `epic-design.md` (Prisma schema, tenant resolver, Operation pattern)
+- Phase 1: Read `epic-design.md` (Drizzle schema, tenant resolver, Operation pattern)
 - Phase 2: Read `F-001/requirements.md`, `F-002/requirements.md` (detection logic, adapters)
 - Phase 3: Read all `F-*/requirements.md` + `F-*/tests.md` (acceptance criteria)
 - Phase 4: Read `epic-design.md` (module manifest, events), `tasks.md` (verification checklist)

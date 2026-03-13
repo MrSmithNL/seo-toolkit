@@ -38,7 +38,7 @@ traces_to:
 
 # Feature Design — Quality Threshold Settings (F-005)
 
-> Slim feature design. See `../epic-design.md` for shared architecture (Prisma schema, module boundary, coding guardrails, cross-cutting concerns).
+> Slim feature design. See `../epic-design.md` for shared architecture (Drizzle schema, module boundary, coding guardrails, cross-cutting concerns).
 
 ---
 

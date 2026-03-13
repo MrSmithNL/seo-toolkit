@@ -106,7 +106,7 @@ VoiceProfile {
 }
 ```
 
-Note: `source_urls`, `word_count_analysed`, `confidence`, and `distinctive_patterns` are stored as JSON fields within the Prisma VoiceProfile model. See epic-design.md for the full Prisma schema.
+Note: `source_urls`, `word_count_analysed`, `confidence`, and `distinctive_patterns` are stored as JSON fields within the Drizzle VoiceProfile model. See epic-design.md for the full Drizzle schema.
 
 ## User Stories
 

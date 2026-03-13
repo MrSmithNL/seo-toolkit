@@ -38,7 +38,7 @@ traces_to:
 
 # Feature Design — Site URL Registration & Crawl Config (F-001)
 
-> Slim feature design. See `../epic-design.md` for shared architecture (Prisma schema, module boundary, coding guardrails, cross-cutting concerns).
+> Slim feature design. See `../epic-design.md` for shared architecture (Drizzle schema, module boundary, coding guardrails, cross-cutting concerns).
 
 ---
 
@@ -120,7 +120,7 @@ interface SiteRepository {
 | **Value object** | `Language` | Code + name + optional URL pattern |
 | **Domain event** | `site.registered` | `{ siteId, url, tenantId }` — triggers downstream features |
 | **Domain event** | `site.crawled` | `{ siteId, cmsType, languages[], contentCount }` — triggers CMS adapter selection |
-| **Repository** | `SiteRepository` | Prisma-backed, tenant-scoped queries |
+| **Repository** | `SiteRepository` | Drizzle-backed, tenant-scoped queries |
 
 ---
 
