@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 11
+completed_tasks: 12
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -157,13 +157,14 @@ Phase 1 parallel groups:
   - Dependencies: TASK-001
   - Est: 3h | Actual: ~10min
 
-- [ ] **TASK-007:** Language detection logic (hreflang + Shopify locales + html lang)
+- [x] **TASK-007:** Language detection logic (hreflang + Shopify locales + html lang) ✅
   - Story: US-003 (F-001)
-  - Files: `src/modules/content-engine/config/site-registration/detectors/language.ts`, `src/modules/content-engine/config/site-registration/__tests__/language.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: Detects languages from hreflang tags, Shopify locale URLs, WPML alternate links, html lang attribute. Fallback to "en". All examples from F-001 US-003 pass (mocked HTTP).
+  - Files: `src/modules/content-engine/config/site-registration/detectors/language.ts`, `__tests__/language.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: Detects languages from hreflang tags, html lang attribute. Fallback to "en". Deduplicates. All mocked HTTP tests pass.
+  - Result: 8 tests pass. Hreflang (multi-language, URL pattern extraction), html lang (simple + region code → base), Shopify locale alternates, fallback (no signals → en, fetch error → en), deduplication (same lang from multiple sources). 20-language name lookup table.
   - Dependencies: TASK-001
-  - Est: 3h
+  - Est: 3h | Actual: ~10min
 
 - [ ] **TASK-008:** Sitemap parser — content inventory
   - Story: US-004 (F-001)
