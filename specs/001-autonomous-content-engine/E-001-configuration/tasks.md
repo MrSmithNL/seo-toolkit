@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 14
+completed_tasks: 15
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -184,13 +184,14 @@ Phase 1 parallel groups:
   - Dependencies: TASK-002, TASK-004
   - Est: 4h | Actual: ~15min
 
-- [ ] **TASK-010:** Shopify adapter [P]
+- [x] **TASK-010:** Shopify adapter ✅
   - Story: US-002 (F-002)
-  - Files: `src/modules/content-engine/config/cms-connection/adapters/shopify.ts`, `src/modules/content-engine/config/cms-connection/__tests__/shopify.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `ShopifyAdapter` implements `CMSAdapter`. Validates token via GraphQL Admin API. Checks `read_content` + `write_content` scopes. Creates test article and deletes it. All examples from F-002 US-002, US-003 pass (mocked HTTP).
+  - Files: `cms-connection/adapters/shopify.ts`, `__tests__/shopify.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `ShopifyAdapter` implements `CmsAdapter`. Validates token via GraphQL Admin API. Checks `read_content` + `write_content` scopes. Creates test article and deletes it. All mocked HTTP tests pass.
+  - Result: 6 tests pass. Verify (valid with scopes, 401 invalid token, missing scopes → 403). TestPublish (create + delete cycle). Publish (returns GID + handle). Unpublish (delete by GID). GraphQL mutations for article CRUD. Scope validation against REQUIRED_SCOPES constant.
   - Dependencies: TASK-009
-  - Est: 3h
+  - Est: 3h | Actual: ~10min
 
 Phase 2 parallel groups:
   Group A: TASK-005, TASK-006, TASK-007, TASK-008 (all depend only on TASK-001, independent of each other)
