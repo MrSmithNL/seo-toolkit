@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 20
+completed_tasks: 21
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -246,10 +246,11 @@ Phase 2 parallel groups:
   - Dependencies: TASK-002, TASK-003
   - Est: 3h
 
-- [ ] **TASK-016:** AISO preferences service [P]
+- [x] **TASK-016:** AISO preferences service [P]
   - Story: US-001, US-002, US-003 (F-006)
   - Files: `src/modules/content-engine/config/aiso-preferences/aiso.service.ts`, `src/modules/content-engine/config/aiso-preferences/aiso.repository.ts`, `src/modules/content-engine/config/aiso-preferences/factor-registry.ts`, `src/modules/content-engine/config/aiso-preferences/__tests__/aiso.service.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 15 tests. AisoRepository (create/findBySiteId/update). AisoService (createDefaults, getPreferences, updatePreferences, resetToRecommended). FactorRegistry (36 factors, 6 categories, validation). Validates factors, schema types, AI platforms.
   - Done when: Defaults created with `use_recommended=true`. Factor registry contains all 36 factors grouped in 6 categories. Custom factor selection works when `use_recommended=false`. Schema type configuration works. Falls back to recommended on corruption. All F-006 acceptance criteria met.
   - Dependencies: TASK-002, TASK-003
   - Est: 3h
