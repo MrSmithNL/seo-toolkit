@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 19
+completed_tasks: 20
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -237,10 +237,11 @@ Phase 2 parallel groups:
   - Dependencies: TASK-002, TASK-003
   - Est: 5h
 
-- [ ] **TASK-015:** Quality thresholds service [P]
+- [x] **TASK-015:** Quality thresholds service [P]
   - Story: US-001, US-002, US-003 (F-005)
   - Files: `src/modules/content-engine/config/quality-thresholds/quality.service.ts`, `src/modules/content-engine/config/quality-thresholds/quality.repository.ts`, `src/modules/content-engine/config/quality-thresholds/__tests__/quality.service.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 13 tests. QualityRepository (create/findBySiteId/update). QualityService (createDefaults, getThresholds, updateThresholds, resetToDefaults). CMS-specific defaults (Shopify shorter content). Validation (ranges, enums, min>max). getDefaults pure function.
   - Done when: Defaults created on site registration (seo_score_min=65, aiso_score_min=7.0, readability=grade_8, word_count=1500-3000, publish=draft_review). Thresholds editable. Validation prevents invalid ranges. Falls back to defaults on corruption. All F-005 acceptance criteria met.
   - Dependencies: TASK-002, TASK-003
   - Est: 3h
