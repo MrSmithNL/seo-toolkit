@@ -1,0 +1,68 @@
+feature: F-001 Site Registration
+service: SiteService
+safety_checks:
+  - "URL normalisation strips trailing slashes and forces HTTPS"
+  - "Duplicate URL for same tenant returns 409"
+  - "Cross-tenant access returns 404 not 403"
+
+cases:
+  - name: "Register a valid site"
+    method: registerSite
+    input:
+      url: "https://example.com"
+      name: "Example Site"
+    expect:
+      success: true
+      data:
+        id_pattern: "^ste_"
+        url: "https://example.com"
+
+  - name: "Normalise URL — trim, lowercase, add HTTPS"
+    method: registerSite
+    input:
+      url: "  EXAMPLE.COM/  "
+      name: "Normalised"
+    expect:
+      success: true
+      data:
+        url: "https://example.com"
+
+  - name: "Reject empty URL"
+    method: registerSite
+    input:
+      url: ""
+      name: "Bad"
+    expect:
+      success: false
+      error:
+        status: 400
+
+  - name: "Reject duplicate URL for same tenant"
+    method: registerSite
+    setup: register_site_first
+    input:
+      url: "https://example.com"
+      name: "Duplicate"
+    expect:
+      success: false
+      error:
+        status: 409
+
+  - name: "Get site returns 404 for non-existent ID"
+    method: getSite
+    input:
+      id: "ste_doesnotexist"
+    expect:
+      success: false
+      error:
+        status: 404
+
+  - name: "Cross-tenant access returns 404"
+    method: getSite
+    context: different_tenant
+    input:
+      id: "ste_from_other_tenant"
+    expect:
+      success: false
+      error:
+        status: 404

@@ -1,0 +1,77 @@
+feature: F-005 Quality Thresholds
+service: QualityService
+safety_checks:
+  - "CMS-specific defaults (Shopify vs WordPress)"
+  - "Validation rejects out-of-range values"
+  - "Partial updates preserve unchanged fields"
+
+cases:
+  - name: "Create WordPress defaults"
+    method: createDefaults
+    input:
+      siteId: "ste_wp"
+      cmsType: "wordpress"
+    expect:
+      success: true
+      data:
+        seoScoreMin: 65
+        wordCountMin: 1500
+        publishMode: "draft_review"
+
+  - name: "Create Shopify defaults (shorter content)"
+    method: createDefaults
+    input:
+      siteId: "ste_shop"
+      cmsType: "shopify"
+    expect:
+      success: true
+      data:
+        wordCountMin: 800
+        readabilityTarget: "grade_6"
+
+  - name: "Update single threshold"
+    method: updateThresholds
+    setup: create_defaults_first
+    input:
+      siteId: "ste_wp"
+      seoScoreMin: 80
+    expect:
+      success: true
+      data:
+        seoScoreMin: 80
+        aisoScoreMin: 7.0
+
+  - name: "Reject SEO score > 100"
+    method: updateThresholds
+    setup: create_defaults_first
+    input:
+      siteId: "ste_wp"
+      seoScoreMin: 150
+    expect:
+      success: false
+      error:
+        status: 400
+
+  - name: "Reject wordCountMin > wordCountMax"
+    method: updateThresholds
+    setup: create_defaults_first
+    input:
+      siteId: "ste_wp"
+      wordCountMin: 5000
+      wordCountMax: 1000
+    expect:
+      success: false
+      error:
+        status: 400
+
+  - name: "Reset to defaults"
+    method: resetToDefaults
+    setup: create_and_modify_first
+    input:
+      siteId: "ste_wp"
+      cmsType: "wordpress"
+    expect:
+      success: true
+      data:
+        seoScoreMin: 65
+        publishMode: "draft_review"

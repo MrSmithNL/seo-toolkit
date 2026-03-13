@@ -1,7 +1,7 @@
 {
   "name": "@smithai/seo-toolkit",
   "version": "0.1.0",
-  "description": "SEO Toolkit \u2014 autonomous content engine",
+  "description": "SEO Toolkit — autonomous content engine",
   "type": "module",
   "private": true,
   "engines": {
@@ -30,7 +30,8 @@
     "@types/node": "^22.13.14",
     "drizzle-kit": "^0.30.5",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "vitest": "^3.0.9",
+    "yaml": "^2.8.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

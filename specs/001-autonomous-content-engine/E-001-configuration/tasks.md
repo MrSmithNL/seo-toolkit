@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 23
+completed_tasks: 24
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -281,10 +281,11 @@ Phase 3 parallel groups:
   - Dependencies: TASK-017
   - Est: 3h
 
-- [ ] **TASK-F05:** Conformance suite YAML tests — expected I/O for all endpoints
+- [x] **TASK-F05:** Conformance suite YAML tests — expected I/O for all endpoints
   - Story: Cross-cutting (architecture — conformance suite template)
   - Files: `tests/conformance/site-registration.yaml`, `tests/conformance/cms-connection.yaml`, `tests/conformance/brand-voice.yaml`, `tests/conformance/topic-config.yaml`, `tests/conformance/quality-thresholds.yaml`, `tests/conformance/aiso-preferences.yaml`, `tests/conformance/runner.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 9 tests. 6 YAML suites (35 cases total), conformance runner validates structure, completeness, safety checks. ≥5 cases per feature, happy+error paths.
   - Done when: YAML test cases cover: happy path CRUD, validation errors, tenant isolation (404 not 403), idempotency, business rules per feature. Runner executes YAML cases against API endpoints. All `safety_checks` documented. ≥5 cases per feature.
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 4h
