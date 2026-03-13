@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 12
+completed_tasks: 13
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -166,13 +166,14 @@ Phase 1 parallel groups:
   - Dependencies: TASK-001
   - Est: 3h | Actual: ~10min
 
-- [ ] **TASK-008:** Sitemap parser — content inventory
+- [x] **TASK-008:** Sitemap parser — content inventory ✅
   - Story: US-004 (F-001)
-  - Files: `src/modules/content-engine/config/site-registration/sitemap.ts`, `src/modules/content-engine/config/site-registration/__tests__/sitemap.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: Parses `sitemap.xml` and `sitemap_index.xml`. Counts content URLs (excludes images/CSS/JS). Returns 0 with note if no sitemap found. All examples from F-001 US-004 pass.
+  - Files: `src/modules/content-engine/config/site-registration/sitemap.ts`, `__tests__/sitemap.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: Parses `sitemap.xml` and `sitemap_index.xml`. Counts content URLs (excludes images/CSS/JS). Returns 0 with sitemapFound=false if no sitemap found.
+  - Result: 6 tests pass. Simple sitemap (3 URLs), sitemap index (follows child sitemaps, sums counts), no sitemap (0 + false), fetch error (0 + false), asset exclusion (filters 15 extensions), sitemap_index.xml fallback. Regex-based XML parsing — no external dependency needed.
   - Dependencies: TASK-001
-  - Est: 2h
+  - Est: 2h | Actual: ~10min
 
 - [ ] **TASK-009:** CMS adapter interfaces + WordPress adapter [P]
   - Story: US-001 (F-002)
