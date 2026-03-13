@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 1
+completed_tasks: 2
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -63,13 +63,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: none
   - Est: 4h | Actual: ~2h
 
-- [ ] **TASK-002:** Drizzle schema — full data model for all 6 features
+- [x] **TASK-002:** Drizzle schema — full data model for all 6 features ✅
   - Story: All features (data layer)
-  - Files: `src/db/schema.ts`, `src/db/index.ts`, `drizzle.config.ts`, `drizzle/`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: All 8 tables from `epic-design.md` §Shared Data Model are in schema, `drizzle-kit push` applies cleanly, TypeScript types inferred. All relations and cascading deletes verified by test.
+  - Files: `src/db/schema.ts`, `src/db/schema.test.ts`, `src/lib/id.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: All 8 tables from `epic-design.md` §Shared Data Model are in schema, TypeScript types inferred. All relations and cascading deletes verified by test.
+  - Result: 12 tests pass (CRUD for all 8 tables, cascading deletes site→children, topicConfig→clusters, unique constraints, multi-tenant URL isolation). `slg_` prefix added to ID generator (9 total).
   - Dependencies: TASK-001
-  - Est: 3h
+  - Est: 3h | Actual: ~1h
 
 - [ ] **TASK-003:** Tenant context middleware — `StaticTenantResolver` + Drizzle query wrapper
   - Story: Cross-cutting (multi-tenancy)

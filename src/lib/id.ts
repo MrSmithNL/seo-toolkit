@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 
 const ID_PREFIXES = {
   site: 'ste',
+  siteLanguage: 'slg',
   cmsConnection: 'cms',
   voiceProfile: 'vce',
   topicConfig: 'tpc',
