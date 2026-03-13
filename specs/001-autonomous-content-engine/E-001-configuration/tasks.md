@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 18
+completed_tasks: 19
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -228,11 +228,11 @@ Phase 2 parallel groups:
   - Dependencies: TASK-002, TASK-003
   - Est: 5h
 
-- [ ] **TASK-014:** Topic configuration service [P]
+- [x] **TASK-014:** Topic configuration service [P]
   - Story: US-001, US-002, US-003, US-004 (F-004)
   - Files: `src/modules/content-engine/config/topic-config/topic.service.ts`, `src/modules/content-engine/config/topic-config/topic.repository.ts`, `src/modules/content-engine/config/topic-config/clustering.ts`, `src/modules/content-engine/config/topic-config/__tests__/topic.service.test.ts`
   - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - Result: 9 tests. TopicRepository (createConfig/findConfigBySiteId/addCluster/findClustersByConfigId/updateClusterPriority/deleteConfigBySiteId). TopicService (setTopics, inferTopics, getTopics, updateClusterPriority). Mock LlmClusterer. Dedup, normalisation, small-set single-cluster, re-entrant overwrite.
   - Done when: `inferTopics(siteId)` auto-extracts from site content. `setTopics(siteId, keywords)` accepts manual input. `importFromGSC(siteId, creds)` imports from Search Console. All inputs cluster into `TopicCluster` entities with priorities. `topics.configured` event emitted. All F-004 acceptance criteria met.
   - Dependencies: TASK-002, TASK-003
   - Est: 5h
@@ -240,8 +240,7 @@ Phase 2 parallel groups:
 - [ ] **TASK-015:** Quality thresholds service [P]
   - Story: US-001, US-002, US-003 (F-005)
   - Files: `src/modules/content-engine/config/quality-thresholds/quality.service.ts`, `src/modules/content-engine/config/quality-thresholds/quality.repository.ts`, `src/modules/content-engine/config/quality-thresholds/__tests__/quality.service.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: Defaults created on site registration (seo_score_min=65, aiso_score_min=7.0, readability=grade_8, word_count=1500-3000, publish=draft_review). Thresholds editable. Validation prevents invalid ranges. Falls back to defaults on corruption. All F-005 acceptance criteria met.
   - Dependencies: TASK-002, TASK-003
   - Est: 3h
@@ -249,8 +248,7 @@ Phase 2 parallel groups:
 - [ ] **TASK-016:** AISO preferences service [P]
   - Story: US-001, US-002, US-003 (F-006)
   - Files: `src/modules/content-engine/config/aiso-preferences/aiso.service.ts`, `src/modules/content-engine/config/aiso-preferences/aiso.repository.ts`, `src/modules/content-engine/config/aiso-preferences/factor-registry.ts`, `src/modules/content-engine/config/aiso-preferences/__tests__/aiso.service.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: Defaults created with `use_recommended=true`. Factor registry contains all 36 factors grouped in 6 categories. Custom factor selection works when `use_recommended=false`. Schema type configuration works. Falls back to recommended on corruption. All F-006 acceptance criteria met.
   - Dependencies: TASK-002, TASK-003
   - Est: 3h
@@ -266,8 +264,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-017:** Module manifest + event bus integration
   - Story: Cross-cutting (architecture)
   - Files: `src/modules/content-engine/module-manifest.json`, `src/modules/content-engine/config/events.ts`, `src/modules/content-engine/config/__tests__/events.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: `module-manifest.json` matches the spec from `epic-design.md`. Event bus wired: all 7 events (`site.registered`, `site.crawled`, `cms.connected`, `cms.verified`, `voice.extracted`, `topics.configured`, `config.complete`) emit correctly with typed payloads. Event subscribers can receive and type-check payloads.
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 3h
@@ -275,8 +272,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-018:** Configuration completeness orchestrator
   - Story: Cross-cutting (pipeline readiness)
   - Files: `src/modules/content-engine/config/orchestrator.ts`, `src/modules/content-engine/config/__tests__/orchestrator.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: Orchestrator tracks which config features are complete per site. Emits `config.complete` when all Must-have features (F-001, F-002, F-004) are done. Reports config status showing which features are configured/pending. Pipeline won't start without minimum config.
   - Dependencies: TASK-017
   - Est: 3h
@@ -284,8 +280,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-F05:** Conformance suite YAML tests — expected I/O for all endpoints
   - Story: Cross-cutting (architecture — conformance suite template)
   - Files: `tests/conformance/site-registration.yaml`, `tests/conformance/cms-connection.yaml`, `tests/conformance/brand-voice.yaml`, `tests/conformance/topic-config.yaml`, `tests/conformance/quality-thresholds.yaml`, `tests/conformance/aiso-preferences.yaml`, `tests/conformance/runner.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: YAML test cases cover: happy path CRUD, validation errors, tenant isolation (404 not 403), idempotency, business rules per feature. Runner executes YAML cases against API endpoints. All `safety_checks` documented. ≥5 cases per feature.
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 4h
@@ -293,8 +288,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-F06:** Fitness function CI checks (FF-028 to FF-034)
   - Story: Cross-cutting (architecture — fitness functions)
   - Files: `tests/architecture/fitness-functions.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: 7 fitness functions pass: FF-028 (module ≤10 files, ≤2000 lines), FF-029 (every command/query has Zod + return type), FF-030 (Result return + OperationContext param), FF-031 (`.safeParse` in every handler), FF-032 (no `throw` in `src/api/`), FF-033 (no `let`/`var` at module scope in `src/`), FF-034 (`tenant-isolation.test.ts` exists).
   - Dependencies: TASK-017
   - Est: 3h
@@ -302,8 +296,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-F07:** Tenant isolation integration test
   - Story: Cross-cutting (NFR 22 all features — FF-034)
   - Files: `tests/integration/tenant-isolation.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: Tests verify: Tenant A creates site → Tenant B queries same ID → gets 404 (not 403). Tenant B creates site → Tenant A cannot see it in list. Covers all 6 entity types. All CRUD operations tested.
   - Dependencies: TASK-003, TASK-011
   - Est: 3h
@@ -311,8 +304,7 @@ Phase 3 parallel groups:
 - [ ] **TASK-F08:** CloudEvents event logging verification
   - Story: Cross-cutting (NFR 21 — logging standards §14)
   - Files: `tests/integration/event-logging.test.ts`
-  - TDD: [x] Red → [x] Green → [x] Refactor
-  - Result: 5 tests. VoiceRepository (create/findBySiteId/update), VoiceService (extractVoice via LlmClient, createDefaults, getProfile, updateProfile). Mock LLM interface for testability.
+  - TDD: [ ] Red → [ ] Green → [ ] Refactor
   - Done when: All 7 events emit with CloudEvents 1.0 envelope (specversion, id, source, type, time, tenantid, correlationid). Emit and consume are both logged as structured JSON. Tests capture log output and verify fields.
   - Dependencies: TASK-017
   - Est: 2h
