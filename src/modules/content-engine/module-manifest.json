@@ -1,0 +1,72 @@
+{
+  "name": "content-engine-config",
+  "version": "0.1.0",
+  "capability": "seo",
+  "description": "Site configuration for the autonomous content engine",
+  "dependencies": {
+    "platform": ["database", "config"],
+    "modules": []
+  },
+  "routes": [
+    { "method": "POST", "path": "/api/v1/sites", "handler": "createSite" },
+    { "method": "GET", "path": "/api/v1/sites/:id", "handler": "getSite" },
+    { "method": "GET", "path": "/api/v1/sites", "handler": "listSites" },
+    { "method": "PATCH", "path": "/api/v1/sites/:id", "handler": "updateSite" },
+    { "method": "DELETE", "path": "/api/v1/sites/:id", "handler": "deleteSite" },
+    { "method": "POST", "path": "/api/v1/sites/:id/cms", "handler": "connectCMS" },
+    { "method": "POST", "path": "/api/v1/sites/:id/voice", "handler": "extractVoice" },
+    { "method": "PUT", "path": "/api/v1/sites/:id/topics", "handler": "configureTopics" },
+    { "method": "PUT", "path": "/api/v1/sites/:id/quality", "handler": "setThresholds" },
+    { "method": "PUT", "path": "/api/v1/sites/:id/aiso", "handler": "setAISOPrefs" }
+  ],
+  "contracts": {
+    "commands": [
+      { "name": "createSite", "input": "CreateSiteInput", "output": "Result<SiteConfig, OperationError>" },
+      { "name": "updateSite", "input": "UpdateSiteInput", "output": "Result<SiteConfig, OperationError>" },
+      { "name": "deleteSite", "input": "DeleteSiteInput", "output": "Result<void, OperationError>" },
+      { "name": "connectCMS", "input": "ConnectCMSInput", "output": "Result<CMSConnection, OperationError>" },
+      { "name": "extractVoice", "input": "ExtractVoiceInput", "output": "Result<VoiceProfile, OperationError>" },
+      { "name": "configureTopics", "input": "ConfigureTopicsInput", "output": "Result<TopicConfig, OperationError>" },
+      { "name": "setThresholds", "input": "SetThresholdsInput", "output": "Result<QualityThresholds, OperationError>" },
+      { "name": "setAISOPrefs", "input": "SetAISOPrefsInput", "output": "Result<AISOPreferences, OperationError>" }
+    ],
+    "queries": [
+      { "name": "getSite", "input": "GetSiteInput", "output": "Result<SiteConfig, OperationError>" },
+      { "name": "listSites", "input": "ListSitesInput", "output": "Result<PaginatedList<SiteConfig>, OperationError>" }
+    ]
+  },
+  "events": {
+    "emits": [
+      "site.registered",
+      "site.crawled",
+      "cms.connected",
+      "cms.verified",
+      "voice.extracted",
+      "topics.configured",
+      "config.complete"
+    ],
+    "subscribes": []
+  },
+  "agentTools": [
+    {
+      "name": "register_site",
+      "description": "Register a new site for content generation",
+      "inputSchema": "CreateSiteInput",
+      "outputSchema": "SiteConfig",
+      "consequenceClass": "B",
+      "consequenceDescription": "Creates a new site configuration record in tenant scope",
+      "permissions": ["site:write"]
+    },
+    {
+      "name": "get_site_config",
+      "description": "Get full configuration for a site",
+      "inputSchema": "GetSiteInput",
+      "outputSchema": "SiteConfig",
+      "consequenceClass": "A",
+      "consequenceDescription": "Read-only — retrieves site configuration",
+      "permissions": ["site:read"]
+    }
+  ],
+  "permissions": ["site:read", "site:write", "cms:connect", "config:manage"],
+  "healthEndpoint": "/api/v1/health"
+}

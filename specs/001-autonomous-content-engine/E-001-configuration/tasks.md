@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 21
+completed_tasks: 22
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -263,10 +263,11 @@ Phase 3 parallel groups:
 
 ## Phase 4: Integration + Module Manifest
 
-- [ ] **TASK-017:** Module manifest + event bus integration
+- [x] **TASK-017:** Module manifest + event bus integration
   - Story: Cross-cutting (architecture)
   - Files: `src/modules/content-engine/module-manifest.json`, `src/modules/content-engine/config/events.ts`, `src/modules/content-engine/config/__tests__/events.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 11 tests. ConfigEventBus (typed emit/subscribe for all 7 CloudEvents 1.0 events). Module manifest JSON matching epic-design.md spec. Multiple subscribers, listener count, safe no-subscriber emit.
   - Done when: `module-manifest.json` matches the spec from `epic-design.md`. Event bus wired: all 7 events (`site.registered`, `site.crawled`, `cms.connected`, `cms.verified`, `voice.extracted`, `topics.configured`, `config.complete`) emit correctly with typed payloads. Event subscribers can receive and type-check payloads.
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 3h
