@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 9
+completed_tasks: 10
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -139,13 +139,14 @@ Phase 1 parallel groups:
 
 ## Phase 2: Domain Logic (Detection + Adapters)
 
-- [ ] **TASK-005:** URL normalisation + validation logic
+- [x] **TASK-005:** URL normalisation + validation logic ✅
   - Story: US-001 (F-001)
   - Files: `src/modules/content-engine/config/site-registration/url.ts`, `src/modules/content-engine/config/site-registration/__tests__/url.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: `normaliseUrl("hairgenetix.com")` → `https://www.hairgenetix.com`. Handles: add https://, strip trailing slash, resolve www/non-www, reject invalid URLs. All examples from F-001 US-001 pass.
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: `normaliseUrl("hairgenetix.com")` → `https://hairgenetix.com`. Handles: add https://, upgrade http→https, strip trailing slash, lowercase hostname, strip default ports, strip fragments, reject invalid URLs. All spec examples pass. Idempotency verified.
+  - Result: 19 tests pass. Protocol handling (3), trailing slash (2), hostname normalisation (4), spec examples (3), invalid URLs (3), idempotency (1), edge cases (3). Returns `Result<string, OperationError>`. www resolution deferred to crawl step (TASK-011) — normalisation is pure, no HTTP.
   - Dependencies: TASK-001
-  - Est: 2h
+  - Est: 2h | Actual: ~10min
 
 - [ ] **TASK-006:** CMS detection logic (WordPress + Shopify detectors)
   - Story: US-002 (F-001)
