@@ -51,7 +51,7 @@ Ongoing monitoring and content generation. These need paid services or more data
 | SEO-023 | Build Reporter Agent | 🔲 Todo | Weekly/monthly dashboards combining all service data |
 | SEO-024 | Schedule recurring audits | 🔲 Todo | Set up weekly/monthly Rube recipe schedules |
 | SEO-025 | Apply audit recommendations to LOE | ⏳ In Progress | Re-audited 2026-03-09: 90/100 tech, 63/100 content (40 pages). T-001 + T-002 + T-004 done. Fix list compiled (53 issues, 5 phases). Next: T-006/T-007/T-008 (meta, alt, heading fixes — human_level 2) |
-| SEO-026 | Apply audit recommendations to Hairgenetix | ⏳ In Progress | Re-audited 2026-03-11: 72/100 tech (down from 83). Cloudflare blocking crawler on pages/collections. 64 critical, 148 warnings. T-003 done, T-005 next |
+| SEO-026 | Apply audit recommendations to Hairgenetix | ⏳ In Progress | Re-audited 2026-03-11: 72/100 tech (down from 83). Fix list compiled (280 issues, 5 phases). Root cause: Cloudflare bot protection blocks 32 pages. T-003 + T-005 done. Next: T-009 (llms.txt draft), T-010 (meta fixes) — both human_level 2 |
 | SEO-027 | Rebuild AI Discovery Rube recipe for v2.0 | 🔲 Todo | Implement 34-factor audit in recipe `rcp_3LBwPfkiTtRT` — content scoring, external presence, SoM |
 | SEO-028 | Re-audit Love Over Exile with AI Discovery v2.0 | 🔲 Todo | Re-score with new 34-factor model (was 100/100 on v1.0 — expect lower on v2.0) |
 | SEO-029 | Re-audit Hairgenetix with AI Discovery v2.0 | 🔲 Todo | Re-score with new 34-factor model (was 74/100 on v1.0) |
