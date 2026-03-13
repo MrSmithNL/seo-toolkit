@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 3
+completed_tasks: 4
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -81,13 +81,14 @@ Tasks are ordered by dependency. Each task should take 2-8 hours. Tasks marked [
   - Dependencies: TASK-001
   - Est: 4h | Actual: ~1h
 
-- [ ] **TASK-004:** Encryption utility — AES-256-GCM encrypt/decrypt for credentials
+- [x] **TASK-004:** Encryption utility — AES-256-GCM encrypt/decrypt for credentials ✅
   - Story: US-001, US-002 (F-002 — Constitutional Constraint #1)
-  - Files: `src/lib/crypto/encrypt.ts`, `src/lib/crypto/__tests__/encrypt.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - Files: `src/lib/crypto/encrypt.ts`, `src/lib/crypto/encrypt.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
   - Done when: `encrypt(plaintext, key)` returns `{iv, ciphertext, tag}`. `decrypt(encrypted, key)` returns original plaintext. Key derived from `ENCRYPTION_KEY` env var. Tests verify roundtrip, tamper detection (modified ciphertext fails), different keys produce different ciphertext.
+  - Result: 12 tests pass. Roundtrip (plain, unicode, empty string), random IV (same input → different output), different keys → different ciphertext, wrong key throws, tampered ciphertext throws, tampered tag throws, deriveKey determinism and uniqueness.
   - Dependencies: none
-  - Est: 2h
+  - Est: 2h | Actual: ~20min
 
 - [ ] **TASK-005a:** Tenant administration CLI — add, list, remove, rotate-key commands
   - Story: Cross-cutting (tenant management — fills gap between manual JSON editing and PROD-004 SaaS)
