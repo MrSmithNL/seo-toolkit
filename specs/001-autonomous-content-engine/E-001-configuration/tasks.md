@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 10
+completed_tasks: 11
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -148,13 +148,14 @@ Phase 1 parallel groups:
   - Dependencies: TASK-001
   - Est: 2h | Actual: ~10min
 
-- [ ] **TASK-006:** CMS detection logic (WordPress + Shopify detectors)
+- [x] **TASK-006:** CMS detection logic (WordPress + Shopify detectors) ✅
   - Story: US-002 (F-001)
-  - Files: `src/modules/content-engine/config/site-registration/detectors/wordpress.ts`, `src/modules/content-engine/config/site-registration/detectors/shopify.ts`, `src/modules/content-engine/config/site-registration/detectors/types.ts`, `src/modules/content-engine/config/site-registration/__tests__/detectors.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
-  - Done when: Pluggable detector pattern works. WordPress detector checks `/wp-json/wp/v2/` endpoint. Shopify detector checks for `cdn.shopify.com` in HTML. Unknown fallback works. All examples from F-001 US-002 pass (mocked HTTP).
+  - Files: `src/modules/content-engine/config/site-registration/detectors/types.ts`, `detectors/wordpress.ts`, `detectors/shopify.ts`, `detectors/detect.ts`, `__tests__/detectors.test.ts`
+  - TDD: [x] Red → [x] Green → [ ] Refactor
+  - Done when: Pluggable detector pattern works. WordPress detector checks `/wp-json/wp/v2/` endpoint + `/wp-login.php` fallback. Shopify detector checks for `cdn.shopify.com` and `Shopify.theme` in HTML. Unknown fallback works. All mocked HTTP tests pass.
+  - Result: 12 tests pass. WordPress (wp-json 0.95, wp-login fallback 0.7, no signals → null, network error → null). Shopify (cdn.shopify.com 0.9, Shopify.theme 0.85, no signals → null, error → null). Orchestrator (wordpress, shopify, unknown, highest-confidence wins). `HttpFetcher` interface for testability. `CmsDetector` interface for pluggability.
   - Dependencies: TASK-001
-  - Est: 3h
+  - Est: 3h | Actual: ~10min
 
 - [ ] **TASK-007:** Language detection logic (hreflang + Shopify locales + html lang)
   - Story: US-003 (F-001)
