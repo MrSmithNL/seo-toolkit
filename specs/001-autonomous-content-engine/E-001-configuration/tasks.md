@@ -10,7 +10,7 @@ phase: 6-build
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
-completed_tasks: 22
+completed_tasks: 23
 refs:
   requirements: "./F-*/requirements.md"
   design: "./epic-design.md"
@@ -272,10 +272,11 @@ Phase 3 parallel groups:
   - Dependencies: TASK-011, TASK-012, TASK-013, TASK-014, TASK-015, TASK-016
   - Est: 3h
 
-- [ ] **TASK-018:** Configuration completeness orchestrator
+- [x] **TASK-018:** Configuration completeness orchestrator
   - Story: Cross-cutting (pipeline readiness)
   - Files: `src/modules/content-engine/config/orchestrator.ts`, `src/modules/content-engine/config/__tests__/orchestrator.test.ts`
-  - TDD: [ ] Red → [ ] Green → [ ] Refactor
+  - TDD: [x] Red → [x] Green → [x] Refactor
+  - Result: 7 tests. ConfigOrchestrator with pluggable ConfigCheckers. Tracks 6 features (3 required, 3 optional). Pipeline ready = all Must-haves configured. All/none/partial scenarios covered.
   - Done when: Orchestrator tracks which config features are complete per site. Emits `config.complete` when all Must-have features (F-001, F-002, F-004) are done. Reports config status showing which features are configured/pending. Pipeline won't start without minimum config.
   - Dependencies: TASK-017
   - Est: 3h
