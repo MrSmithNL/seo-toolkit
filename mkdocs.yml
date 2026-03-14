@@ -75,7 +75,6 @@ nav:
       - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
       - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
       - Configuration Setup Patterns: specs/001-autonomous-content-engine/research/e001-configuration-setup-patterns.md
-      - Phase 2 Analysis: specs/001-autonomous-content-engine/E-001-configuration/research/phase2-analysis.md
 
   # ============================================================
   # DESIGN — Architecture, agents, coding standards
@@ -107,29 +106,7 @@ nav:
       - Theme: specs/001-autonomous-content-engine/theme.md
       - Capability Map: specs/001-autonomous-content-engine/capability-map.md
       - Process Decomposition: specs/001-autonomous-content-engine/process-decomposition-map.md
-    - E-001 Configuration:
-      - Epic Status: specs/001-autonomous-content-engine/E-001-configuration/epic-status.md
-      - Epic Design: specs/001-autonomous-content-engine/E-001-configuration/epic-design.md
-      - Tasks: specs/001-autonomous-content-engine/E-001-configuration/tasks.md
-    - Feature Specs:
-      - F-001 Site Registration:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/design.md
-      - F-002 CMS Connection:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/design.md
-      - F-003 Brand Voice:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/design.md
-      - F-004 Topic Config:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/design.md
-      - F-005 Quality Thresholds:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/design.md
-      - F-006 AISO Preferences:
-        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/requirements.md
-        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/design.md
+      - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
 
   # ============================================================
   # TEST — Strategy, quality gates, test specs, UAT
@@ -139,17 +116,7 @@ nav:
     - Test Strategy: test-strategy.md
     - Quality Gates: quality-gates.md
     - Mutation Metrics: mutation-metrics.md
-    - UAT:
-      - UAT Guide: uat-guide.md
-      - UAT Wizard (Interactive): uat-wizard.html
-      - UAT Checklist (E-001): specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md
-    - Feature Test Specs:
-      - F-001 Site Registration: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/tests.md
-      - F-002 CMS Connection: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/tests.md
-      - F-003 Brand Voice: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/tests.md
-      - F-004 Topic Config: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/tests.md
-      - F-005 Quality Thresholds: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/tests.md
-      - F-006 AISO Preferences: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/tests.md
+    - UAT Guide: uat-guide.md
 
   # ============================================================
   # DEPLOY — CI/CD, releases, ship gate
@@ -157,10 +124,6 @@ nav:
 
   - Deployment:
     - Deployment Guide: deployment-guide.md
-    - Ship Gate Checklist (E-001): specs/001-autonomous-content-engine/E-001-configuration/ship-gate-checklist.md
-    - Release Notes (v0.1.0): specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md
-    - Deployment Report (E-001): specs/001-autonomous-content-engine/E-001-configuration/deployment-report.md
-    - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
 
   # ============================================================
   # OPERATE — Day-to-day operations, monitoring, security

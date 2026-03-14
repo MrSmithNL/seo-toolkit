@@ -29,22 +29,6 @@ tmp/
 *.tmp
 *.log
 
-# TypeScript / Node
-node_modules/
-dist/
-*.tsbuildinfo
-
-# Database (local SQLite)
-data/
-*.db
-*.db-journal
-
-# Drizzle migrations (generated)
-drizzle/meta/
-
-# Tenant secrets
-tenants.json
-
 # Data cache
 cache/
 *.cache
