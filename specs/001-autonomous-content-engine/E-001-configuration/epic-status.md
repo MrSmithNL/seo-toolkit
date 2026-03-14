@@ -281,10 +281,10 @@ Epic E-001: Configuration & Setup
 | Visual preview _(if UI)_ | N/A — CLI for V1 | |
 | Build | [x] Complete — 33/33 tasks, 251 tests, 25 test files | 2026-03-13/14 |
 | Build complete verification | [x] Passed — all checks green | 2026-03-14 |
-| Staging verified | [ ] In progress | |
-| **Gate: Ship** | [ ] Not reached | |
-| Production deployed | [ ] Not started | |
-| Post-deploy monitoring | [ ] Not configured | |
+| Staging verified | [x] Passed — hairgenetix + skingenetix detected correctly. WP false positive bug found and fixed. | 2026-03-14 |
+| **Gate: Ship** | [x] Passed — CI workflow, feature flag, staging verified | 2026-03-14 |
+| Production deployed | [x] Shipped — local CLI via npm link, code on main | 2026-03-14 |
+| Post-deploy monitoring | [x] pino structured logging configured, CI pipeline active | 2026-03-14 |
 | Retrospective | [ ] Not started | |
 
 ---
