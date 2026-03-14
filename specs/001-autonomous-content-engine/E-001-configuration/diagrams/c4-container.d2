@@ -1,0 +1,262 @@
+# C4 Container Diagram — E-001 Content Engine Configuration
+# SEO Toolkit (PROD-001)
+
+direction: down
+
+title: {
+  label: "C4 Container — Content Engine Configuration"
+  near: top-center
+  shape: text
+  style.font-size: 28
+  style.bold: true
+}
+
+# === People ===
+
+site_owner: "Site Owner\n[Person]" {
+  shape: person
+  style.fill: "#08427B"
+  style.font-color: "#ffffff"
+}
+
+# === System Boundary ===
+
+seo_toolkit: "SEO Toolkit CLI\n[System Boundary]" {
+  style.fill: "#E8E8E8"
+  style.stroke: "#1168BD"
+  style.border-radius: 8
+
+  # --- Content Engine Module ---
+
+  content_engine: "Content Engine\n[Module]" {
+    style.fill: "#D5E8FF"
+    style.stroke: "#1168BD"
+    style.border-radius: 8
+
+    # --- Config Orchestrator ---
+
+    orchestrator: "Config Orchestrator\n[TypeScript Class]\n\nTracks feature completeness\n(F-001 to F-006), emits\nconfig.complete when ready." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    event_bus: "Config Event Bus\n[TypeScript Class]\n\nCloudEvents 1.0 typed bus.\nEmits site.registered,\nsite.crawled, cms.connected,\nconfig.complete events." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    # --- Site Registration ---
+
+    site_service: "Site Registration\n[F-001 · SiteService]\n\nURL normalisation, duplicate\ncheck, CMS detection,\nlanguage detection, sitemap\nparsing. Entry point for\nnew sites." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    # --- CMS Detectors ---
+
+    detectors: "CMS Detectors\n[Pluggable Strategy]" {
+      style.fill: "#C5DCFF"
+      style.stroke: "#438DD5"
+      style.border-radius: 8
+
+      detect_orchestrator: "Detection Orchestrator\n[detectCms()]\n\nRuns all detectors in parallel,\nreturns highest-confidence\nmatch or 'unknown'." {
+        shape: rectangle
+        style.fill: "#438DD5"
+        style.font-color: "#ffffff"
+        style.border-radius: 8
+      }
+
+      wp_detector: "WordPress Detector\n[WordPressDetector]\n\nProbes /wp-json/wp/v2/ (0.95)\nand /wp-login.php (0.70)." {
+        shape: rectangle
+        style.fill: "#438DD5"
+        style.font-color: "#ffffff"
+        style.border-radius: 8
+      }
+
+      shopify_detector: "Shopify Detector\n[ShopifyDetector]\n\nChecks for cdn.shopify.com (0.90)\nand Shopify.theme (0.85)." {
+        shape: rectangle
+        style.fill: "#438DD5"
+        style.font-color: "#ffffff"
+        style.border-radius: 8
+      }
+
+      detect_orchestrator -> wp_detector: "runs" {
+        style.stroke: "#438DD5"
+      }
+      detect_orchestrator -> shopify_detector: "runs" {
+        style.stroke: "#438DD5"
+      }
+    }
+
+    # --- CMS Connection ---
+
+    cms_service: "CMS Connection\n[F-002 · CmsService]\n\nAdapter selection, credential\nencryption (AES-256),\nverification, persistence." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    # --- Other Config Features ---
+
+    voice_service: "Brand Voice\n[F-003 · VoiceService]\n\nExtracts and stores brand\nvoice profile from existing\nsite content." {
+      shape: rectangle
+      style.fill: "#85BBF0"
+      style.font-color: "#333333"
+      style.border-radius: 8
+    }
+
+    topic_service: "Topic Config\n[F-004 · TopicService]\n\nKeyword clusters, topic\nmapping, content gap\nanalysis." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    quality_service: "Quality Thresholds\n[F-005 · QualityService]\n\nMin word count, readability,\nSEO score thresholds." {
+      shape: rectangle
+      style.fill: "#85BBF0"
+      style.font-color: "#333333"
+      style.border-radius: 8
+    }
+
+    aiso_service: "AISO Preferences\n[F-006 · AisoService]\n\nAI search optimisation\nfactor weights and\npreferences." {
+      shape: rectangle
+      style.fill: "#85BBF0"
+      style.font-color: "#333333"
+      style.border-radius: 8
+    }
+
+    # --- HTTP Fetcher ---
+
+    http_fetcher: "HTTP Fetcher\n[HttpFetcher Interface]\n\nAbstraction over HTTP GET.\nInjected for testability." {
+      shape: rectangle
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+      style.border-radius: 8
+    }
+
+    # --- Data Store ---
+
+    repository: "Site Repository\n[In-Memory / SQLite]\n\nPersists site records,\nCMS connections, language\ndata, config state." {
+      shape: cylinder
+      style.fill: "#438DD5"
+      style.font-color: "#ffffff"
+    }
+  }
+}
+
+# === External Systems ===
+
+target_website: "Target Website\n[External]" {
+  shape: rectangle
+  style.fill: "#999999"
+  style.font-color: "#ffffff"
+  style.border-radius: 8
+}
+
+wordpress_api: "WordPress REST API\n[External]" {
+  shape: rectangle
+  style.fill: "#999999"
+  style.font-color: "#ffffff"
+  style.border-radius: 8
+}
+
+shopify_cdn: "Shopify Platform\n[External]" {
+  shape: rectangle
+  style.fill: "#999999"
+  style.font-color: "#ffffff"
+  style.border-radius: 8
+}
+
+# === Relationships ===
+
+# User to system
+site_owner -> seo_toolkit.content_engine.site_service: "Registers website URL\nand site name" {
+  style.stroke: "#08427B"
+}
+
+site_owner -> seo_toolkit.content_engine.cms_service: "Provides CMS\ncredentials" {
+  style.stroke: "#08427B"
+}
+
+# Internal flow: registration pipeline
+seo_toolkit.content_engine.site_service -> seo_toolkit.content_engine.detectors.detect_orchestrator: "URL → detect CMS" {
+  style.stroke: "#438DD5"
+}
+
+seo_toolkit.content_engine.site_service -> seo_toolkit.content_engine.repository: "Persists site record\nand crawl results" {
+  style.stroke: "#438DD5"
+}
+
+seo_toolkit.content_engine.cms_service -> seo_toolkit.content_engine.repository: "Stores encrypted\nCMS credentials" {
+  style.stroke: "#438DD5"
+}
+
+# Orchestrator checks all features
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.site_service: "hasSiteRegistration?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.cms_service: "hasCmsConnection?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.voice_service: "hasVoiceProfile?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.topic_service: "hasTopicConfig?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.quality_service: "hasQualityThresholds?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.aiso_service: "hasAisoPreferences?" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+
+seo_toolkit.content_engine.orchestrator -> seo_toolkit.content_engine.event_bus: "Emits config.complete\nwhen all required\nfeatures configured" {
+  style.stroke: "#438DD5"
+}
+
+# HTTP fetcher to external
+seo_toolkit.content_engine.http_fetcher -> target_website: "GET HTML, sitemap.xml,\nlanguage tags" {
+  style.stroke: "#707070"
+}
+
+seo_toolkit.content_engine.detectors.wp_detector -> wordpress_api: "GET /wp-json/wp/v2/\nGET /wp-login.php\n[HTTPS]" {
+  style.stroke: "#707070"
+}
+
+seo_toolkit.content_engine.detectors.shopify_detector -> shopify_cdn: "Checks cdn.shopify.com\nand Shopify.theme\n[HTTPS]" {
+  style.stroke: "#707070"
+}
+
+seo_toolkit.content_engine.site_service -> seo_toolkit.content_engine.http_fetcher: "Uses for crawl\npipeline" {
+  style.stroke: "#438DD5"
+}
+
+seo_toolkit.content_engine.detectors.detect_orchestrator -> seo_toolkit.content_engine.http_fetcher: "Passes fetcher\nto detectors" {
+  style.stroke: "#438DD5"
+  style.stroke-dash: 3
+}
+
+# === Legend ===
+
+legend: "Legend: Dark blue = Required (must-have) · Light blue = Optional · Solid = Direct call · Dashed = Check · Grey = External · Cylinder = Data store" {
+  near: bottom-center
+  shape: rectangle
+  style.fill: "#F5F5F5"
+  style.border-radius: 4
+  style.font-size: 13
+}

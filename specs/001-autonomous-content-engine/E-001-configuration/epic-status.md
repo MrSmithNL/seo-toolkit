@@ -282,10 +282,17 @@ Epic E-001: Configuration & Setup
 | Build | [x] Complete — 33/33 tasks, 251 tests, 25 test files | 2026-03-13/14 |
 | Build complete verification | [x] Passed — all checks green | 2026-03-14 |
 | Staging verified | [x] Passed — hairgenetix + skingenetix detected correctly. WP false positive bug found and fixed. | 2026-03-14 |
-| **Gate: Ship** | [x] Passed — CI workflow, feature flag, staging verified | 2026-03-14 |
+| **Gate: Ship (v4.17)** | [x] Passed (partial) — CI, feature flag, staging verified | 2026-03-14 |
 | Production deployed | [x] Shipped — local CLI via npm link, code on main | 2026-03-14 |
 | Post-deploy monitoring | [x] pino structured logging configured, CI pipeline active | 2026-03-14 |
-| Retrospective | [ ] Not started | |
+| **Ship Gate Checklist (RE v4.18)** | [ ] In progress — remediation after framework audit | 2026-03-14 |
+| UAT checklist created | [x] `uat-checklist.md` created | 2026-03-14 |
+| Architecture diagrams | [ ] In progress — C4 context + container | 2026-03-14 |
+| Release notes | [ ] In progress — `release-notes-v0.1.0.md` | 2026-03-14 |
+| Deployment report | [ ] In progress — `deployment-report.md` | 2026-03-14 |
+| Follow-up roadmap | [ ] In progress — `roadmap.md` | 2026-03-14 |
+| **Malcolm UAT approval** | [ ] PENDING — HARD BLOCK | |
+| Retrospective | [x] Complete — in E2E audit report | 2026-03-14 |
 
 ---
 
@@ -328,7 +335,7 @@ Epic E-001: Configuration & Setup
 | **Total tasks** | 33 |
 | **Tasks complete** | 33 |
 | **Test files** | 25 |
-| **Total tests** | 251 |
+| **Total tests** | 255 |
 | **Build duration** | ~30h actual (90h estimated) |
 | **Estimation accuracy** | 3x overestimate |
 
