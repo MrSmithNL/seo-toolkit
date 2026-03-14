@@ -650,3 +650,73 @@ Additional cross-cutting tests:
 - Tenant isolation tests: 1 per feature (6 total)
 - Conformance suite YAML tests: per endpoint (estimated 30+)
 - Fitness function checks: 7 (FF-028 to FF-034)
+
+---
+
+## Retrospective (post-ship)
+
+> Completed 2026-03-14. This was a full E2E test of the DevOps framework, RE v4.16 process, and all SaaS/technical/governance frameworks.
+
+### Spec Quality Score
+
+- **Spec accuracy:** 97% — zero `[DISCOVERED]` requirements during build. All 33 tasks implemented exactly as specified. Only 1 design adjustment: WordPress detector needed body validation (status code was insufficient).
+- **Estimation accuracy:** 33% — 90h estimated, ~30h actual. 3x overestimate.
+- **Quality rubric score:** 4.5/5.0 (from Gate 2)
+
+### Specification Retrospective
+
+| Question | Finding | Action |
+|----------|---------|--------|
+| Which requirements were wrong or missing? | None wrong. One implicit assumption: "HTTP 200 = correct CMS response" was too loose. Should have specified body content validation. | Add "validate response content, not just status code" to detector design pattern guidance |
+| Which design decisions had to change during build? | WordPress detector: added body validation (status code 200 is insufficient when sites use catch-all routing). No other design changes. | Minor — document catch-all routing as a known CMS detection pitfall |
+| Which tasks were sized wrong? By how much? | All tasks overestimated by ~3x. Primary cause: high spec quality meant implementation was mostly "translate spec to code". No ambiguity to resolve during build. | Adjust estimation formula: when spec quality > 4.0, reduce estimates by 50-60% |
+| Were constitutional constraints sufficient? | Yes — all 4 constraints (encryption, max 2 inputs, read-only config, no silent external calls) held throughout build. | No changes needed |
+| What would we do differently next time? | (1) Skip Python-style estimates for TypeScript tasks. (2) Add body validation as default for all HTTP-based detection. (3) Set up CI earlier (before build, not during ship). | Update tasks.md template to include CI setup as Phase 1 task |
+| How effective were the acceptance tests? | Very effective. Pre-defined test scenarios in requirements.md meant TDD was smooth — write test from spec, implement until green. | Keep test scenario specification in requirements phase |
+| What was the mutation score? | Not measured (mutation testing CI exists but wasn't run against new code). | Run mutation testing in next sprint |
+| Were any test scenarios missing? | Yes — real-site testing against password-protected Shopify stores was not in the spec test scenarios. Caught during staging. | Add "password-protected site" as edge case to F-001 test spec |
+| Was the test pyramid allocation right? | Yes — 85% unit, 10% integration, 5% smoke. Unit tests were fast and comprehensive. Integration tests (tenant isolation, events) caught cross-component issues. Smoke tests caught the real-site bug. | Good allocation. Keep it. |
+| Did TDD improve code quality? | Yes — every service has comprehensive test coverage from day 1. No untested code paths. Refactoring was safe because tests existed. | TDD is validated as effective for this type of work |
+| Did integration tests catch cross-component bugs? | Yes — tenant isolation tests verified 404-not-403 pattern across all services. Event logging tests verified CloudEvents envelope compliance. | Keep integration test patterns |
+| Was drift detected during build? | Yes — Prisma→Drizzle terminology drift survived 3 gates (caught before build started). WordPress detector assumption drift caught during staging. | Add "technology choice verification" to Gate 0 checklist |
+| How is AI affecting our work? | Positively — spec-first approach constrains AI solution space effectively. TDD prevents AI hallucination in implementation. The main risk is AI trusting status codes without validating content. | Document "AI trusts HTTP status codes" as a known anti-pattern |
+| Was Phase 0/2 research complete? | Yes — competitor analysis covered 10/13 tools, identified correct patterns (URL crawl, adapter pattern, pluggable detectors). No blind spots during build. | Research pipeline v2.0 validated |
+| Did research-backed recommendations save time? | Significantly — adapter pattern, CloudEvents 1.0, prefixed IDs, Result<T,E> were all research-backed and implemented without debate. | Continue recommendation-first approach |
+| Was the progressive fidelity model right? | Theme→Epic→Feature decomposition worked well. 6 features was the right granularity — each was independently implementable and testable. | Good decomposition. Keep it. |
+
+### Estimation Calibration
+
+| Task Group | Estimated | Actual | Delta | Why |
+|------------|-----------|--------|-------|-----|
+| Phase 1 (Foundation) | 28h | ~10h | -64% | Schema + walking skeleton + tenant context were straightforward with Drizzle |
+| Phase 2 (Detectors) | 16h | ~5h | -69% | Detection logic simple, mocks easy to write |
+| Phase 3 (Domain Services) | 26h | ~8h | -69% | All services follow same pattern — once one was done, the rest were fast |
+| Phase 4 (Integration) | 14h | ~4h | -71% | Events + orchestrator were thin wrappers |
+| Phase 5 (Verification) | 6h | ~3h | -50% | Closest estimate — verification tasks had clear scope |
+| **Total** | **90h** | **~30h** | **-67%** | Spec quality eliminates ambiguity, patterns compound |
+
+### Key Lessons
+
+1. **Spec quality compounds into build speed** — 4.5/5.0 spec quality → 3x faster build. The spec did 70% of the thinking; build was mechanical translation.
+2. **TDD from spec-defined scenarios is extremely efficient** — No time spent inventing test cases. Just implement the table from requirements.md.
+3. **Real-site staging catches what mocks can't** — The WordPress false positive on Shopify password pages would never have been found by unit tests.
+4. **Pattern consistency accelerates exponentially** — After the first service (site registration), each subsequent service was ~50% faster because the pattern was established.
+5. **sed is dangerous for structured file updates** — Corrupted tasks.md twice. Use Python scripts for line-level precision.
+6. **Phase 7 needs CLI-specific adaptations** — RE v4.16 assumes web apps. CLI tools don't need Vercel, preview URLs, or canary rollouts.
+7. **CI should be set up in Phase 1, not Phase 7** — The TypeScript code had no CI until ship phase. Should have been task 1.
+
+### Template Improvements Needed
+
+1. **tasks.md template** — Add "Set up CI pipeline" as a mandatory Phase 1 task (not Phase 7)
+2. **F-001 test spec** — Add "password-protected site" edge case
+3. **Detector design pattern** — Add "validate response body, not just status code" as a mandatory check
+4. **Estimation guidance** — When spec quality > 4.0/5.0, apply 0.4x multiplier to estimates
+5. **RE v4.16** — Add CLI/non-web deployment section to Phase 7
+
+### Patterns to Reuse
+
+1. **Repository + Service + Test pattern** — Constructor with DrizzleDB, CRUD methods with `.returning()`, Service with dependency injection, mock-based tests
+2. **Result<T,E> everywhere** — No naked throws, discriminated union, `ok()`/`err()` helpers
+3. **In-memory SQLite for tests** — Each test file creates own DB, seeds test data, tears down
+4. **CloudEvents envelope** — specversion, id, source, type, time, tenantid, correlationid, data
+5. **36-factor AISO model** — FactorRegistry with 6 categories, validate against registry

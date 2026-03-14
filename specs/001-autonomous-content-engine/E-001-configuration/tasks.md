@@ -6,7 +6,7 @@ project: PROD-001
 domain: configuration
 parent: "THM-CE-001"
 status: complete
-phase: 6-build
+phase: 7-ship
 created: 2026-03-13
 last_updated: 2026-03-13
 total_tasks: 33
