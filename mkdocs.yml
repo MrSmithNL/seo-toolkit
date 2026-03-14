@@ -141,6 +141,7 @@ nav:
     - Mutation Metrics: mutation-metrics.md
     - UAT:
       - UAT Guide: uat-guide.md
+      - UAT Wizard (Interactive): uat-wizard.html
       - UAT Checklist (E-001): specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md
     - Feature Test Specs:
       - F-001 Site Registration: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/tests.md

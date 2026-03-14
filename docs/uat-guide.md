@@ -4,6 +4,11 @@
 
 ---
 
+\!\!\! tip "Interactive UAT Wizard"
+    **[Launch the UAT Wizard](uat-wizard.html){target=_blank}** — a guided, step-by-step testing experience. It shows you one test at a time, explains what to check in plain English, and lets you mark Pass/Fail with comments. Your progress is saved automatically.
+
+---
+
 ## What is UAT?
 
 UAT is the final check before a feature ships. You (Malcolm) verify that what was built actually does what was specified. The same AI that builds the code cannot be the sole judge of whether it's correct — that's why your sign-off is a **hard block**.
@@ -18,6 +23,7 @@ UAT is the final check before a feature ships. You (Malcolm) verify that what wa
 
 | Document | What's in it |
 |----------|-------------|
+| **[UAT Wizard (Recommended)](uat-wizard.html){target=_blank}** | Interactive step-by-step guide — the easiest way to do UAT |
 | **[UAT Checklist](specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md)** | Step-by-step test scenarios with pass/fail checkboxes |
 | [Release Notes](specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md) | What was built, known limitations |
 | [Ship Gate Checklist](specs/001-autonomous-content-engine/E-001-configuration/ship-gate-checklist.md) | Full readiness checklist (CI, deployment, monitoring) |

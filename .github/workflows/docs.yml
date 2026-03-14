@@ -25,11 +25,14 @@ jobs:
           python-version: '3.12'
 
       - name: Install MkDocs Material and plugins
-        run: pip install mkdocs-material mkdocs-encryptcontent-plugin
+        run: pip install mkdocs-material mkdocs-encryptcontent-plugin pyyaml
 
       - name: Copy specs into docs
         run: |
           cp -r specs docs/specs
+
+      - name: Generate UAT Wizard
+        run: python3 scripts/generate_uat_wizard.py specs/001-autonomous-content-engine/E-001-configuration/uat-wizard-scenarios.yaml --output docs/uat-wizard.html
 
       - name: Build site
         run: mkdocs build
