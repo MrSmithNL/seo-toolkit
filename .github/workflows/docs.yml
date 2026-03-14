@@ -27,6 +27,10 @@ jobs:
       - name: Install MkDocs Material and plugins
         run: pip install mkdocs-material mkdocs-encryptcontent-plugin
 
+      - name: Copy specs into docs
+        run: |
+          cp -r specs docs/specs
+
       - name: Build site
         run: mkdocs build
         env:

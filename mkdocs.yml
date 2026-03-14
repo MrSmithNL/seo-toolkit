@@ -78,6 +78,32 @@ nav:
     - AI Discovery: agents/ai-discovery-agent.md
     - Schema Audit: agents/schema-audit-agent.md
     - Reporter: agents/reporter-agent.md
+  - Development:
+    - Roadmap: specs/001-autonomous-content-engine/roadmap.md
+    - Theme & Planning:
+      - Theme: specs/001-autonomous-content-engine/theme.md
+      - Capability Map: specs/001-autonomous-content-engine/capability-map.md
+      - Process Decomposition: specs/001-autonomous-content-engine/process-decomposition-map.md
+    - E-001 Configuration:
+      - Epic Status: specs/001-autonomous-content-engine/E-001-configuration/epic-status.md
+      - Epic Design: specs/001-autonomous-content-engine/E-001-configuration/epic-design.md
+      - Tasks: specs/001-autonomous-content-engine/E-001-configuration/tasks.md
+      - Ship Gate Checklist: specs/001-autonomous-content-engine/E-001-configuration/ship-gate-checklist.md
+      - UAT Checklist: specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md
+      - Release Notes v0.1.0: specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md
+      - Deployment Report: specs/001-autonomous-content-engine/E-001-configuration/deployment-report.md
+      - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
+    - Feature Specs:
+      - F-001 Site Registration: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/requirements.md
+      - F-002 CMS Connection: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/requirements.md
+      - F-003 Brand Voice: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/requirements.md
+      - F-004 Topic Config: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/requirements.md
+      - F-005 Quality Thresholds: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/requirements.md
+      - F-006 AISO Preferences: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/requirements.md
+    - Research:
+      - Competitive Landscape: specs/001-autonomous-content-engine/research/competitive-landscape.md
+      - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
+      - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
   - Operations:
     - Processes & Flows: processes-and-flows.md
     - Decisions Log: decisions-log.md

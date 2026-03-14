@@ -12,6 +12,7 @@ repos:
     rev: v4.5.0
     hooks:
       - id: check-yaml
+        args: ['--unsafe']
       - id: check-added-large-files
       - id: detect-private-key
       - id: end-of-file-fixer
