@@ -58,6 +58,11 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+
+  # ============================================================
+  # PLAN — Strategy, research, market analysis
+  # ============================================================
+
   - Strategy:
     - Business Case: business-case.md
     - Market Research: market-research.md
@@ -65,9 +70,21 @@ nav:
     - Competitor Recommendations: competitor-recommendations.md
     - Roadmap: roadmap.md
     - Strategic OS: strategic-os.md
+    - Research:
+      - Competitive Landscape: specs/001-autonomous-content-engine/research/competitive-landscape.md
+      - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
+      - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
+      - Configuration Setup Patterns: specs/001-autonomous-content-engine/research/e001-configuration-setup-patterns.md
+      - Phase 2 Analysis: specs/001-autonomous-content-engine/E-001-configuration/research/phase2-analysis.md
+
+  # ============================================================
+  # DESIGN — Architecture, agents, coding standards
+  # ============================================================
+
   - Architecture:
     - System Architecture: architecture.md
     - Coding Standards: coding-standards.md
+
   - Agents:
     - Audit Agent: agents/audit-agent.md
     - Keywords Agent: agents/keywords-agent.md
@@ -78,9 +95,15 @@ nav:
     - AI Discovery: agents/ai-discovery-agent.md
     - Schema Audit: agents/schema-audit-agent.md
     - Reporter: agents/reporter-agent.md
+
+  # ============================================================
+  # BUILD — Specs, features, implementation
+  # ============================================================
+
   - Development:
-    - Roadmap: specs/001-autonomous-content-engine/roadmap.md
+    - Automated Article Generator: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
     - Theme & Planning:
+      - Development Roadmap: specs/001-autonomous-content-engine/roadmap.md
       - Theme: specs/001-autonomous-content-engine/theme.md
       - Capability Map: specs/001-autonomous-content-engine/capability-map.md
       - Process Decomposition: specs/001-autonomous-content-engine/process-decomposition-map.md
@@ -88,47 +111,64 @@ nav:
       - Epic Status: specs/001-autonomous-content-engine/E-001-configuration/epic-status.md
       - Epic Design: specs/001-autonomous-content-engine/E-001-configuration/epic-design.md
       - Tasks: specs/001-autonomous-content-engine/E-001-configuration/tasks.md
-      - Ship Gate Checklist: specs/001-autonomous-content-engine/E-001-configuration/ship-gate-checklist.md
-      - UAT Checklist: specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md
-      - Release Notes v0.1.0: specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md
-      - Deployment Report: specs/001-autonomous-content-engine/E-001-configuration/deployment-report.md
-      - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
-    - Automated Article Generator: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
     - Feature Specs:
       - F-001 Site Registration:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/tests.md
       - F-002 CMS Connection:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/tests.md
       - F-003 Brand Voice:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/tests.md
       - F-004 Topic Config:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/tests.md
       - F-005 Quality Thresholds:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/tests.md
       - F-006 AISO Preferences:
         - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/requirements.md
         - Design: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/design.md
-        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/tests.md
-    - Research:
-      - Competitive Landscape: specs/001-autonomous-content-engine/research/competitive-landscape.md
-      - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
-      - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
-      - Configuration Setup Patterns: specs/001-autonomous-content-engine/research/e001-configuration-setup-patterns.md
-      - Phase 2 Analysis: specs/001-autonomous-content-engine/E-001-configuration/research/phase2-analysis.md
+
+  # ============================================================
+  # TEST — Strategy, quality gates, test specs, UAT
+  # ============================================================
+
+  - Testing:
+    - Test Strategy: test-strategy.md
+    - Quality Gates: quality-gates.md
+    - Mutation Metrics: mutation-metrics.md
+    - UAT:
+      - UAT Guide: uat-guide.md
+      - UAT Checklist (E-001): specs/001-autonomous-content-engine/E-001-configuration/uat-checklist.md
+    - Feature Test Specs:
+      - F-001 Site Registration: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/tests.md
+      - F-002 CMS Connection: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/tests.md
+      - F-003 Brand Voice: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/tests.md
+      - F-004 Topic Config: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/tests.md
+      - F-005 Quality Thresholds: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/tests.md
+      - F-006 AISO Preferences: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/tests.md
+
+  # ============================================================
+  # DEPLOY — CI/CD, releases, ship gate
+  # ============================================================
+
+  - Deployment:
+    - Deployment Guide: deployment-guide.md
+    - Ship Gate Checklist (E-001): specs/001-autonomous-content-engine/E-001-configuration/ship-gate-checklist.md
+    - Release Notes (v0.1.0): specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md
+    - Deployment Report (E-001): specs/001-autonomous-content-engine/E-001-configuration/deployment-report.md
+    - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
+
+  # ============================================================
+  # OPERATE — Day-to-day operations, monitoring, security
+  # ============================================================
+
   - Operations:
     - Processes & Flows: processes-and-flows.md
     - Decisions Log: decisions-log.md
     - Security Risk Log: security-risk-log.md
     - Accounts & Access: accounts-and-access.md
-    - Metrics: metrics.md
+    - Metrics & KPIs: metrics.md
     - Todo: todo.md
