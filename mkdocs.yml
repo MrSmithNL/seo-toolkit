@@ -93,17 +93,38 @@ nav:
       - Release Notes v0.1.0: specs/001-autonomous-content-engine/E-001-configuration/release-notes-v0.1.0.md
       - Deployment Report: specs/001-autonomous-content-engine/E-001-configuration/deployment-report.md
       - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
+    - Automated Article Generator: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
     - Feature Specs:
-      - F-001 Site Registration: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/requirements.md
-      - F-002 CMS Connection: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/requirements.md
-      - F-003 Brand Voice: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/requirements.md
-      - F-004 Topic Config: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/requirements.md
-      - F-005 Quality Thresholds: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/requirements.md
-      - F-006 AISO Preferences: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/requirements.md
+      - F-001 Site Registration:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-001-site-registration/tests.md
+      - F-002 CMS Connection:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-002-cms-connection/tests.md
+      - F-003 Brand Voice:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-003-brand-voice/tests.md
+      - F-004 Topic Config:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-004-topic-config/tests.md
+      - F-005 Quality Thresholds:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-005-quality-thresholds/tests.md
+      - F-006 AISO Preferences:
+        - Requirements: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/requirements.md
+        - Design: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/design.md
+        - Tests: specs/001-autonomous-content-engine/E-001-configuration/F-006-aiso-preferences/tests.md
     - Research:
       - Competitive Landscape: specs/001-autonomous-content-engine/research/competitive-landscape.md
       - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
       - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
+      - Configuration Setup Patterns: specs/001-autonomous-content-engine/research/e001-configuration-setup-patterns.md
+      - Phase 2 Analysis: specs/001-autonomous-content-engine/E-001-configuration/research/phase2-analysis.md
   - Operations:
     - Processes & Flows: processes-and-flows.md
     - Decisions Log: decisions-log.md
