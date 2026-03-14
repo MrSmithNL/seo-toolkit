@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  python-lint-and-test:
+    name: Python CI
     runs-on: ubuntu-latest
 
     strategy:
@@ -45,3 +46,34 @@ jobs:
 
       - name: Run tests with pytest
         run: pytest tests/ -v --cov=scripts/ --cov-report=term-missing
+
+  typescript-lint-and-test:
+    name: TypeScript CI (Content Engine)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Audit dependencies
+        run: pnpm audit --prod
+        continue-on-error: true

@@ -79,7 +79,7 @@ describe('SiteService — Registration Pipeline (TASK-011)', () => {
     const fetcher = mockFetcher({
       'https://example.com/wp-json/wp/v2/': {
         status: 200,
-        body: '{"name":"Example WP"}',
+        body: '{"namespaces":["wp/v2"],"name":"Example WP"}',
       },
       'https://example.com': {
         status: 200,

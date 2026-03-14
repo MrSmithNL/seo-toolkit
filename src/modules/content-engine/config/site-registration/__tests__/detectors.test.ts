@@ -24,7 +24,7 @@ describe('WordPressDetector', () => {
     const fetcher = mockFetcher({
       'https://example.com/wp-json/wp/v2/': {
         status: 200,
-        body: '{"name":"Example Site","description":"Just another WordPress site"}',
+        body: '{"namespaces":["wp/v2"],"name":"Example Site","description":"Just another WordPress site"}',
       },
     });
 
@@ -39,7 +39,7 @@ describe('WordPressDetector', () => {
       'https://example.com/wp-json/wp/v2/': { status: 404, body: '' },
       'https://example.com/wp-login.php': {
         status: 200,
-        body: '<html><body>WordPress login</body></html>',
+        body: '<html><body><form id="loginform" action="wp-login.php"><input name="wp-submit" /></form></body></html>',
       },
     });
 
@@ -53,6 +53,23 @@ describe('WordPressDetector', () => {
     const fetcher = mockFetcher({
       'https://example.com/wp-json/wp/v2/': { status: 404, body: '' },
       'https://example.com/wp-login.php': { status: 404, body: '' },
+    });
+
+    const result = await detector.detect('https://example.com', fetcher);
+    expect(result).toBeNull();
+  });
+
+  it('returns null when 200 but body has no WordPress markers', async () => {
+    // Simulates Shopify password page or catch-all that returns 200 for any path
+    const fetcher = mockFetcher({
+      'https://example.com/wp-json/wp/v2/': {
+        status: 200,
+        body: '<html><head><title>Password page</title></head><body>Enter password</body></html>',
+      },
+      'https://example.com/wp-login.php': {
+        status: 200,
+        body: '<html><head><title>Password page</title></head><body>Enter password</body></html>',
+      },
     });
 
     const result = await detector.detect('https://example.com', fetcher);
@@ -130,7 +147,7 @@ describe('detectCms (orchestrator)', () => {
     const fetcher = mockFetcher({
       'https://example.com/wp-json/wp/v2/': {
         status: 200,
-        body: '{"name":"WP Site"}',
+        body: '{"namespaces":["wp/v2"],"name":"WP Site"}',
       },
       'https://example.com': {
         status: 200,
@@ -175,7 +192,7 @@ describe('detectCms (orchestrator)', () => {
     const fetcher = mockFetcher({
       'https://example.com/wp-json/wp/v2/': {
         status: 200,
-        body: '{"name":"Weird site"}',
+        body: '{"namespaces":["wp/v2"],"name":"Weird hybrid site"}',
       },
       'https://example.com': {
         status: 200,
@@ -186,5 +203,26 @@ describe('detectCms (orchestrator)', () => {
     const result = await detectCms('https://example.com', fetcher);
     // wp-json gives 0.95 confidence, Shopify CDN gives 0.9
     expect(result.cmsType).toBe('wordpress');
+  });
+
+  it('returns shopify when catch-all returns 200 but no WP markers', async () => {
+    // Simulates Shopify store with password page — all paths return 200 but no WP content
+    const fetcher = mockFetcher({
+      'https://example.com/wp-json/wp/v2/': {
+        status: 200,
+        body: '<html><head><title>Enter password</title></head><body>This store is password-protected</body></html>',
+      },
+      'https://example.com/wp-login.php': {
+        status: 200,
+        body: '<html><head><title>Enter password</title></head><body>This store is password-protected</body></html>',
+      },
+      'https://example.com': {
+        status: 200,
+        body: '<html><link rel="preconnect" href="https://cdn.shopify.com"><script>Shopify.theme = {}</script></html>',
+      },
+    });
+
+    const result = await detectCms('https://example.com', fetcher);
+    expect(result.cmsType).toBe('shopify');
   });
 });

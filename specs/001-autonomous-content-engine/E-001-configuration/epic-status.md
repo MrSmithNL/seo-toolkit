@@ -279,9 +279,9 @@ Epic E-001: Configuration & Setup
 | Task breakdown | [x] Complete — 32 tasks (26 impl + 6 verification), 8 framework tasks added | 2026-03-13 |
 | **Gate: Build Approval** | [x] Passed — 4 minor conditions cleared (deployment, test data, agent boundaries, task count) | 2026-03-13 |
 | Visual preview _(if UI)_ | N/A — CLI for V1 | |
-| Build | [ ] Not started | |
-| Build complete verification | [ ] Not started | |
-| Staging verified | [ ] Not started | |
+| Build | [x] Complete — 33/33 tasks, 251 tests, 25 test files | 2026-03-13/14 |
+| Build complete verification | [x] Passed — all checks green | 2026-03-14 |
+| Staging verified | [ ] In progress | |
 | **Gate: Ship** | [ ] Not reached | |
 | Production deployed | [ ] Not started | |
 | Post-deploy monitoring | [ ] Not configured | |
@@ -324,9 +324,13 @@ Epic E-001: Configuration & Setup
 | Metric | Count |
 |--------|-------|
 | **Total features** | 6 |
-| **Features complete** | 0 |
+| **Features complete** | 6 |
 | **Total tasks** | 33 |
-| **Tasks complete** | 0 |
+| **Tasks complete** | 33 |
+| **Test files** | 25 |
+| **Total tests** | 251 |
+| **Build duration** | ~30h actual (90h estimated) |
+| **Estimation accuracy** | 3x overestimate |
 
 ---
 
@@ -401,6 +405,8 @@ F-005 (Quality Thresholds) ─→ F-006 (AISO Preferences)
 | 2026-03-13 | **E2E Pass 2 — Phase 3 & 4 complete.** epic-design.md fully updated: Operation Pattern (P-008) with code examples, CQS file structure, AppError hierarchy (RFC 7807 + suggested_action), structured logging (pino with PII redaction), prefixed IDs (7 entity prefixes), circuit breaker config, CloudEvents 1.0 event contracts, conformance suite YAML examples, 7 fitness functions (FF-028–FF-034), Drizzle schema updated with RLS policies and prefixed IDs. All 6 feature requirements have framework-specific NFRs (Operation Pattern, Error Handling, Logging, Tenant Isolation, Idempotency, Serialisable I/O, Contract Completeness, No Module State, PII Redaction, Prefixed IDs, Circuit Breaker). **Gate 2 passed:** 10/10 RE process checks, 12/12 framework integration checks. 11 minor gaps found and fixed (FF ID collision renumbered FF-028–FF-034, DOR boxes ticked, domain model reconciliation notes added, quality rubric scored 4.5/5.0, hallucination risk assessment, Black Hat sweep, RAID log, test coverage summary added). | Phase 5: Task breakdown update, then Gate 3. |
 | 2026-03-13 | **Phase 5 complete + Gate 3 PASSED.** Task breakdown updated: 8 framework tasks added (TASK-F01 to F08) covering Operation pattern infrastructure, prefixed ID generation, structured logging, circuit breaker, conformance suite, fitness functions, tenant isolation integration test, CloudEvents logging verification. Total: 32 tasks (26 impl + 6 verification), ~86h. Gate 3 conditions cleared: deployment readiness section, test data strategy, agent task boundaries (Always/Ask/Never + context files per phase), task count corrected. **Full E2E test of RE v4.16 process complete.** All 3 gates passed. All 10 frameworks integrated. | Ready for Malcolm's review and build approval. |
 | 2026-03-13 | **Tenant admin CLI added.** Gap identified: no way to create/manage tenants in `tenants.json` for R1. Added tenant administration CLI to epic-design (4 commands: add, list, remove, rotate-key). TASK-005a added to tasks.md (4h, Phase 1). Secure API key generation (32 random bytes, `apikey_` prefix). `tnt_` prefix added to ID system (8 total). Cascade delete on tenant remove. Total: 33 tasks, ~90h. | Proceed to build Phase 1. |
+| 2026-03-13 | **BUILD PHASE COMPLETE.** All 33 tasks done across 5 build phases. Phase 1 (Foundation): TASK-001–004 + TASK-F01–F04. Phase 2 (Detectors): TASK-005–008. Phase 3 (Domain Services): TASK-009–016. Phase 4 (Integration): TASK-017–018 + TASK-F05–F08. Phase 5 (Verification): TASK-V01–V06. 251 tests, 25 test files, TypeScript strict clean. Key metrics: ~30h actual vs 90h estimated (3x overestimate — spec quality was high). All 10 SaaS/technical frameworks validated. Commits: 4c2e0fa through 0bfa316. | Phase 6→7 transition review. |
+| 2026-03-14 | **Phase 6→7 Transition Review completed.** New RE v4.17 rule: Phase Transition Review Protocol — mandatory structured review at every phase boundary (3 steps: completion audit, lessons captured, next phase plan). Build Complete Verification checklist passed. Phase 7 plan adapted for CLI tool (no Vercel/preview URLs — uses npm link, GitHub Actions CI, feature flag, real-site testing). | Execute Phase 7: Ship. |
 | 2026-03-13 | **Prisma → Drizzle ORM correction.** Spec referenced Prisma throughout but ADR-007 (researched, accepted 2026-03-10) chose Drizzle for native RLS support, SQL-first philosophy, no code generation. Converted all references across 13 files: full schema rewrite to `sqliteTable()` syntax in epic-design.md, file paths updated (`prisma/` → `src/db/`, `drizzle/`), middleware → query wrapper terminology, Technology Decision #2 updated, dependency list changed (drizzle-orm + drizzle-kit + better-sqlite3). **E2E test learning:** Gate 0 should cross-check technology decisions against existing ADRs — this inconsistency survived 3 gates. | Start build Phase 1. |
 | 2026-03-13 | **TASK-001 Walking Skeleton COMPLETE (Build Phase started).** TypeScript project infrastructure set up alongside existing Python code: `package.json` (drizzle-orm, better-sqlite3, vitest, zod, nanoid, pino), `tsconfig.json` (strict mode, path aliases), `vitest.config.ts` (85% coverage thresholds), `drizzle.config.ts` (SQLite). TDD followed: red phase (7 tests written, all fail — missing implementation), green phase (repository + service implemented, all 7 pass). Files created: `src/db/schema.ts` (siteConfig table), `src/db/index.ts` (Drizzle client), `src/lib/result.ts` (Result type, no naked throw), `src/lib/context.ts` (OperationContext), `src/lib/id.ts` (prefixed NanoID), `site.repository.ts` (create, findById, findByUrl with tenant filtering), `site.service.ts` (registerSite + getSite with Zod validation). Tests cover: registration, validation error, duplicate detection (409), cross-tenant isolation (same URL allowed), getSite by ID, not-found (404), tenant isolation (404 not 403). TypeScript strict mode passes clean. **E2E framework compliance:** P-008 operation pattern ✅, Result<T,E> returns ✅, Zod validation ✅, prefixed IDs ✅, repository pattern ✅, tenant isolation ✅, TDD ✅. | TASK-002: Full Drizzle schema. |
 | 2026-03-13 | **TASK-002 Full Drizzle Schema COMPLETE.** All 8 tables from epic-design.md implemented: siteConfig, siteLanguage, cmsConnection, voiceProfile, topicConfig, topicCluster, qualityThresholds, aisoPreferences. All relations defined (one-to-many, one-to-one). 12 new tests: CRUD per table, cascading deletes (site→all children, topicConfig→clusters), unique constraints (tenant+URL, site+language code), multi-tenant URL isolation. `slg_` prefix added to ID generator (9 total). Drizzle boolean mode verified (`{ mode: 'boolean' }` returns `true`/`false` not `1`/`0` — test learning). Total: 19 tests, 2 test files. TypeScript clean. | TASK-003: Tenant context middleware. |
