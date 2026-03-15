@@ -212,7 +212,7 @@ This module uses LLMs (AI content generation, scoring, validation) AND has exter
 - [x] **Gate 0: Architecture Classification** — Complete (2026-03-15)
 - [x] **Phase 0: Theme Identification** — Complete (2026-03-15)
 - [ ] **Phase 1: Understand** — E-001 complete, E-002–E-006 pending
-- [ ] **Phase 2: Research** — Competitive deep-dive (5 dimensions)
+- [x] **Phase 2: Research** — E-001 competitive deep-dive complete (2026-03-15)
 - [ ] **GATE 1: Scope Validation** — Malcolm reviews research and scope
 - [ ] **Phase 3: Requirements** — EARS stories, NFRs, acceptance tests
 - [ ] **GATE 2: Completeness Review** — Malcolm reviews full spec
@@ -247,6 +247,7 @@ This module uses LLMs (AI content generation, scoring, validation) AND has exter
 | 2026-03-15 | Gate 0 architecture classification completed. All 29 dependency items assessed (22 NEEDED, 7 DEFERRED). Five-Port interface contracts defined. | Phase 0: Theme Identification |
 | 2026-03-15 | Phase 0 started. theme.md created with identity, process map, success criteria, frozen decisions. Competitive research launched for PDM evidence (8-10 competitors). | Populate PDM when research completes |
 | 2026-03-15 | Phase 0 complete. PDM populated (33 L3 + 9 cross-cutting), FBS tree (~55 stories), capability map (10 capabilities), epic breakdown (6 epics, 16 weeks serial pipeline), D2 capability diagram rendered. Competitive feature matrix: 10 competitors, 21 TS / 9 DF / 3 IN / 5 EN. | Malcolm review of theme.md, then Phase 1 per-epic |
+| 2026-03-15 | Phase 2 E-001 competitive deep-dive complete. 539-line research doc covering 5 dimensions (Features, Workflows, UI/UX, Integrations, Data Models) across Frase.io, SEO.ai, SurferSEO, Semrush ContentShake. 10 table stakes defined. 7 differentiator opportunities identified. 10 anti-patterns documented. | Gate 1: Malcolm reviews research, then Phase 3 requirements |
 
 ## Process Audit — Gate 0
 
