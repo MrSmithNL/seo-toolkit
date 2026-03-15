@@ -97,10 +97,14 @@ nav:
   # ============================================================
 
   - Development:
-    - Automated Article Generator: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
     - Theme & Planning:
       - Theme: specs/001-autonomous-content-engine/theme.md
       - Status: specs/001-autonomous-content-engine/status.md
+    - Features:
+      - 001 — Autonomous Content Engine:
+        - BA Briefing: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
+        - Theme: specs/001-autonomous-content-engine/theme.md
+        - Status: specs/001-autonomous-content-engine/status.md
 
   # ============================================================
   # TEST — Strategy, quality gates, test specs, UAT
