@@ -6,7 +6,7 @@ project: PROD-001
 domain: seo.content-pipeline
 parent: PROD-001-SPEC-E-001
 status: draft
-phase: 4-design
+phase: 5-tasks
 priority: must
 size: L
 risk: medium

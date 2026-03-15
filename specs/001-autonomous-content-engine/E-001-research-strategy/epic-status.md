@@ -3,7 +3,7 @@ id: "PROD-001-SPEC-E-001"
 type: epic
 title: "Research & Strategy Engine"
 status: in-progress
-phase: 3-requirements
+phase: 5-tasks
 timestamps:
   created: 2026-03-15
   started: 2026-03-15
@@ -256,9 +256,9 @@ Epic: E-001 Research & Strategy Engine
 | Research (Phase 1-2) | [x] Complete | 2026-03-15 |
 | **Gate 1: Scope** | [x] Approved by Malcolm | 2026-03-15 |
 | Feature specs (Phase 3) | [x] Complete | 2026-03-15 |
-| Design (Phase 4) | [ ] Not started | |
+| Design (Phase 4) | [x] Complete | 2026-03-15 |
 | **Gate 2: Completeness** | [x] Approved by Malcolm | 2026-03-15 |
-| Task breakdown | [ ] Not started | |
+| Task breakdown | [ ] In progress | 2026-03-15 |
 | **Gate 3: Build Approval** | [ ] Not reached | |
 | Build | [ ] Not started | |
 | **Gate: Ship** | [ ] Not reached | |
@@ -505,6 +505,7 @@ None currently.
 ---
 
 ## Session Log
+| 2026-03-15 | Phase 5 (Tasks) complete | All 7 tasks.md files created: F-001 (10 tasks), F-002 (8 tasks), F-003 (6 tasks), F-004 (7 tasks), F-005 (8 tasks), F-006 (7 tasks), F-007 (9 tasks). Total: 55 implementation tasks. Ready for Gate 3. |
 
 | Date | What Happened | Next Step |
 |------|--------------|-----------|
