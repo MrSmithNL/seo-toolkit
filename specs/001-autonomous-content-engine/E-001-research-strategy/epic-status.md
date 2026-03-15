@@ -1,3 +1,28 @@
+---
+id: "PROD-001-SPEC-E-001"
+type: epic
+title: "Research & Strategy Engine"
+status: in-progress
+phase: 2-research
+timestamps:
+  created: 2026-03-15
+  started: 2026-03-15
+  review: null
+  completed: null
+gates:
+  scope: pending
+  completeness: pending
+  build_approval: pending
+baseline:
+  version: null
+  approved_by: null
+traces_to:
+  product: PROD-001
+  theme: "001-autonomous-content-engine"
+  capability: CAP-SEO-001
+tags: [e-001, research, strategy, keyword-research, content-calendar, aiso, seo]
+---
+
 # Epic Status — Research & Strategy Engine
 
 > **What this is:** Status tracker for the Research & Strategy pipeline stage —
@@ -65,7 +90,7 @@
 - [x] Parent theme-level DOD is met (theme PDM, FBS, epic breakdown complete)
 - [ ] Lean Business Case completed
 - [x] Business process this epic supports is mapped (theme.md § Business Process Map, Stage 1)
-- [ ] Competitive Deep-Dive completed (5 dimensions)
+- [x] Competitive Deep-Dive completed (5 dimensions) — `research/competitive-deep-dive.md`
 - [ ] UX pattern research for this workflow completed
 - [ ] Architecture decisions for this epic documented
 - [ ] Cross-cutting concerns addressed
@@ -116,7 +141,7 @@ None currently.
 | **Who has this problem?** | E-commerce store owners (Hairgenetix first) who need SEO/AISO content but lack time/expertise to research what to write |
 | **Current state** | Manual keyword research via Claude + `seo-content-strategy` skill + Rube recipes. No persistence. No content calendar. No automated gap detection. |
 | **Desired future state** | Input: website URL → Output: prioritised content calendar with topics, keywords, intent, cluster mapping. < 15 min human review to approve. |
-| **Constraints** | Free keyword data sources only (no SEMrush/Ahrefs API budget for R1). Shopify + WordPress target CMS. $50-100/mo total AI API budget for all 5 stages. |
+| **Constraints** | Minimal keyword data cost ($10 Keywords Everywhere + $50 DataForSEO deposit from month 3). No SEMrush/Ahrefs ($140+/mo). Shopify + WordPress target CMS. $50-100/mo total AI API budget for all 5 stages. |
 | **Cost of inaction** | Content remains ad-hoc, keyword-blind, not competitive. AISO scores stagnate. Organic traffic doesn't grow. Pipeline can't start without research output. |
 
 #### 3. Jobs-to-Be-Done (JTBD)
@@ -273,24 +298,63 @@ Epic: E-001 Research & Strategy Engine
 
 | Research File | Key Finding |
 |---------------|-------------|
-| `research/competitive-deep-dive.md` | _In progress — 5-dimension analysis of Frase, SEO.ai, SurferSEO, Semrush CS_ |
+| `research/competitive-deep-dive.md` | Complete — 539 lines, 5 dimensions, 4 competitors. Key finding: white space = transparent agentic pipeline |
+| `research/keyword-data-sources-analysis.md` | Complete — 441 lines. Free sources cover 60% of need. Recommendation: Keywords Everywhere ($10 one-time) for R1, DataForSEO ($50 deposit) for R1 Month 3+. Build-own roadmap: 80-90% self-sufficient by 12-18 months. |
 
 ---
 
 ## Competitive Deep-Dive (5-Dimension Analysis)
 
-> _In progress — being populated by research agent. See `research/competitive-deep-dive.md` when complete._
+> **COMPLETE.** Full 539-line analysis in [`research/competitive-deep-dive.md`](research/competitive-deep-dive.md).
 
 ### Competitors Analysed
 
-| # | Competitor | Product | Pricing Tier | Source Used |
-|---|-----------|---------|-------------|-------------|
-| A | Frase.io | Agentic SEO + GEO Platform | Solo $15/mo, Team $115/mo | docs, help centre, API |
-| B | SEO.ai | Autonomous SEO Pipeline | Starter $49/mo, Business $249/mo | docs, help centre |
-| C | SurferSEO | Content Scoring + Research | Essential $89/mo, Scale $129/mo | docs, blog, updates |
-| D | Semrush ContentShake | SEO Ecosystem Content Tool | Part of Semrush ($139+/mo) | docs, API docs |
+| # | Competitor | Product | Pricing | Source |
+|---|-----------|---------|---------|-------|
+| A | Frase.io | Agentic SEO + GEO | $39-299/mo (+$35 keyword add-on) | docs, help centre, API docs, G2 |
+| B | SEO.ai | Autonomous SEO Pipeline | $169+/mo | homepage, G2 (3.4/5, 8 reviews) |
+| C | SurferSEO | Content Scoring + Research | $99-299/mo | KB docs, SERP analyzer docs |
+| D | Semrush ContentShake | SEO Ecosystem Content Tool | Part of Semrush ($139+/mo) | keyword research guide, reviews |
 
-_Full 5-dimension tables will be populated from research agent output._
+### Key Competitive Insight
+
+The market has split into **research-first tools** (Frase, Semrush) that give humans rich data and expect human decisions, and **autonomy-first tools** (SEO.ai) that make all decisions but with opaque, low-trust output. The white space is a **transparent agentic pipeline** — automates execution while keeping the reasoning legible and the human in control of strategy.
+
+### Table Stakes (Must Match)
+
+1. SERP analysis (top 20+ results with entities, structure, word count)
+2. Topic Score / Content Score (0-100, real-time)
+3. Content brief auto-generation from SERP
+4. Topic clustering (pillar + support structure)
+5. Search intent classification (4-type)
+6. Google Search Console integration
+7. Keyword gap analysis vs competitors
+8. Content calendar / article queue
+9. WordPress + Shopify publish integration
+10. AI visibility tracking (ChatGPT + Perplexity minimum)
+
+### Differentiators (AISOGEN Opportunities)
+
+1. **Multi-language keyword research** — no competitor handles 9-language simultaneous planning
+2. **Transparent autonomous reasoning** — show the "why" for every keyword decision (SEO.ai's black-box is top complaint)
+3. **Durable pipeline with stage-level resumability** — BullMQ-backed, no competitor has this
+4. **YMYL domain guardrails** — health/legal/financial content safety checks
+5. **Intent-to-format mapping** — recommending article format, not just intent classification
+6. **Content calendar with algorithmic prioritisation scoring** — volume x difficulty x business value x gap score
+7. **New-site topical mapping without GSC dependency** — SurferSEO's best feature is unusable for new sites
+
+### Anti-Patterns (Avoid)
+
+1. Keyword research behind upsell paywall (Frase $35/mo add-on)
+2. Black-box autonomous selection (SEO.ai — 3.4/5 G2)
+3. No outline builder (SurferSEO)
+4. Tool fragmentation (SurferSEO — 3 separate tools)
+5. Content Score gaming via keyword stuffing (SurferSEO, Frase)
+6. GSC-only topical mapping (SurferSEO — excludes new sites)
+7. 14-day data refresh lag (SurferSEO)
+8. Auto-publish without human review gate (SEO.ai)
+9. Google Docs plugin instability at >3K words (Semrush)
+10. Correlation-based scoring that ignores content quality (SurferSEO)
 
 ---
 
@@ -340,14 +404,14 @@ F-001 (Keywords) ──→ F-002 (Clustering)
 ### Risks
 | ID | Risk | Probability | Impact | Owner | Mitigation | Status |
 |----|------|:-----------:|:------:|-------|------------|:------:|
-| R1 | Free keyword data sources insufficient for accurate volume/difficulty | Medium | High | Claude | Research paid alternatives in Phase 2; DataForSEO as fallback ($50/mo) | Open |
+| R1 | Free keyword data sources insufficient for accurate volume/difficulty | High | High | Claude | **RESOLVED:** Keywords Everywhere ($10, 100K lookups) fills volume gap. DataForSEO ($50 deposit, ~$5/mo actual) adds difficulty + SERP. See `research/keyword-data-sources-analysis.md`. | Mitigated |
 | R2 | CLI-only modality for R1 limits usability | Low | Medium | Malcolm | Dashboard in E-006; CLI outputs human-readable Markdown | Accepted |
-| R3 | Google Search Console not connected for Hairgenetix | Medium | Medium | Malcolm | Check GSC access; fallback to SERP-only gap analysis | Open |
+| R3 | Google Search Console not connected for Hairgenetix | N/A | Medium | Malcolm | **RESOLVED:** Malcolm confirmed GSC is connected. Use for post-publication feedback loop. | Closed |
 
 ### Assumptions
 | ID | Assumption | Confidence | Validation |
 |----|-----------|:----------:|------------|
-| A1 | Free keyword data (autocomplete, PAA) is sufficient for R1 | Low | Phase 2 research |
+| A1 | Free keyword data (autocomplete, PAA) is sufficient for R1 | **Invalidated** | Free sources cover idea generation + intent but NOT volume/difficulty. $10 Keywords Everywhere fills the gap. See `research/keyword-data-sources-analysis.md`. |
 | A2 | LLM semantic clustering is sufficient without vector DB | Medium | Phase 2 prototype |
 | A3 | Existing Rube recipes are reusable as pipeline components | High | BA §3 confirms live |
 | A4 | SERP scraping at < 50 queries/day is within API ToS | High | DataForSEO confirmed |
@@ -358,9 +422,69 @@ None currently.
 ### Dependencies
 | ID | Dependency | Type | Status | Blocks |
 |----|-----------|------|:------:|--------|
-| D1 | Keyword volume data source | External | Researching | F-001 accuracy |
-| D2 | GSC access for Hairgenetix | External | Unknown | F-006 accuracy |
+| D1 | Keyword volume data source | External | **Resolved** — Keywords Everywhere ($10) | F-001 accuracy |
+| D2 | GSC access for Hairgenetix | External | **Resolved** — confirmed connected | F-006 accuracy |
 | D3 | ContentBrief schema (output contract) | Internal | Not started | E-002 input |
+
+---
+
+## Specification Quality Rubric (Gate 2)
+
+> Self-assessment per RE v4.23 Gate 2 requirements. Minimum: 3.5 average.
+> To be completed during Phase 3 (Requirements) before Gate 2 review.
+
+| Dimension | Score (1-5) | Evidence |
+|-----------|:-----------:|---------:|
+| **Determinism** | — | _Pending: Phase 3 acceptance criteria_ |
+| **Completeness** | — | _Pending: Phase 3 story coverage_ |
+| **Testability** | — | _Pending: Phase 3 test specs_ |
+| **Context Sufficiency** | — | _Pending: Phase 4 design docs_ |
+| **Test Readiness** | — | _Pending: Phase 5 task breakdown_ |
+| **Average** | — | _Must exceed 3.5_ |
+
+---
+
+## Hallucination Risk Assessment (Gate 2)
+
+> Requirements at risk of agent hallucination during implementation.
+> To be populated during Phase 3 (Requirements).
+
+| Risk | Feature | Requirement | Mitigation |
+|:----:|---------|-------------|------------|
+| H | F-001 | "accurate volume data" — what accuracy threshold? | Define: volume within ±30% of Google Ads baseline |
+| M | F-006 | "correctly identifies gaps" — what recall/precision? | Define: ≥80% recall against manual audit of top-5 competitors |
+| M | F-007 | "< 15 min review" — subjective without task decomposition | Define: 10 topics, each with 5 fields to review, max 90 sec per topic |
+
+---
+
+## Six Thinking Hats — Black Hat Sweep (Gate 2)
+
+> "What could go wrong?" analysis.
+
+| Concern | Likelihood | Impact | Mitigation |
+|---------|:----------:|:------:|------------|
+| Keywords Everywhere API deprecated or pricing changes | Low | High | DataForSEO as fallback; abstracted data source interface |
+| Google blocks Autocomplete scraping at our volume | Medium | Medium | Rate-limit to <100/day; fall back to LLM ideation only |
+| LLM clustering produces poor topic groups | Medium | Medium | Human review step; confidence scoring per cluster |
+| Content calendar targets keywords with zero actual traffic | High (if free-only) | High | Mitigated: Keywords Everywhere provides real volume data |
+| Pipeline produces English-biased recommendations for non-EN markets | Medium | High | Per-language keyword expansion; validate volume in each locale |
+
+---
+
+## Test Coverage Summary (Gate 2)
+
+> To be populated during Phase 5 (Task Breakdown) with actual test counts.
+
+| Feature | Acceptance Tests | Integration Tests | Property Invariants | Total |
+|---------|:----------------:|:-----------------:|:-------------------:|:-----:|
+| F-001 Keyword Research | — | — | — | — |
+| F-002 Topic Clustering | — | — | — | — |
+| F-003 Intent Classification | — | — | — | — |
+| F-004 SERP Analysis | — | — | — | — |
+| F-005 Competitor Analysis | — | — | — | — |
+| F-006 Content Gap ID | — | — | — | — |
+| F-007 Content Calendar | — | — | — | — |
+| **Total** | — | — | — | — |
 
 ---
 
@@ -369,3 +493,5 @@ None currently.
 | Date | What Happened | Next Step |
 |------|--------------|-----------|
 | 2026-03-15 | E-001 epic-status.md created. Phase 1 (Understand) complete: problem framing, JTBD, assumption mapping, interaction modality decision, process flow, feature breakdown. Phase 2 competitive deep-dive launched (background). | Populate 5-dimension deep-dive from research results |
+| 2026-03-15 | Phase 2 deep-dive complete (539 lines). 10 table stakes, 7 differentiators, 10 anti-patterns documented. Key insight: transparent agentic pipeline is the white space. Keyword data source analysis launched. | Integrate keyword analysis, fix audit findings, present Gate 1 |
+| 2026-03-15 | Keyword data cost-benefit analysis complete (441 lines). Decision: $10 Keywords Everywhere for R1 volume data, DataForSEO ($50 deposit) from month 3 for difficulty + SERP. Build-own roadmap to 80-90% self-sufficient by month 12-18. RAID log updated: R1 mitigated, R3 closed, A1 invalidated, D1+D2 resolved. GSC confirmed connected. | DevOps audit review, Gate 1 preparation |
