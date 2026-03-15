@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
 
 from src.research_engine.models.keyword import Keyword, KeywordGap
@@ -142,3 +143,45 @@ class JsonFileKeywordAdapter:
             return []
         data = json.loads(path.read_text())
         return [KeywordGap.model_validate(item) for item in data]
+
+    def update_intent_fields(
+        self,
+        keyword_id: str,
+        intent: str,
+        intent_confidence: str,
+        intent_rationale: str,
+        recommended_format: str,
+        format_signal: str | None,
+        classified_at: datetime,
+    ) -> bool:
+        """Update intent classification fields on a keyword.
+
+        Args:
+            keyword_id: ID of the keyword to update.
+            intent: Intent type string.
+            intent_confidence: Confidence level string.
+            intent_rationale: One-sentence rationale.
+            recommended_format: Content format string.
+            format_signal: Detected signal or None.
+            classified_at: When classification was performed.
+
+        Returns:
+            True if keyword was found and updated.
+        """
+        for path in self._data_dir.glob("keywords_*.json"):
+            data = json.loads(path.read_text())
+            modified = False
+            for item in data:
+                if item.get("id") == keyword_id:
+                    item["intent"] = intent
+                    item["intent_confidence"] = intent_confidence
+                    item["intent_rationale"] = intent_rationale
+                    item["recommended_format"] = recommended_format
+                    item["format_signal"] = format_signal
+                    item["classified_at"] = classified_at.isoformat()
+                    modified = True
+                    break
+            if modified:
+                path.write_text(json.dumps(data, indent=2, default=str))
+                return True
+        return False

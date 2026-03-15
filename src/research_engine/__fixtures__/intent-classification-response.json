@@ -1,0 +1,164 @@
+{
+  "classifications": [
+    {
+      "keyword": "hair transplant recovery timeline",
+      "intent": "informational",
+      "confidence": "high",
+      "rationale": "User wants to understand the recovery process — no purchase signal.",
+      "recommended_format": "how-to-guide",
+      "format_signal": null
+    },
+    {
+      "keyword": "best hair transplant clinic Germany",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "User is comparing providers before booking — classic commercial investigation.",
+      "recommended_format": "listicle",
+      "format_signal": "best"
+    },
+    {
+      "keyword": "book hair transplant consultation",
+      "intent": "transactional",
+      "confidence": "high",
+      "rationale": "Explicit action intent — 'book' is a strong transactional signal.",
+      "recommended_format": "product-landing-page",
+      "format_signal": "book"
+    },
+    {
+      "keyword": "hairgenetix",
+      "intent": "navigational",
+      "confidence": "high",
+      "rationale": "User is looking for a specific brand.",
+      "recommended_format": "brand-navigational-page",
+      "format_signal": null
+    },
+    {
+      "keyword": "hair transplant",
+      "intent": "commercial",
+      "confidence": "medium",
+      "rationale": "Ambiguous — could be informational research OR commercial investigation; classified as commercial (higher intent).",
+      "recommended_format": "category-page",
+      "format_signal": null
+    },
+    {
+      "keyword": "how to care for hair after transplant",
+      "intent": "informational",
+      "confidence": "high",
+      "rationale": "How-to query seeking procedural information.",
+      "recommended_format": "how-to-guide",
+      "format_signal": "how to"
+    },
+    {
+      "keyword": "FUE vs DHI hair transplant",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "User is comparing two specific procedures before making a decision.",
+      "recommended_format": "comparison-article",
+      "format_signal": "vs"
+    },
+    {
+      "keyword": "what is alopecia areata",
+      "intent": "informational",
+      "confidence": "high",
+      "rationale": "Definition query — user wants to understand a medical condition.",
+      "recommended_format": "definition-explainer",
+      "format_signal": "what is"
+    },
+    {
+      "keyword": "hair transplant consultation Berlin",
+      "intent": "transactional",
+      "confidence": "high",
+      "rationale": "Location-specific transactional query with city name.",
+      "recommended_format": "location-page",
+      "format_signal": "Berlin"
+    },
+    {
+      "keyword": "hair growth serum",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "Product category search — commercial investigation with no specific signal.",
+      "recommended_format": "category-page",
+      "format_signal": null
+    },
+    {
+      "keyword": "Haartransplantation Kosten Deutschland",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "German keyword for hair transplant costs — commercial investigation.",
+      "recommended_format": "category-page",
+      "format_signal": null
+    },
+    {
+      "keyword": "FUE procedure",
+      "intent": "informational",
+      "confidence": "medium",
+      "rationale": "Could be pre-purchase research; classified as informational, but commercial is possible.",
+      "recommended_format": "definition-explainer",
+      "format_signal": null
+    },
+    {
+      "keyword": "Haartransplantation vorher nachher",
+      "intent": "informational",
+      "confidence": "high",
+      "rationale": "German for 'before and after' — seeking visual/informational content.",
+      "recommended_format": "how-to-guide",
+      "format_signal": null
+    },
+    {
+      "keyword": "beste Haarklinik Berlin",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "German for 'best hair clinic Berlin' — comparing providers.",
+      "recommended_format": "listicle",
+      "format_signal": "beste"
+    },
+    {
+      "keyword": "Haartransplantation Erfahrungen",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "German for 'hair transplant experiences' — commercial research via reviews.",
+      "recommended_format": "listicle",
+      "format_signal": null
+    },
+    {
+      "keyword": "minoxidil side effects",
+      "intent": "informational",
+      "confidence": "high",
+      "rationale": "User seeks factual health information, not purchasing.",
+      "recommended_format": "definition-explainer",
+      "format_signal": null
+    },
+    {
+      "keyword": "buy finasteride online",
+      "intent": "transactional",
+      "confidence": "high",
+      "rationale": "Explicit purchase intent with 'buy' keyword.",
+      "recommended_format": "product-landing-page",
+      "format_signal": "buy"
+    },
+    {
+      "keyword": "hair loss treatment options",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "Exploring treatment options — commercial investigation phase.",
+      "recommended_format": "listicle",
+      "format_signal": null
+    },
+    {
+      "keyword": "PRP hair treatment cost",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "Cost inquiry indicates commercial investigation.",
+      "recommended_format": "category-page",
+      "format_signal": null
+    },
+    {
+      "keyword": "hair transplant turkey reviews",
+      "intent": "commercial",
+      "confidence": "high",
+      "rationale": "Review-seeking indicates pre-purchase research.",
+      "recommended_format": "listicle",
+      "format_signal": "reviews"
+    }
+  ]
+}

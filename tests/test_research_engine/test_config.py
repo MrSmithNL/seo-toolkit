@@ -117,6 +117,39 @@ class TestResearchConfig:
         )
         assert config.max_crawl_pages == 50
 
+    def test_intent_classification_flag_defaults_false(self) -> None:
+        """FEATURE_INTENT_CLASSIFICATION defaults to False."""
+        config = ResearchConfig(
+            environment="test",
+            _env_file=None,  # type: ignore[call-arg]
+        )
+        assert config.feature_intent_classification is False
+
+    def test_intent_classification_flag_can_enable(self) -> None:
+        """Intent classification can be enabled via config."""
+        config = ResearchConfig(
+            environment="test",
+            feature_intent_classification=True,
+            _env_file=None,  # type: ignore[call-arg]
+        )
+        assert config.feature_intent_classification is True
+
+    def test_intent_chunk_size_default(self) -> None:
+        """Intent chunk size defaults to 50."""
+        config = ResearchConfig(
+            environment="test",
+            _env_file=None,  # type: ignore[call-arg]
+        )
+        assert config.intent_chunk_size == 50
+
+    def test_intent_max_retries_default(self) -> None:
+        """Intent max retries defaults to 1."""
+        config = ResearchConfig(
+            environment="test",
+            _env_file=None,  # type: ignore[call-arg]
+        )
+        assert config.intent_max_retries == 1
+
 
 class TestCreateResearchModule:
     """Tests for the module factory function."""

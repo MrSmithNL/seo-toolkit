@@ -32,6 +32,11 @@ class ResearchConfig(BaseSettings):
     # Feature flags
     feature_keyword_research: bool = False
     feature_topic_clustering: bool = False
+    feature_intent_classification: bool = False
+
+    # Intent classification (F-003)
+    intent_chunk_size: int = 50
+    intent_max_retries: int = 1
 
     # Storage
     storage_mode: Literal["sqlite", "json"] = "json"

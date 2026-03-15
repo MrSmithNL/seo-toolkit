@@ -6,6 +6,7 @@ Provides mock adapters, sample config, and reusable fixtures.
 from __future__ import annotations
 
 import uuid
+from datetime import datetime
 
 import pytest
 
@@ -78,6 +79,28 @@ class MockStorage:
     def get_gaps(self, campaign_id: str) -> list[KeywordGap]:
         """Get gaps by campaign."""
         return [g for g in self.gaps if g.campaign_id == campaign_id]
+
+    def update_intent_fields(
+        self,
+        keyword_id: str,
+        intent: str,
+        intent_confidence: str,
+        intent_rationale: str,
+        recommended_format: str,
+        format_signal: str | None,
+        classified_at: datetime,
+    ) -> bool:
+        """Update intent classification fields on a keyword."""
+        for kw in self.keywords:
+            if kw.id == keyword_id:
+                object.__setattr__(kw, "intent", intent)
+                object.__setattr__(kw, "intent_confidence", intent_confidence)
+                object.__setattr__(kw, "intent_rationale", intent_rationale)
+                object.__setattr__(kw, "recommended_format", recommended_format)
+                object.__setattr__(kw, "format_signal", format_signal)
+                object.__setattr__(kw, "classified_at", classified_at)
+                return True
+        return False
 
 
 @pytest.fixture()

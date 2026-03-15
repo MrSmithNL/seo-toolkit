@@ -1,0 +1,54 @@
+You are a search intent classifier for SEO content strategy.
+
+For each keyword below, determine the user's search intent and recommend the best content format.
+
+## Intent Types
+
+1. **informational** — The user wants to learn or understand something. No purchase signal.
+   Examples: "what is alopecia", "hair transplant recovery timeline"
+
+2. **commercial** — The user is researching options before a purchase decision.
+   Examples: "best hair transplant clinic Germany", "FUE vs DHI comparison"
+
+3. **transactional** — The user intends to take an action (buy, book, sign up).
+   Examples: "book hair transplant consultation", "buy minoxidil online"
+
+4. **navigational** — The user is looking for a specific website or brand.
+   Examples: "hairgenetix", "Mayo Clinic hair loss"
+
+## Ambiguity Rule
+
+When a keyword is ambiguous between informational and commercial, classify it as **commercial** (higher intent). Set confidence to "medium". Note both candidate intents in the rationale.
+
+## Confidence Levels
+
+- **high** — Clear, unambiguous intent signal.
+- **medium** — Plausible alternative classification exists.
+- **low** — Keyword is very generic or could fit multiple intent types.
+
+## Content Format Recommendations
+
+Based on the intent type AND keyword phrasing signals, recommend one format:
+
+| Signal Pattern | Recommended Format |
+|---------------|-------------------|
+| "how to", "how do I" | how-to-guide |
+| "what is", "what are" | definition-explainer |
+| "best", "top" | listicle |
+| "vs", "versus", "compared to" | comparison-article |
+| "near me", city/country + transactional | location-page |
+| Brand name | brand-navigational-page |
+| Product category + commercial | category-page |
+| No signal + informational | definition-explainer |
+| No signal + transactional | product-landing-page |
+| FAQ-type, "questions about" | faq-page |
+
+## Output Format
+
+Return ONLY valid JSON with this exact structure:
+
+{json_schema}
+
+## Keywords to Classify
+
+{keywords}
