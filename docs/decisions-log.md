@@ -63,3 +63,27 @@
 - Competitor comparison and trend tracking
 **Research basis:** Full research document at `smith-ai-agency/research/ai-visibility-optimization-research.md`
 **Trade-off:** More complex audit that takes longer to run vs. genuinely actionable insights that move the needle on AI visibility.
+
+## DEC-008 — E-001 builds as Python in seo-toolkit, not TypeScript in saas-platform
+
+**Date:** 2026-03-15
+**Decision:** Build E-001 (Research & Strategy Engine) as Python code in the seo-toolkit repository, not as a TypeScript module in the saas-platform.
+**Why:** The saas-platform is at Phase 0 (scaffolding only) — no auth, no tenancy, no API layer, no job queue. Building E-001 there would require building the entire platform core first. Meanwhile, seo-toolkit already has 5 live Rube recipe agents, pytest/mypy/ruff configured, and operational Python code. Building in Python now delivers value immediately.
+**Conditions:**
+1. **Migration-ready code structure** — All Python code must use the adapter pattern with clean interfaces, Pydantic models that mirror the TypeScript ContentBrief contract, and clear separation of business logic from infrastructure.
+2. **Migration is high-priority roadmap item** — When saas-platform reaches Phase 2+ (auth + tenancy + API operational), E-001 migrates to TypeScript module.
+3. **Documentation** — The epic-design.md is updated with Python adaptation notes. The spec's TypeScript/Drizzle/BullMQ references are the *target* architecture, not the current implementation.
+**What changes from spec:**
+- TypeScript → Python 3.12+
+- Drizzle ORM → SQLAlchemy or SQLite (local-first, no PostgreSQL initially)
+- BullMQ + Redis → Python async or simple queue (Celery or in-process)
+- Vitest → pytest + Hypothesis (property-based testing)
+- Zod schemas → Pydantic v2 models (structurally equivalent)
+**What stays the same:**
+- Adapter pattern for data sources (ADR-E001-002)
+- ContentBrief output contract (structure identical, Pydantic instead of Zod)
+- Pipeline orchestration concept (stages with dependencies)
+- SSRF mitigations and input validation
+- Event contracts (emitted as structured logs until event bus exists)
+- All 7 feature requirements and acceptance criteria
+**Trade-off:** Temporary divergence from target architecture. Requires a dedicated migration sprint later. Worth it because: (a) delivers value 3-6 months earlier, (b) validates the design with real usage before committing to TypeScript, (c) Python prototype can inform the TypeScript implementation.

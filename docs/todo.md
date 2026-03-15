@@ -51,10 +51,11 @@ Active RE process for the Autonomous Content Engine. Syncs with product roadmap 
 | RE-004 | E-001 — Gate 1 (Scope Validation) | ✅ Done | Malcolm approved 2026-03-15 |
 | RE-005 | E-001 — Phase 3 (Requirements): All 7 features | ✅ Done | 2,659 lines across F-001 to F-007. EARS acceptance criteria. |
 | RE-006 | E-001 — Gate 2 (Completeness Review) | ✅ Done | Malcolm approved 2026-03-15 |
-| RE-007 | E-001 — Phase 4 (Design) | 🔲 Todo | Architecture, data model, API contracts |
-| RE-008 | E-001 — Gate 3 (Build Approval) | 🔲 Todo | After Phase 5 (Tasks) |
+| RE-007 | E-001 — Phase 4 (Design) | ✅ Done | Architecture + data model + API contracts + 6 ADRs |
+| RE-008 | E-001 — Gate 3 (Build Approval) | ✅ Done | Malcolm approved 2026-03-15. Build as Python (DEC-008). |
 | RE-009 | Purchase Keywords Everywhere API key ($10) | 🔲 Todo | Malcolm approved spend 2026-03-15 |
 | RE-010 | E-002 to E-005 — spec remaining epics | 🔲 Todo | After E-001 reaches Gate 3 |
+| RE-011 | Migrate E-001 to saas-platform TypeScript module | 🔲 Todo | HIGH PRIORITY. Trigger: saas-platform Phase 2+ operational. See DEC-008. |
 
 ## Phase 3 — Tracking & Growth
 

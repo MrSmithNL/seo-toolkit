@@ -42,7 +42,7 @@
 
 | # | Item | Category | ARID | Spec | Gate Status | Target Sprint | Notes |
 |---|------|----------|:----:|:----:|:-----------:|:------------:|-------|
-| 7 | E-001 Research & Strategy (7 features) | product | 11.2 | Phase 3 complete | Gate 1 ✅, Gate 2 ✅ | S002 | Gate 2 approved 2026-03-15. Phase 4 (Design) next. |
+| 7 | E-001 Research & Strategy (7 features) | product | 11.2 | Phase 5 complete | Gate 1 ✅, Gate 2 ✅, Gate 3 ✅ | S002 | Gate 3 approved 2026-03-15. **Build (Phase 6) in progress.** Python in seo-toolkit (DEC-008). |
 | 8 | Purchase Keywords Everywhere API ($10) | product | 9.0 | N/A | N/A — purchase | S002 | Malcolm approved 2026-03-15. Needed before F-001 build. |
 | 9 | DataForSEO API setup ($50 deposit) | product | 6.0 | N/A | N/A — purchase | S003+ | Deferred to month 3 per cost analysis. |
 
@@ -70,6 +70,7 @@
 | 23 | White-label reports for agencies | product | 1.0 | Feature request | Low | Reporter Agent |
 | 24 | Schema markup generator | product | 2.0 | Content Optimizer dep | Medium | Content Optimizer |
 | 25 | Productise as standalone SaaS (Phase 2) | strategy | 1.0 | Long-term | Low | Proven on clients |
+| 26 | **Migrate E-001 to saas-platform TypeScript module** | engineering | 8.0 | DEC-008 | **High** | SaaS Platform Phase 2+ operational. See DEC-008. |
 
 ---
 
@@ -110,3 +111,4 @@
 | 2026-03-15 | Gate 2 sync — E-001 ARID updated 8.4→11.2 (Spec Readiness 3→4). S001 operational tasks updated to Done. 237 EARS criteria + 270 test scenarios documented. |
 | 2026-03-01 | v1.0 — Initial roadmap from competitor recommendations. 23 items across 3 time horizons. |
 | 2026-03-15 | v2.0 — Converted to Now/Next/Later format (DM SOP O11). Added Feature Hierarchy tracing, ARID scores, Discovered Scope section. Integrated E-001 RE progress (7 features at Phase 3). Added blockers from keyword data analysis. |
+| 2026-03-15 | Gate 3 approved — E-001 build started (Python, DEC-008). Migration item #26 added to Later. |

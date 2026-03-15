@@ -378,3 +378,75 @@ When the building agent starts implementation:
 2. No PII stored unencrypted
 3. Pipeline must be resumable (no lost work on failure)
 4. Human approval gate before content calendar is finalised
+
+---
+
+## Python Adaptation (DEC-008)
+
+> **This section documents the temporary Python implementation.** The spec above describes the *target* TypeScript architecture. This section describes what changes for the Python build and how to structure code for future migration.
+
+### Decision Context
+
+E-001 builds as Python in seo-toolkit because the saas-platform is at Phase 0 (scaffolding only). See `docs/decisions-log.md` DEC-008 for full rationale. Migration to TypeScript is a high-priority roadmap item triggered when saas-platform reaches Phase 2+.
+
+### Technology Mapping
+
+| Spec (Target) | Python (Current) | Migration Notes |
+|---------------|-----------------|-----------------|
+| TypeScript 5.x | Python 3.12+ | Type hints everywhere — enables automated TS conversion |
+| Drizzle ORM | SQLite + SQLAlchemy (or raw) | Local-first. No PostgreSQL initially. Schema design matches target tables. |
+| BullMQ + Redis | asyncio task queue or Celery | Pipeline stages as async functions. State machine pattern preserved. |
+| Vitest | pytest | Same test structure: unit → integration → property-based |
+| fast-check | Hypothesis | Property-based testing equivalent |
+| Zod schemas | Pydantic v2 models | Structurally identical. Field names, types, and nesting match 1:1. |
+| `packages/ai-gateway` | Direct OpenAI/Anthropic SDK | Wrap in adapter for future gateway integration |
+| Event bus | Structured logging | Events emitted as JSON log lines. Same event names and payloads. |
+| Result type (`ok`/`err`) | Python Result type (returns lib or custom) | Same pattern: no exceptions for business errors |
+| RLS (PostgreSQL) | N/A (single-tenant local) | tenant_id column still present in schema for migration readiness |
+
+### Migration-Ready Code Structure Rules
+
+These rules ensure the Python code can be systematically migrated to TypeScript:
+
+1. **Mirror the module structure** — Python package layout must match the target TypeScript module:
+   ```
+   src/research_engine/
+   ├── __init__.py
+   ├── commands/           # Write operations (matches modules/research-engine/src/commands/)
+   ├── queries/            # Read operations (matches modules/research-engine/src/queries/)
+   ├── events/             # Event definitions (matches modules/research-engine/src/events/)
+   ├── adapters/           # Data source adapters (KeywordDataSource interface)
+   ├── pipeline/           # Pipeline orchestrator and stage runners
+   ├── models/             # Pydantic models (1:1 with Zod/Drizzle schemas)
+   └── tests/              # Mirrors src/ structure
+   ```
+
+2. **Pydantic models = TypeScript interfaces** — Every Pydantic model must be structurally equivalent to the target TypeScript interface. Use the same field names, nesting, and types. Document the TS equivalent in a docstring.
+
+3. **Adapter pattern is mandatory** — All external API calls go through adapters implementing a Protocol (Python's structural typing). The Protocol definition mirrors the TypeScript interface from ADR-E001-002.
+
+4. **No Python-specific magic** — Avoid metaclasses, decorators that change function signatures, dynamic attribute access, or patterns that have no TypeScript equivalent. Keep it boring and translatable.
+
+5. **Type hints on everything** — Every function parameter, return type, and variable assignment must have type hints. Run mypy in strict mode. This is the single most important rule for migration.
+
+6. **Business logic in pure functions** — Keep business logic (clustering, scoring, gap analysis) in pure functions with typed inputs and outputs. No side effects. These translate directly to TypeScript.
+
+7. **Infrastructure at the edges** — Database access, HTTP calls, file I/O only in adapter/infrastructure code. Business logic never imports infrastructure directly.
+
+8. **Same test scenarios** — Test files must implement the same scenarios from tests.md. Test names should match so coverage can be verified after migration.
+
+9. **ContentBrief contract is frozen** — The Pydantic ContentBrief model must exactly match the TypeScript interface in ADR-E001-006. Any changes require updating both.
+
+10. **Event names and payloads are frozen** — Use the same event names from the Event Contracts table above. Payloads must match. Emit as structured JSON logs for now.
+
+### What This Enables
+
+When saas-platform reaches Phase 2+, migration consists of:
+1. Auto-generate TypeScript types from Pydantic models (pydantic-to-typescript or manual)
+2. Translate pure business logic functions (mostly mechanical with type hints)
+3. Swap adapters: Python → TypeScript implementations of same interfaces
+4. Swap infrastructure: SQLite → Drizzle/PostgreSQL, asyncio → BullMQ
+5. Re-run same test scenarios in Vitest
+6. Wire into saas-platform event bus (replace structured logs with real events)
+
+Estimated migration effort: 2-3 sprints (based on ~55 tasks, adapter pattern, and frozen contracts).
