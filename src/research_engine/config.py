@@ -59,3 +59,14 @@ class ResearchConfig(BaseSettings):
     serp_daily_limit_google: int = 30
     serp_cache_days: int = 7
     serp_google_delay_seconds: float = 5.0
+
+    # Competitor analysis (F-005)
+    feature_competitor_analysis: bool = False
+    crawl_min_delay_ms: int = 500
+    crawl_max_concurrent: int = 2
+    crawl_max_retries: int = 3
+    crawl_user_agent: str = "SEOToolkit/1.0 (Competitor Analysis)"
+    quality_llm_model: str = "claude-haiku"
+    quality_batch_size: int = 5
+    quality_max_input_chars: int = 8000
+    quality_max_tokens_per_page: int = 2000

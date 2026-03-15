@@ -1,5 +1,12 @@
 """Research Engine domain models."""
 
+from src.research_engine.models.competitor import (
+    CompetitorBenchmark,
+    CompetitorSnapshot,
+    CrawlStatus,
+    QualityAssessmentStatus,
+    QualityProfile,
+)
 from src.research_engine.models.contracts import KeywordRecord
 from src.research_engine.models.intent import (
     ContentFormat,
@@ -27,8 +34,11 @@ from src.research_engine.models.serp import (
 
 __all__ = [
     "ApiSource",
+    "CompetitorBenchmark",
+    "CompetitorSnapshot",
     "ContentFormat",
     "ContentType",
+    "CrawlStatus",
     "DifficultySource",
     "Err",
     "GapStatus",
@@ -42,6 +52,8 @@ __all__ = [
     "KeywordRecord",
     "KeywordSource",
     "Ok",
+    "QualityAssessmentStatus",
+    "QualityProfile",
     "Result",
     "SerpFeatures",
     "SerpResult",

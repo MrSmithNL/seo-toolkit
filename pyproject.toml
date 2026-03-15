@@ -34,7 +34,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101"]  # assert is expected in tests
+"tests/**/*.py" = ["S101", "D102", "D107"]  # assert + test method/init docstrings
 "scripts/**/*.py" = ["E501", "D103"]  # build scripts with embedded HTML templates
 
 [tool.ruff.lint.mccabe]
