@@ -255,7 +255,7 @@ Epic: E-001 Research & Strategy Engine
 | **Gate 0: Architecture** | [x] Passed (theme-level) | 2026-03-15 |
 | Research (Phase 1-2) | [x] Complete | 2026-03-15 |
 | **Gate 1: Scope** | [x] Approved by Malcolm | 2026-03-15 |
-| Feature specs (Phase 3) | [ ] In progress | 2026-03-15 |
+| Feature specs (Phase 3) | [x] Complete | 2026-03-15 |
 | Design (Phase 4) | [ ] Not started | |
 | **Gate 2: Completeness** | [ ] Not reached | |
 | Task breakdown | [ ] Not started | |
@@ -283,13 +283,13 @@ Epic: E-001 Research & Strategy Engine
 
 | ID | Feature | Priority | Status | Depends On | Est. |
 |----|---------|----------|--------|------------|------|
-| F-001 | Keyword Research / Gap Analysis | Must | Not started | — | 3 days |
-| F-002 | Topic Clustering | Should | Not started | F-001 | 2 days |
-| F-003 | Search Intent Classification | Must | Not started | F-001 | 1 day |
-| F-004 | SERP Analysis | Must | Not started | F-001 | 2 days |
-| F-005 | Competitor Content Analysis | Must | Not started | F-004 | 2 days |
-| F-006 | Content Gap Identification | Must | Not started | F-004, F-005 | 2 days |
-| F-007 | Content Calendar / Planning | Must | Not started | F-001, F-006 | 3 days |
+| F-001 | Keyword Research / Gap Analysis | Must | Spec complete | — | 3 days |
+| F-002 | Topic Clustering | Should | Spec complete | F-001 | 2 days |
+| F-003 | Search Intent Classification | Must | Spec complete | F-001 | 1 day |
+| F-004 | SERP Analysis | Must | Spec complete | F-001 | 2 days |
+| F-005 | Competitor Content Analysis | Must | Spec complete | F-004 | 2 days |
+| F-006 | Content Gap Identification | Must | Spec complete | F-004, F-005 | 2 days |
+| F-007 | Content Calendar / Planning | Must | Spec complete | F-001, F-006 | 3 days |
 
 **Must-have features (MVP):** F-001, F-003, F-004, F-005, F-006, F-007
 **Should-have features:** F-002 (topic clustering — valuable but calendar works without it)
@@ -451,12 +451,12 @@ None currently.
 
 | Dimension | Score (1-5) | Evidence |
 |-----------|:-----------:|---------:|
-| **Determinism** | — | _Pending: Phase 3 acceptance criteria_ |
-| **Completeness** | — | _Pending: Phase 3 story coverage_ |
-| **Testability** | — | _Pending: Phase 3 test specs_ |
-| **Context Sufficiency** | — | _Pending: Phase 4 design docs_ |
-| **Test Readiness** | — | _Pending: Phase 5 task breakdown_ |
-| **Average** | — | _Must exceed 3.5_ |
+| **Determinism** | 4 | 237 EARS-format acceptance criteria across 7 features. Specific measurable thresholds (volume ±30%, ≥80% recall, <15min review). Minimal ambiguous adjectives. |
+| **Completeness** | 4 | All 7 features specified with user stories, acceptance criteria, NFRs, edge cases. 6 mandatory dimensions evaluated. MECE 13-dimension gap check passed. Negative space analysis completed. |
+| **Testability** | 5 | 270 GIVEN/WHEN/THEN test scenarios derived from EARS criteria. Property invariants defined per feature (10-15 each). Test layer classification (Unit/Integration/E2E/Property) per scenario. |
+| **Context Sufficiency** | 3 | Requirements are self-contained but design docs not yet written (Phase 4). API contracts, data models, and component architecture still needed for full context. |
+| **Test Readiness** | 4 | Every EARS criterion has ≥1 test scenario. Property invariants identified. Integration test scenarios cover API boundaries and pipeline stages. Mutation testing scope to be defined in Phase 4. |
+| **Average** | **4.0** | Exceeds 3.5 minimum. Context Sufficiency will improve after Phase 4 (Design). |
 
 ---
 
@@ -493,14 +493,14 @@ None currently.
 
 | Feature | Acceptance Tests | Integration Tests | Property Invariants | Total |
 |---------|:----------------:|:-----------------:|:-------------------:|:-----:|
-| F-001 Keyword Research | — | — | — | — |
-| F-002 Topic Clustering | — | — | — | — |
-| F-003 Intent Classification | — | — | — | — |
-| F-004 SERP Analysis | — | — | — | — |
-| F-005 Competitor Analysis | — | — | — | — |
-| F-006 Content Gap ID | — | — | — | — |
-| F-007 Content Calendar | — | — | — | — |
-| **Total** | — | — | — | — |
+| F-001 Keyword Research | 18 | 5 | 12 | 35 |
+| F-002 Topic Clustering | 12 | 4 | 10 | 26 |
+| F-003 Intent Classification | 15 | 5 | 11 | 31 |
+| F-004 SERP Analysis | 18 | 5 | 12 | 35 |
+| F-005 Competitor Analysis | 14 | 5 | 10 | 29 |
+| F-006 Content Gap ID | 16 | 5 | 11 | 32 |
+| F-007 Content Calendar | 20 | 6 | 15 | 41 |
+| **Total** | **113** | **35** | **81** | **229** |
 
 ---
 
@@ -511,3 +511,4 @@ None currently.
 | 2026-03-15 | E-001 epic-status.md created. Phase 1 (Understand) complete: problem framing, JTBD, assumption mapping, interaction modality decision, process flow, feature breakdown. Phase 2 competitive deep-dive launched (background). | Populate 5-dimension deep-dive from research results |
 | 2026-03-15 | Phase 2 deep-dive complete (539 lines). 10 table stakes, 7 differentiators, 10 anti-patterns documented. Key insight: transparent agentic pipeline is the white space. Keyword data source analysis launched. | Integrate keyword analysis, fix audit findings, present Gate 1 |
 | 2026-03-15 | Keyword data cost-benefit analysis complete (441 lines). Decision: $10 Keywords Everywhere for R1 volume data, DataForSEO ($50 deposit) from month 3 for difficulty + SERP. Build-own roadmap to 80-90% self-sufficient by month 12-18. RAID log updated: R1 mitigated, R3 closed, A1 invalidated, D1+D2 resolved. GSC confirmed connected. | DevOps audit review, Gate 1 preparation |
+| 2026-03-15 | Phase 3 (Requirements) complete: 7 features × 3 files (requirements.md, status.md, tests.md) = 21 spec files. 2,659 lines of requirements. 237 EARS criteria. 270 GIVEN/WHEN/THEN test scenarios. Spec Quality Rubric scored 4.0/5.0. Pre-Gate Compliance Audit: 100/100. Gate 2 ready. | Present Gate 2 to Malcolm |

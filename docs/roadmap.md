@@ -27,9 +27,9 @@
 
 | # | Item | Category | ARID | Spec | Gate | Sprint | Status |
 |---|------|----------|:----:|:----:|:----:|:------:|--------|
-| 1 | Re-run Technical Audit on hairgenetix.com | operational | — | N/A | N/A | S001 | In progress |
-| 2 | Compile LOE audit findings into prioritised fix list | operational | — | N/A | N/A | S001 | In progress |
-| 3 | Compile HG audit findings into prioritised fix list | operational | — | N/A | N/A | S001 | In progress |
+| 1 | Re-run Technical Audit on hairgenetix.com | operational | — | N/A | N/A | S001 | Done |
+| 2 | Compile LOE audit findings into prioritised fix list | operational | — | N/A | N/A | S001 | Done |
+| 3 | Compile HG audit findings into prioritised fix list | operational | — | N/A | N/A | S001 | Done |
 | 4 | Analyse LOE keyword research for top 5 content gaps | operational | — | N/A | N/A | S001 | Done |
 | 5 | Analyse HG keyword research for top 5 content gaps | operational | — | N/A | N/A | S001 | Done |
 | 6 | Create reusable content brief template | operational | — | N/A | N/A | S001 | In progress |
@@ -42,7 +42,7 @@
 
 | # | Item | Category | ARID | Spec | Gate Status | Target Sprint | Notes |
 |---|------|----------|:----:|:----:|:-----------:|:------------:|-------|
-| 7 | E-001 Research & Strategy (7 features) | product | 8.4 | Phase 3 complete | Gate 1 ✅, Gate 2 pending | S002 | All 7 feature requirements written. Phase 4 (Design) next. |
+| 7 | E-001 Research & Strategy (7 features) | product | 11.2 | Phase 3 complete | Gate 1 ✅, **Gate 2 pending** | S002 | 237 EARS criteria, 270 test scenarios, rubric 4.0/5.0. Compliance audit 100%. Phase 4 (Design) next after Gate 2 approval. |
 | 8 | Purchase Keywords Everywhere API ($10) | product | 9.0 | N/A | N/A — purchase | S002 | Malcolm approved 2026-03-15. Needed before F-001 build. |
 | 9 | DataForSEO API setup ($50 deposit) | product | 6.0 | N/A | N/A — purchase | S003+ | Deferred to month 3 per cost analysis. |
 
@@ -106,5 +106,6 @@
 
 | Date | What Changed |
 |------|-------------|
+| 2026-03-15 | Gate 2 sync — E-001 ARID updated 8.4→11.2 (Spec Readiness 3→4). S001 operational tasks updated to Done. 237 EARS criteria + 270 test scenarios documented. |
 | 2026-03-01 | v1.0 — Initial roadmap from competitor recommendations. 23 items across 3 time horizons. |
 | 2026-03-15 | v2.0 — Converted to Now/Next/Later format (DM SOP O11). Added Feature Hierarchy tracing, ARID scores, Discovered Scope section. Integrated E-001 RE progress (7 features at Phase 3). Added blockers from keyword data analysis. |
