@@ -60,6 +60,9 @@ class ResearchConfig(BaseSettings):
     serp_cache_days: int = 7
     serp_google_delay_seconds: float = 5.0
 
+    # Content gap analysis (F-006)
+    feature_content_gap: bool = False
+
     # Competitor analysis (F-005)
     feature_competitor_analysis: bool = False
     crawl_min_delay_ms: int = 500
