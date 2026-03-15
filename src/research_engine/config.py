@@ -52,3 +52,10 @@ class ResearchConfig(BaseSettings):
     # Autocomplete rate limiting
     autocomplete_daily_limit: int = 100
     autocomplete_delay_seconds: float = 2.0
+
+    # SERP analysis (F-004)
+    feature_serp_analysis: bool = False
+    serp_daily_limit: int = 50
+    serp_daily_limit_google: int = 30
+    serp_cache_days: int = 7
+    serp_google_delay_seconds: float = 5.0

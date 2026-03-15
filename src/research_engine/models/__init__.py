@@ -17,9 +17,18 @@ from src.research_engine.models.keyword import (
     KeywordSource,
 )
 from src.research_engine.models.result import Err, Ok, Result
+from src.research_engine.models.serp import (
+    ApiSource,
+    ContentType,
+    SerpFeatures,
+    SerpResult,
+    SerpSnapshot,
+)
 
 __all__ = [
+    "ApiSource",
     "ContentFormat",
+    "ContentType",
     "DifficultySource",
     "Err",
     "GapStatus",
@@ -34,4 +43,7 @@ __all__ = [
     "KeywordSource",
     "Ok",
     "Result",
+    "SerpFeatures",
+    "SerpResult",
+    "SerpSnapshot",
 ]
