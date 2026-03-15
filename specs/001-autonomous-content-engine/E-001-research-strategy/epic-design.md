@@ -115,22 +115,30 @@ interface KeywordDataSource {
 
 ## ADR-E001-003: Topic Clustering
 
-**Status:** Proposed
+**Status:** Proposed (updated from architecture research 2026-03-15)
 **Context:** Need to group 50-500 keywords into topical clusters (pillar + support structure).
-**Decision:** LLM-first approach for R1 (fast to implement, good accuracy at our scale). Embedding-based clustering as R2 enhancement.
+**Decision:** Two-phase approach: (1) Embedding-based clustering via OpenAI `text-embedding-3-small` (384-dim) + HDBSCAN, (2) LLM for cluster labelling only.
 
-**R1 approach:** Send batches of 50 keywords to Claude/GPT with structured output requesting cluster assignments. JSON schema enforced output.
+**R1 approach:**
+1. Generate embeddings for all keywords via `text-embedding-3-small` ($0.02 per 1M tokens — negligible cost)
+2. Optional UMAP dimensionality reduction (384→50 dims for HDBSCAN performance)
+3. HDBSCAN clustering (no need to specify cluster count — auto-detects)
+4. SERP overlap validation: keywords sharing ≥40% of top-10 URLs are merged into same cluster
+5. LLM generates cluster name + rationale from keyword list (transparency requirement)
 
-**R2 enhancement (if scale demands):** Generate embeddings via OpenAI `text-embedding-3-small`, store in pgvector, cluster via DBSCAN or hierarchical clustering.
+**R2 enhancement:** Store embeddings in pgvector for persistent similarity search. Incremental clustering (add new keywords to existing clusters).
 
-**Rationale:**
-- At <500 keywords, LLM clustering is accurate and fast (<30s per batch)
-- No additional infrastructure (pgvector) needed for R1
-- LLM can provide cluster names and rationale (transparency requirement)
+**Rationale (from research):**
+- HDBSCAN is deterministic — same input = same clusters (LLM clustering is stochastic)
+- Embedding cost negligible ($0.02/1M tokens vs $0.01-0.05 per LLM batch)
+- SERP overlap validation adds real-world signal (keywords ranking for same URLs = same topic)
+- LLM used only for labelling (cheap, fast, transparent)
+- No pgvector needed for R1 — embeddings processed in-memory
 **Alternatives considered:**
-1. TF-IDF + cosine similarity — Works but produces lower quality clusters for semantic similarity
-2. pgvector + DBSCAN from day 1 — Over-engineering for R1 volume
-**Consequences:** LLM cost per clustering run (~$0.01-0.05 per 100 keywords). Scale limit ~1000 keywords per LLM approach before switching to embeddings.
+1. LLM-only clustering — Stochastic, expensive at scale, non-reproducible
+2. TF-IDF + cosine similarity — Lower quality for semantic similarity
+3. pgvector + DBSCAN from day 1 — Store embeddings from R1 but don't require pgvector extension
+**Consequences:** Requires OpenAI API for embeddings. HDBSCAN available via `hdbscan` npm package or Python subprocess. Deterministic results enable reliable testing.
 
 ---
 
@@ -260,7 +268,7 @@ Tenant ──1:M──→ Campaign ──1:M──→ PipelineRun
 | `serp_result` | id, tenant_id, keyword_id, rank, url, title, snippet, word_count, serp_features[] | Top-10 per keyword |
 | `competitor_site` | id, tenant_id, campaign_id, domain, crawl_status | Sites we compare against |
 | `competitor_page` | id, tenant_id, competitor_site_id, url, title, word_count, topics[], quality_score | Per-page analysis |
-| `content_gap` | id, tenant_id, campaign_id, keyword_id, gap_type, gap_score, our_coverage, competitor_coverage | Gap matrix entry |
+| `content_gap` | id, tenant_id, campaign_id, keyword_id, gap_type (missing/weak/strong/shared/unique), gap_score, our_coverage, competitor_coverage, opportunity_score | Gap matrix with 5-type classification |
 | `content_brief` | id, tenant_id, campaign_id, keyword_id, brief_json, priority_score, calendar_week, status | Output contract (JSON column) |
 | `pipeline_run` | id, tenant_id, campaign_id, status, started_at, completed_at, stages_completed[], error | Pipeline execution tracking |
 
