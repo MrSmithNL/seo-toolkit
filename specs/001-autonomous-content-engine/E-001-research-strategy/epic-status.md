@@ -3,14 +3,14 @@ id: "PROD-001-SPEC-E-001"
 type: epic
 title: "Research & Strategy Engine"
 status: in-progress
-phase: 2-research
+phase: 3-requirements
 timestamps:
   created: 2026-03-15
   started: 2026-03-15
-  review: null
+  review: 2026-03-15
   completed: null
 gates:
-  scope: pending
+  scope: approved  # Malcolm approved 2026-03-15
   completeness: pending
   build_approval: pending
 baseline:
@@ -237,10 +237,10 @@ Epic: E-001 Research & Strategy Engine
 | Phase | Status | Date |
 |-------|--------|------|
 | **Gate 0: Architecture** | [x] Passed (theme-level) | 2026-03-15 |
-| Research (Phase 1-2) | [x] In progress | 2026-03-15 |
+| Research (Phase 1-2) | [x] Complete | 2026-03-15 |
+| **Gate 1: Scope** | [x] Approved by Malcolm | 2026-03-15 |
+| Feature specs (Phase 3) | [ ] In progress | 2026-03-15 |
 | Design (Phase 4) | [ ] Not started | |
-| **Gate 1: Scope** | [ ] Not reached | |
-| Feature specs | [ ] Not started | |
 | **Gate 2: Completeness** | [ ] Not reached | |
 | Task breakdown | [ ] Not started | |
 | **Gate 3: Build Approval** | [ ] Not reached | |

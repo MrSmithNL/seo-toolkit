@@ -15,7 +15,7 @@
 | **Total appetite** | 16 weeks (4 sprints × 4 phases) |
 | **Owner** | Claude (autonomous), Malcolm (gate approvals) |
 | **Created** | 2026-03-15 |
-| **Baseline version** | null |
+| **Baseline version** | v1.0 (2026-03-15, approved by Malcolm) |
 
 ---
 

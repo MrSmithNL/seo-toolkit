@@ -15,7 +15,7 @@ capability: "seo.content-pipeline"
 
 # === STATE ===
 status: in-progress
-phase: phase-0
+phase: phase-3
 priority: must
 size: XL
 risk: medium
@@ -49,22 +49,22 @@ ai:
   generation: autonomous
   model: claude-opus-4-6
   confidence: high
-  reviewed: false
-  review_date: null
+  reviewed: true
+  review_date: 2026-03-15
 
 # === GATES ===
 gates:
-  gate_0: pending
-  scope: pending
+  gate_0: approved
+  scope: approved
   completeness: pending
   build_approval: pending
 
 # === BASELINE ===
 baseline:
-  version: null
-  date: null
+  version: v1.0
+  date: 2026-03-15
   hash: null
-  approved_by: null
+  approved_by: Malcolm
 
 # === ARCHITECTURE CLASSIFICATION (Gate 0 — RE v4.23) ===
 saas_ecosystem: true
@@ -93,7 +93,7 @@ tags: [content-engine, seo, aiso, geo, pipeline, shopify, multilingual]
 
 ## Current State
 
-**Gate 0 (Architecture Classification) in progress.** This is a fresh RE run (v4.23) starting from the preserved BA briefing doc. All previous RE outputs were discarded for a clean-slate re-run.
+**Phase 3 (Requirements) in progress for E-001.** Gate 0 approved, theme baselined (v1.0), Gate 1 scope approved. Keywords Everywhere ($10) approved for keyword data.
 
 **Input:** `automated-article-generator-briefing.md` (BA deliverable — preserved from first run)
 
@@ -211,10 +211,10 @@ This module uses LLMs (AI content generation, scoring, validation) AND has exter
 
 - [x] **Gate 0: Architecture Classification** — Complete (2026-03-15)
 - [x] **Phase 0: Theme Identification** — Complete (2026-03-15)
-- [ ] **Phase 1: Understand** — E-001 complete, E-002–E-006 pending
+- [x] **Phase 1: Understand** — E-001 complete (2026-03-15), E-002–E-006 pending
 - [x] **Phase 2: Research** — E-001 competitive deep-dive complete (2026-03-15)
-- [ ] **GATE 1: Scope Validation** — Malcolm reviews research and scope
-- [ ] **Phase 3: Requirements** — EARS stories, NFRs, acceptance tests
+- [x] **GATE 1: Scope Validation** — Approved by Malcolm (2026-03-15)
+- [ ] **Phase 3: Requirements** — In progress for E-001
 - [ ] **GATE 2: Completeness Review** — Malcolm reviews full spec
 - [ ] **Phase 4: Design** — Technical design, data model, API contracts
 - [ ] **Phase 4b: Visual Preview** — Dashboard HTML mockups
