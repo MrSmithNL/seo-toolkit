@@ -1,147 +1,176 @@
+# Autonomous Content Engine — Capability Framework
+# Source: specs/001-autonomous-content-engine/theme.md (PDM)
+# 10 competitors analysed, 33 L3 features + 9 cross-cutting
+
 direction: right
 
-title: "Autonomous Content Engine — Capability Framework" {
+title: {
+  label: "Autonomous Content Engine — Capability Framework"
+  style.font-size: 24
+  style.bold: true
   near: top-center
 }
 
-configure: {
-  label: "1. Configure"
-  style.fill: "#E3F2FD"
-  style.stroke: "#1565C0"
+# === L1 DOMAINS (Pipeline Stages) ===
 
-  setup: {
-    label: "Site & Brand Setup"
-    site-reg: "1.1 Site URL [AUTO][TS]"
-    brand-voice: "1.2 Brand Voice [ASSISTED][DF]"
-    cms-connect: "1.3 CMS Connection [ASSISTED][TS]"
-    topic-config: "1.4 Topic Config [ASSISTED][TS]"
-    quality-thresh: "1.5 Quality Thresholds [ASSISTED][DF]"
-    aiso-prefs: "1.6 AISO Preferences [ASSISTED][IN]" {
-      style.fill: "#FFF3E0"
-    }
+research: "E-001\nResearch & Strategy" {
+  style.fill: "#e3f2fd"
+  style.stroke: "#1565c0"
+  style.font-size: 16
+
+  ki: "Keyword Intelligence" {
+    style.fill: "#bbdefb"
+    kr: "Keyword Research [TS]" { style.fill: "#c8e6c9" }
+    tc: "Topic Clustering [DF]" { style.fill: "#fff9c4" }
+    si: "Intent Classification [TS]" { style.fill: "#c8e6c9" }
+  }
+
+  ci: "Competitive Intelligence" {
+    style.fill: "#bbdefb"
+    sa: "SERP Analysis [TS]" { style.fill: "#c8e6c9" }
+    ca: "Competitor Analysis [TS]" { style.fill: "#c8e6c9" }
+    gi: "Gap Identification [TS]" { style.fill: "#c8e6c9" }
+  }
+
+  cp: "Content Planning" {
+    style.fill: "#bbdefb"
+    cc: "Content Calendar [TS]" { style.fill: "#c8e6c9" }
   }
 }
 
-research: {
-  label: "2. Research"
-  style.fill: "#E8F5E9"
-  style.stroke: "#2E7D32"
+create: "E-002\nContent Creation" {
+  style.fill: "#e8f5e9"
+  style.stroke: "#2e7d32"
+  style.font-size: 16
 
-  keyword-intel: {
-    label: "Keyword Intelligence"
-    kw-research: "2.1 Keyword Research [AUTO][TS]"
-    kw-cluster: "2.2 Clustering [AUTO][DF]"
-    intent: "2.3 Intent Classification [AUTO][DF]"
-    cannibal: "2.4 Cannibalisation [AUTO][DF]"
+  ag: "Article Generation" {
+    style.fill: "#c8e6c9"
+    lf: "Long-form Gen [TS]" { style.fill: "#c8e6c9" }
+    ol: "Outline Gen [TS]" { style.fill: "#c8e6c9" }
+    rc: "Research/Citation [DF]" { style.fill: "#fff9c4" }
   }
 
-  gap-analysis: {
-    label: "Content Gap Analysis"
-    competitor-audit: "2.5.1 Competitor Audit [AUTO][TS]"
-    content-gap: "2.5.2 Gap ID [AUTO][TS]"
-    serp: "2.5.3 SERP Analysis [AUTO][TS]"
-  }
-
-  aiso-intel: {
-    label: "AISO Intelligence"
-    style.fill: "#FFF3E0"
-    citation: "2.6.1 AI Citation Analysis [IN]"
-    entity-gap: "2.6.2 Entity Coverage [IN]"
-    schema-opp: "2.6.3 Schema Opportunities [IN]"
+  ce: "Content Enhancement" {
+    style.fill: "#c8e6c9"
+    ee: "E-E-A-T Signals [DF]" { style.fill: "#fff9c4" }
+    il: "Internal Linking [DF]" { style.fill: "#fff9c4" }
+    ig: "Image Selection [DF]" { style.fill: "#fff9c4" }
+    bv: "Brand Voice [TS]" { style.fill: "#c8e6c9" }
   }
 }
 
-generate: {
-  label: "3. Generate & Optimise"
-  style.fill: "#F3E5F5"
-  style.stroke: "#6A1B9A"
+optimise: "E-003\nOptimisation" {
+  style.fill: "#fff3e0"
+  style.stroke: "#e65100"
+  style.font-size: 16
 
-  content-gen: {
-    label: "Content Generation"
-    brief: "3.1 Brief [AUTO][TS]"
-    outline: "3.2 Outline [AUTO][TS]"
-    article: "3.3 Full Article [AUTO][TS]"
-    aiso-native: "3.4 AISO-Native [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    nlp: "3.5 NLP Terms [AUTO][DF]"
-    images: "3.6 Images [ASSISTED][DF]"
+  ss: "SEO Scoring" {
+    style.fill: "#ffe0b2"
+    op: "On-page Score [TS]" { style.fill: "#c8e6c9" }
+    nl: "NLP Keywords [TS]" { style.fill: "#c8e6c9" }
+    ra: "Readability [TS]" { style.fill: "#c8e6c9" }
+    cs: "Structure Analysis [TS]" { style.fill: "#c8e6c9" }
   }
 
-  optimisation: {
-    label: "Content Optimisation"
-    seo-score: "3.7.1 SEO Score [AUTO][TS]"
-    aiso-score: "3.7.2 AISO 36-Factor [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    dual-score: "3.7.3 Dual Score [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    iterate: "3.7.4 Iterate [AUTO][DF]"
-    readability: "3.7.5 Readability [AUTO][TS]"
-    factcheck: "3.7.6 Fact-Check [ASSISTED][DF]"
+  ts: "Technical SEO" {
+    style.fill: "#ffe0b2"
+    sm: "Schema Markup [IN]" { style.fill: "#ffcdd2" }
+    mt: "Meta Tags [TS]" { style.fill: "#c8e6c9" }
+  }
+
+  av: "AI Visibility" {
+    style.fill: "#ffe0b2"
+    as: "AISO Scoring [TS]" { style.fill: "#c8e6c9" }
   }
 }
 
-publish: {
-  label: "4. Publish"
-  style.fill: "#FFF9C4"
-  style.stroke: "#F9A825"
+publish: "E-004\nPublishing" {
+  style.fill: "#f3e5f5"
+  style.stroke: "#6a1b9a"
+  style.font-size: 16
 
-  publishing: {
-    label: "Content Publishing"
-    wordpress: "4.1 WordPress [AUTO][TS]"
-    shopify: "4.2 Shopify [AUTO][DF]"
-    schema: "4.3 Schema 6+ Types [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    internal-links: "4.4 Internal Links [AUTO][DF]"
-    images-pub: "4.5 Image Upload [AUTO][TS]"
-    scheduled: "4.6 Scheduled [AUTO][DF]"
+  cms: "CMS Integration" {
+    style.fill: "#e1bee7"
+    wp: "WordPress [TS]" { style.fill: "#c8e6c9" }
+    sh: "Shopify [IN]" { style.fill: "#ffcdd2" }
+  }
+
+  cd: "Content Delivery" {
+    style.fill: "#e1bee7"
+    ml: "Translation [DF]" { style.fill: "#fff9c4" }
+    sc: "Scheduling [TS]" { style.fill: "#c8e6c9" }
+  }
+
+  cg: "Content Governance" {
+    style.fill: "#e1bee7"
+    vc: "Version Control [DF]" { style.fill: "#fff9c4" }
+    aw: "Approval Workflow [DF]" { style.fill: "#fff9c4" }
   }
 }
 
-monitor: {
-  label: "5. Monitor & Refresh"
-  style.fill: "#FFEBEE"
-  style.stroke: "#C62828"
+measure: "E-005\nMeasurement &\nRe-optimisation" {
+  style.fill: "#fce4ec"
+  style.stroke: "#c62828"
+  style.font-size: 16
 
-  perf: {
-    label: "Performance"
-    rank: "5.1 Rank Tracking [AUTO][TS]"
-    ai-vis: "5.2 AI Visibility [AUTO][DF]"
-    decay: "5.3 Decay Detection [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    citation-prob: "5.4 Citation Prob [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
+  pm: "Performance Monitoring" {
+    style.fill: "#f8bbd0"
+    pa: "Content Audit [DF]" { style.fill: "#fff9c4" }
+    st: "Score Tracking [TS]" { style.fill: "#c8e6c9" }
+    ac: "AI Citation Mon [TS]" { style.fill: "#c8e6c9" }
+    cr: "Rank Tracking [TS]" { style.fill: "#c8e6c9" }
   }
 
-  refresh: {
-    label: "Content Refresh"
-    auto-trigger: "5.5.1 Auto-Trigger [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
-    update-gen: "5.5.2 Update Gen [AUTO][IN]" {
-      style.fill: "#FFF3E0"
-    }
+  ar: "Autonomous Remediation" {
+    style.fill: "#f8bbd0"
+    ro: "Auto Re-optimise [IN]" { style.fill: "#ffcdd2" }
   }
 }
 
-configure -> research: feeds
-research -> generate: informs
-generate -> publish: outputs
-publish -> monitor: tracks
-monitor -> generate: refresh {style.stroke-dash: 3}
+dashboard: "E-006\nDashboard" {
+  style.fill: "#e0f7fa"
+  style.stroke: "#00695c"
+  style.font-size: 16
 
-cross-cutting: {
-  label: "Cross-Cutting"
-  style.fill: "#ECEFF1"
-  multi-model: "X.1 Multi-Model AI [DF]"
-  api: "X.2 API Access [TS]"
-  multi-lang: "X.3 Multi-Lang [TS]"
-  bulk: "X.4 Bulk Gen [DF]"
-  brand: "X.5 Brand Voice [DF]"
-  whitelabel: "X.6 White-Label [DF]"
+  pd: "Performance Dashboards [TS]" { style.fill: "#c8e6c9" }
+}
+
+# === PIPELINE FLOW ===
+
+research -> create: "briefs"
+create -> optimise: "drafts"
+optimise -> publish: "optimised"
+publish -> measure: "live pages"
+measure -> research: "re-optimise\ntrigger" { style.stroke-dash: 5 }
+measure -> dashboard: "data"
+
+# === CROSS-CUTTING (bottom) ===
+
+cross: "Cross-Cutting Capabilities [EN]" {
+  style.fill: "#f5f5f5"
+  style.stroke: "#616161"
+  style.font-size: 14
+
+  po: "Pipeline Orchestration\n(BullMQ)" { style.fill: "#e0e0e0" }
+  mg: "Multi-Model AI Gateway\n(Claude+GPT+Gemini)" { style.fill: "#e0e0e0" }
+  fp: "Five-Port Adapters" { style.fill: "#e0e0e0" }
+  at: "Audit Trail" { style.fill: "#e0e0e0" }
+  ff: "Feature Flags" { style.fill: "#e0e0e0" }
+  pl: "Per-Language AISO [IN]" { style.fill: "#ffcdd2" }
+  pb: "Product-Aware Briefs [IN]" { style.fill: "#ffcdd2" }
+  mc: "Multi-CMS Orchestration [IN]" { style.fill: "#ffcdd2" }
+  ym: "YMYL Compliance [DF]" { style.fill: "#fff9c4" }
+}
+
+# === LEGEND ===
+
+legend: "Legend" {
+  style.fill: "#fafafa"
+  style.stroke: "#9e9e9e"
+  style.font-size: 12
+
+  ts_l: "Table-Stakes (21)" { style.fill: "#c8e6c9" }
+  df_l: "Differentiator (9)" { style.fill: "#fff9c4" }
+  in_l: "Innovation (3+4)" { style.fill: "#ffcdd2" }
+  en_l: "Enabler (5)" { style.fill: "#e0e0e0" }
 }
