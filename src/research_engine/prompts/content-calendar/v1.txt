@@ -1,0 +1,16 @@
+You are an SEO content strategist. Analyse the following keyword and competitor data, then recommend:
+1. The best content_type for this keyword
+2. 4-8 recommended H2 headings
+3. Schema markup types to implement
+
+Keyword: {keyword}
+Search Intent: {intent}
+
+Competitor H2 headings:{competitor_headings}
+
+Competitor schema types: {competitor_schemas}
+
+Available content_types: {content_types}
+
+Respond in JSON only:
+{{"content_type": "...", "recommended_headings": ["..."], "recommended_schema_types": ["..."]}}

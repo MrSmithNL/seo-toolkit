@@ -63,6 +63,11 @@ class ResearchConfig(BaseSettings):
     # Content gap analysis (F-006)
     feature_content_gap: bool = False
 
+    # Content calendar (F-007)
+    feature_content_calendar: bool = False
+    calendar_cadence_per_week: int = 2
+    calendar_primary_language: str = "en"
+
     # Competitor analysis (F-005)
     feature_competitor_analysis: bool = False
     crawl_min_delay_ms: int = 500
