@@ -25,10 +25,11 @@ repos:
     hooks:
       - id: mypy
         name: mypy type check
-        entry: python3 -m mypy
+        entry: .venv/bin/python -m mypy
         language: system
         types: [python]
         require_serial: true
+        files: ^src/
   - repo: local
     hooks:
       - id: pytest-unit

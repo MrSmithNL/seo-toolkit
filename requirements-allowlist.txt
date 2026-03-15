@@ -35,3 +35,13 @@ google-auth-oauthlib
 
 # Report generation
 jinja2
+
+# Data models and validation
+pydantic
+pydantic-settings
+
+# Property-based testing
+hypothesis
+
+# HTTP mocking for tests
+pytest-httpx

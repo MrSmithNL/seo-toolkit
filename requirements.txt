@@ -36,3 +36,13 @@ google-auth-oauthlib>=1.2.0
 
 # Report generation
 jinja2>=3.1.0
+
+# Data models and validation
+pydantic>=2.6.0
+pydantic-settings>=2.2.0
+
+# Property-based testing
+hypothesis>=6.98.0
+
+# HTTP mocking for tests
+pytest-httpx>=0.30.0
