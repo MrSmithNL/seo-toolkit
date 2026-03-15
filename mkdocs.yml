@@ -71,10 +71,7 @@ nav:
     - Roadmap: roadmap.md
     - Strategic OS: strategic-os.md
     - Research:
-      - Competitive Landscape: specs/001-autonomous-content-engine/research/competitive-landscape.md
-      - Market Sizing: specs/001-autonomous-content-engine/research/market-sizing-and-business-models.md
-      - Technology Landscape: specs/001-autonomous-content-engine/research/technology-landscape.md
-      - Configuration Setup Patterns: specs/001-autonomous-content-engine/research/e001-configuration-setup-patterns.md
+      - Overview: research.md
 
   # ============================================================
   # DESIGN — Architecture, agents, coding standards
@@ -102,11 +99,8 @@ nav:
   - Development:
     - Automated Article Generator: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
     - Theme & Planning:
-      - Development Roadmap: specs/001-autonomous-content-engine/roadmap.md
       - Theme: specs/001-autonomous-content-engine/theme.md
-      - Capability Map: specs/001-autonomous-content-engine/capability-map.md
-      - Process Decomposition: specs/001-autonomous-content-engine/process-decomposition-map.md
-      - Compliance Audit: specs/001-autonomous-content-engine/compliance-audit.md
+      - Status: specs/001-autonomous-content-engine/status.md
 
   # ============================================================
   # TEST — Strategy, quality gates, test specs, UAT
