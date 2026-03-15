@@ -46,6 +46,22 @@ tags: [e-001, research, strategy, keyword-research, content-calendar, aiso, seo]
 | **Baseline version** | null |
 | **Parent baseline** | Theme v0 (not yet baselined) |
 
+
+---
+
+## Feature Hierarchy Tracing
+
+> Traces this epic's position in the full product hierarchy (DM SOP O11 §6).
+
+
+
+| Level | ID | Name | Status |
+|-------|-----|------|--------|
+| OKR | KR1.1 | Launch AISOGEN MVP | In progress |
+| Theme | 001 | Autonomous Content Engine | Phase 3 — Requirements |
+| Epic | E-001 | Research & Strategy Engine | Phase 3 — Requirements complete |
+| Roadmap | Next #7 | E-001 Research & Strategy (7 features) | ARID 8.4, Gate 2 pending |
+| Sprint | — | No E-001 tasks in S001 (operational sprint) | S002 target |
 ---
 
 ## Architecture Classification (Gate 0)
