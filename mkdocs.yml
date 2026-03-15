@@ -105,9 +105,19 @@ nav:
         - BA Briefing: specs/001-autonomous-content-engine/automated-article-generator-briefing.md
         - Theme: specs/001-autonomous-content-engine/theme.md
         - Status: specs/001-autonomous-content-engine/status.md
+        - Contracts:
+          - Glossary: specs/001-autonomous-content-engine/contracts/glossary.md
+          - Frozen Decisions: specs/001-autonomous-content-engine/contracts/frozen-decisions.md
+          - Domain Model: specs/001-autonomous-content-engine/contracts/domain-model.md
+          - Architecture Guardrails: specs/001-autonomous-content-engine/contracts/architecture-guardrails.md
+        - Research:
+          - Competitive Feature Matrix: specs/001-autonomous-content-engine/research/aisogen-pdm-competitive-feature-matrix-2026.md
         - Epics:
           - E-001 Research & Strategy:
             - Epic Status: specs/001-autonomous-content-engine/E-001-research-strategy/epic-status.md
+            - Research:
+              - Competitive Deep-Dive: specs/001-autonomous-content-engine/E-001-research-strategy/research/competitive-deep-dive.md
+              - Keyword Data Sources: specs/001-autonomous-content-engine/E-001-research-strategy/research/keyword-data-sources-analysis.md
 
   # ============================================================
   # TEST — Strategy, quality gates, test specs, UAT
