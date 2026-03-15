@@ -202,3 +202,104 @@ def failing_autocomplete() -> FailingAutocomplete:
 def failing_volume_source() -> FailingVolumeSource:
     """Volume source that always fails."""
     return FailingVolumeSource()
+
+
+# ---------------------------------------------------------------------------
+# Mock cluster storage adapter (F-002)
+# ---------------------------------------------------------------------------
+
+
+class MockClusterStorage:
+    """In-memory storage implementing ClusterStoragePort."""
+
+    def __init__(self) -> None:  # noqa: D107
+        self.clusters: list[dict] = []
+        self.keyword_assignments: dict[str, str | None] = {}
+        self.deleted_ids: set[str] = set()
+
+    def save_clusters(self, clusters: list) -> int:
+        """Save clusters by upsert on id."""
+        existing_ids = {c["id"] for c in self.clusters}
+        count = 0
+        for cluster in clusters:
+            dumped = cluster.model_dump(mode="json")
+            if dumped["id"] in existing_ids:
+                self.clusters = [
+                    dumped if c["id"] == dumped["id"] else c for c in self.clusters
+                ]
+            else:
+                self.clusters.append(dumped)
+            count += 1
+        return count
+
+    def get_clusters(
+        self,
+        campaign_id: str,
+        locale: str,
+        include_deleted: bool = False,
+    ) -> list:
+        """Query clusters."""
+        from src.research_engine.models.cluster import KeywordCluster
+
+        results = []
+        for data in self.clusters:
+            if data["campaign_id"] != campaign_id:
+                continue
+            if data["locale"] != locale:
+                continue
+            cluster = KeywordCluster.model_validate(data)
+            if not include_deleted and cluster.deleted_at is not None:
+                continue
+            results.append(cluster)
+        return results
+
+    def soft_delete(self, cluster_ids: list[str]) -> int:
+        """Soft-delete clusters."""
+        from datetime import UTC, datetime
+
+        count = 0
+        for item in self.clusters:
+            if item["id"] in cluster_ids and item.get("deleted_at") is None:
+                item["deleted_at"] = datetime.now(tz=UTC).isoformat()
+                self.deleted_ids.add(item["id"])
+                count += 1
+        return count
+
+    def update_keyword_cluster_ids(
+        self,
+        assignments: dict[str, str | None],
+        campaign_id: str,
+    ) -> int:
+        """Track keyword cluster assignments."""
+        self.keyword_assignments.update(assignments)
+        return len(assignments)
+
+
+@pytest.fixture()
+def mock_cluster_storage() -> MockClusterStorage:
+    """In-memory mock cluster storage."""
+    return MockClusterStorage()
+
+
+# ---------------------------------------------------------------------------
+# Mock LLM adapter (F-002)
+# ---------------------------------------------------------------------------
+
+
+class MockLlm:
+    """Mock LLM that returns canned clustering responses."""
+
+    def __init__(self, response: str = "") -> None:  # noqa: D107
+        self.response = response
+        self.calls: list[str] = []
+
+    def complete(self, prompt: str) -> str:
+        """Return canned response, tracking calls."""
+        self.calls.append(prompt)
+        return self.response
+
+
+@pytest.fixture()
+def mock_llm() -> MockLlm:
+    """Mock LLM adapter."""
+    return MockLlm()

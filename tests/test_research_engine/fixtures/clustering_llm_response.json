@@ -1,0 +1,23 @@
+{
+  "clusters": [
+    {
+      "name": "Hair Transplant Procedures",
+      "rationale": "Keywords about different hair transplant surgical methods.",
+      "pillar_keyword": "hair transplant",
+      "pillar_rationale": "Highest volume, broadest scope.",
+      "coherence_score": 9,
+      "coherence_rationale": "Tightly focused on transplant procedures.",
+      "keywords": ["hair transplant", "fue transplant", "fut transplant", "hair transplant cost"]
+    },
+    {
+      "name": "Hair Loss Treatment",
+      "rationale": "Keywords about non-surgical hair loss treatments.",
+      "pillar_keyword": "hair loss treatment",
+      "pillar_rationale": "Broadest informational keyword.",
+      "coherence_score": 7,
+      "coherence_rationale": "Mostly related but includes both medical and cosmetic approaches.",
+      "keywords": ["hair loss treatment", "minoxidil results", "hair growth serum"]
+    }
+  ],
+  "unclustered": ["best barber near me"]
+}

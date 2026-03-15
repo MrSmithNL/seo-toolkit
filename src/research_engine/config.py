@@ -31,6 +31,7 @@ class ResearchConfig(BaseSettings):
 
     # Feature flags
     feature_keyword_research: bool = False
+    feature_topic_clustering: bool = False
 
     # Storage
     storage_mode: Literal["sqlite", "json"] = "json"
