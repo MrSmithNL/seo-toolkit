@@ -71,7 +71,7 @@ nav:
     - Roadmap: roadmap.md
     - Strategic OS: strategic-os.md
     - Research:
-      - Overview: research.md
+      - Competitor Analysis: competitor-analysis.md
 
   # ============================================================
   # DESIGN — Architecture, agents, coding standards
