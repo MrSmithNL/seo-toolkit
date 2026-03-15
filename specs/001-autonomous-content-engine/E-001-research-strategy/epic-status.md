@@ -11,7 +11,7 @@ timestamps:
   completed: null
 gates:
   scope: approved  # Malcolm approved 2026-03-15
-  completeness: pending
+  completeness: approved  # Malcolm approved 2026-03-15
   build_approval: pending
 baseline:
   version: null
@@ -257,7 +257,7 @@ Epic: E-001 Research & Strategy Engine
 | **Gate 1: Scope** | [x] Approved by Malcolm | 2026-03-15 |
 | Feature specs (Phase 3) | [x] Complete | 2026-03-15 |
 | Design (Phase 4) | [ ] Not started | |
-| **Gate 2: Completeness** | [ ] Not reached | |
+| **Gate 2: Completeness** | [x] Approved by Malcolm | 2026-03-15 |
 | Task breakdown | [ ] Not started | |
 | **Gate 3: Build Approval** | [ ] Not reached | |
 | Build | [ ] Not started | |

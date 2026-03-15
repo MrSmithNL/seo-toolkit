@@ -50,7 +50,7 @@ Active RE process for the Autonomous Content Engine. Syncs with product roadmap 
 | RE-003 | E-001 — Phase 2 (Research): Competitive deep-dive | ✅ Done | 5-dimension analysis, 4 competitors, keyword data sources |
 | RE-004 | E-001 — Gate 1 (Scope Validation) | ✅ Done | Malcolm approved 2026-03-15 |
 | RE-005 | E-001 — Phase 3 (Requirements): All 7 features | ✅ Done | 2,659 lines across F-001 to F-007. EARS acceptance criteria. |
-| RE-006 | E-001 — Gate 2 (Completeness Review) | 🔲 Todo | Next step — present to Malcolm |
+| RE-006 | E-001 — Gate 2 (Completeness Review) | ✅ Done | Malcolm approved 2026-03-15 |
 | RE-007 | E-001 — Phase 4 (Design) | 🔲 Todo | Architecture, data model, API contracts |
 | RE-008 | E-001 — Gate 3 (Build Approval) | 🔲 Todo | After Phase 5 (Tasks) |
 | RE-009 | Purchase Keywords Everywhere API key ($10) | 🔲 Todo | Malcolm approved spend 2026-03-15 |
